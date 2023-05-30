@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authentication_middleWare_1 = require("../middleWares/authentication.middleWare");
+const checkRoles_middleWare_1 = require("../middleWares/checkRoles.middleWare");
+const enums_enum_1 = require("../enum/enums.enum");
+const inventroy_controller_1 = require("../controller/inventroy.controller");
+const router = (0, express_1.Router)();
+router.route('/getHistory/:invId').get(authentication_middleWare_1.Authentication, (0, checkRoles_middleWare_1.checkRole)(enums_enum_1.Roles.ADMIN, enums_enum_1.Roles.SUPER_ADMIN), inventroy_controller_1.getHistoryInv);
+exports.default = router;

@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const contact_controller_1 = require("../controller/contact.controller");
+const enums_enum_1 = require("../enum/enums.enum");
+const authentication_middleWare_1 = require("../middleWares/authentication.middleWare");
+const checkRoles_middleWare_1 = require("../middleWares/checkRoles.middleWare");
+const validator_middleWare_1 = require("../middleWares/validator.middleWare");
+const contact_model_1 = require("../model/contact.model");
+const router = (0, express_1.Router)();
+router.route('/add').post((0, validator_middleWare_1.validate)(contact_model_1.contactValidation, 'post'), contact_controller_1.createContact);
+router.route('/getAll/:contactType?').get(authentication_middleWare_1.Authentication, (0, checkRoles_middleWare_1.checkRole)(enums_enum_1.Roles.ADMIN, enums_enum_1.Roles.SUPER_ADMIN, enums_enum_1.Roles.SUB_ADMIN), contact_controller_1.getAllContact);
+router.route('/getById/:contactId').get(authentication_middleWare_1.Authentication, (0, checkRoles_middleWare_1.checkRole)(enums_enum_1.Roles.ADMIN, enums_enum_1.Roles.SUB_ADMIN, enums_enum_1.Roles.SUPER_ADMIN), contact_controller_1.getContactById);
+router.route('/delete/:complaintId').delete(authentication_middleWare_1.Authentication, (0, checkRoles_middleWare_1.checkRole)(enums_enum_1.Roles.ADMIN, enums_enum_1.Roles.SUPER_ADMIN), contact_controller_1.deleteContact);
+exports.default = router;

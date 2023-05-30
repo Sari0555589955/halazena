@@ -1,0 +1,9 @@
+@media only screen and (max-width: 1200px) {
+    .TableContainer {
+    overflow-x: scroll;
+    width: 100%;
+    }
+    .Table {
+        width: 100%;
+    }
+}
