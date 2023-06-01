@@ -120,7 +120,6 @@ export const CustomDrawer = ({ icon, data, name }) => {
     ) {
       return;
     }
-    
 
     setState({ ...state, [anchor]: open });
     setCallDrawerData(true);
@@ -140,12 +139,11 @@ export const CustomDrawer = ({ icon, data, name }) => {
       {data && data[0] && (
         <List>
           {[...data]
-            .filter(({ name_en }) =>{
+            .filter(({ name_en }) => {
               return false
                 ? name_en !== "Profile" && name_en !== "Logout"
-                : name_en !== "Login" && name_en !== "Register"
-            }
-            )
+                : name_en !== "Login" && name_en !== "Register";
+            })
             .map((text, index) => (
               <Box
                 key={text.name_en}

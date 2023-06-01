@@ -25,3 +25,16 @@ export const colors = {
   newLightColor: "#EDCB94",
   lightGreen: "#99ECEA",
 };
+
+export const publicButton = {
+  bgcolor: `${colors.newLightColor} !important`,
+  color: "#fff",
+  p: "10px 50px",
+  transition: "0.3s all",
+  fontFamily: publicFontFamily,
+  fontWeight: "bold",
+  borderRadius: "30px",
+  "&:active": {
+    transform: "scale(0.9)",
+  },
+};

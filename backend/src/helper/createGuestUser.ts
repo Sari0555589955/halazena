@@ -21,8 +21,9 @@ import { Response } from 'express';
 // }
 export const createGuestUser = async (req: AuthenticatedRequest, res: Response) => {
     // let _id = await generateRandomUserId();
-    const user = new User({email:'test',role:'user'})
+    const user = new User({email:'',role:'user'})
      user.save();
+     
    
     // GENERATE TOKEN OF THAT USER AND RETURN IT TO THE FRONT SIDE
 

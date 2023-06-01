@@ -19,6 +19,7 @@ import {
   publicFontFamily,
 } from "../../components/publicStyle/publicStyle";
 import {
+  useClearCartMutation,
   useDeleteFromCartMutation,
   useGetAllCartsQuery,
   useUpdateQuantityMutation,
@@ -35,6 +36,8 @@ const CartTest = () => {
   const navigate = useNavigate();
   const [deleteFromCart] = useDeleteFromCartMutation();
   const [updateQuantity] = useUpdateQuantityMutation();
+  const [clearCart, { isLoading: clearingCartLoading }] =
+    useClearCartMutation();
   var cartTotalPrice =
     cartData?.cart &&
     !isErrCart &&
@@ -73,6 +76,13 @@ const CartTest = () => {
     } else {
       navigate("/checkout");
     }
+  };
+  const handleClearAllCart = () => {
+    clearCart().then(({data}) => {
+      if (data) { 
+        toast.success(data[`success_${language}`])
+      }
+    });
   };
   return (
     <Box
@@ -393,7 +403,7 @@ const CartTest = () => {
         sx={{
           width: 0.9,
           mx: "auto",
-          mb: "50px",
+          mt: "100px",
         }}
       >
         <Typography
@@ -401,11 +411,13 @@ const CartTest = () => {
           sx={{
             fontFamily: publicFontFamily,
             fontWeight: "bold",
+            textAlign: "center",
           }}
         >
           {language === "en" ? "Shopping cart" : "عربة التسوق"}
         </Typography>
       </Box>
+
       {cartData?.cart[0] && !isErrCart ? (
         <>
           <Box
@@ -436,6 +448,28 @@ const CartTest = () => {
               },
             }}
           >
+            <Box
+              sx={{
+                py: "100px",
+              }}
+            >
+              <Button
+                sx={{
+                  bgcolor: `${colors.newLightColor} !important`,
+                  color: "#fff",
+                  fontFamily: publicFontFamily,
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  transition: "0.3s all",
+                  "&:active": {
+                    transform: "scale(0.9)",
+                  },
+                }}
+                onClick={handleClearAllCart}
+              >
+                {language === "en" ? "Clear Cart" : "تفريغ السلة"}
+              </Button>
+            </Box>
             <Box
               sx={{
                 width: {

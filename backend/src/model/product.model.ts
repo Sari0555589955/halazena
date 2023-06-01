@@ -1,47 +1,58 @@
-import { ObjectId } from 'mongodb';
-import mongoose, { Schema } from 'mongoose'
-import { Brand, Colors, Sizes } from './../enum/enums.enum'
-import Joi from 'joi'
-import SavedProduct from './savedProduct'
-import Order from './order.model'
+import { ObjectId } from "mongodb";
+import mongoose, { Schema } from "mongoose";
+import { Brand, Colors, Sizes } from "./../enum/enums.enum";
+import Joi from "joi";
+import SavedProduct from "./savedProduct";
+import Order from "./order.model";
 
 export interface IProduct {
-  title: string
-  description: string
-  category: mongoose.Schema.Types.ObjectId
-  price: number
+  title_en: string;
+  title_ar: string;
+  description_en: string;
+  description_ar: string;
+  category: mongoose.Schema.Types.ObjectId;
+  price: number;
   attributes: {
-    type: [{ key: String; values: Array<string> }]
-  }
+    type: [{ key: String; values: Array<string> }];
+  };
 
-  sale: Number
-  images: string[]
-  likes: [{ like: string; user: mongoose.Schema.Types.ObjectId }]
+  sale: Number;
+  images: string[];
+  likes: [{ like: string; user: mongoose.Schema.Types.ObjectId }];
   ratings: [
-    { rating: number; user: mongoose.Schema.Types.ObjectId; ref: 'User' },
-  ]
-  reviews: number
+    { rating: number; user: mongoose.Schema.Types.ObjectId; ref: "User" }
+  ];
+  reviews: number;
 
-  avgRating: number
-  count: number
-  payInCash: boolean
-  smallDesc:String,
-  sub:ObjectId
+  avgRating: number;
+  count: number;
+  payInCash: boolean;
+  smallDesc: String;
+  sub: ObjectId;
 }
 
 const productSchema = new Schema<IProduct>(
   {
-    title: {
+    title_en: {
       type: String,
       required: true,
     },
+    title_ar: {
+      type: String,
+      required: true,
+    },
+    description_en: {
+      type: String,
+      required: true,
+    },
+    description_ar: {
+      type: String,
+      required: true,
+    },
+
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-    },
-    description: {
-      type: String,
-      required: true,
+      ref: "Category",
     },
     price: { type: Number, required: true },
 
@@ -53,10 +64,10 @@ const productSchema = new Schema<IProduct>(
       {
         type: String,
         default:
-          'https://images.pexels.com/photos/5693889/pexels-photo-5693889.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+          "https://images.pexels.com/photos/5693889/pexels-photo-5693889.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       },
     ],
-    likes: [{ user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } }],
+    likes: [{ user: { type: mongoose.Schema.Types.ObjectId, ref: "User" } }],
     count: {
       type: Number,
       default: 1,
@@ -65,7 +76,7 @@ const productSchema = new Schema<IProduct>(
     ratings: [
       {
         rating: Number,
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
     avgRating: {
@@ -83,18 +94,18 @@ const productSchema = new Schema<IProduct>(
     attributes: {
       type: [{ key: String, values: Array }],
       default: [
-        { key: 'color', values: [] },
-        { key: 'size', values: [] },
+        { key: "color", values: [] },
+        { key: "size", values: [] },
       ],
     },
-    sub:{
+    sub: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
+      ref: "Category",
     },
-    smallDesc:String,
+    smallDesc: String,
   },
-  { timestamps: true },
-)
+  { timestamps: true }
+);
 // productSchema.pre('save', async function (next) {
 //   if (!this.isNew) return next()
 //   const data: any = [
@@ -103,14 +114,13 @@ const productSchema = new Schema<IProduct>(
 //   ]
 //   this.attributes = data
 // })
-productSchema.pre('findOneAndDelete', async function () {
-  let product = await this.model.findOne(this.getQuery())
-  // delete the cascaded saved product
-  console.log('productId; ', product?._id)
+productSchema.pre("findOneAndDelete", async function () {
+  let product = await this.model.findOne(this.getQuery());
+
   let savedProduct = await SavedProduct.findOneAndDelete({
     product: product?._id,
-  })
-  console.log('savedProducat: ', savedProduct)
+  });
+  console.log("savedProducat: ", savedProduct);
   // deleting the product from inside the category
   await Order.updateMany(
     {},
@@ -120,15 +130,15 @@ productSchema.pre('findOneAndDelete', async function () {
           product: product?._id,
         },
       },
-    },
-  )
-})
-productSchema.post('findOneAndDelete', async function () {
-  await Order.deleteMany({ products: { $size: 0 } })
-})
+    }
+  );
+});
+productSchema.post("findOneAndDelete", async function () {
+  await Order.deleteMany({ products: { $size: 0 } });
+});
 
-const Product = mongoose.model('Product', productSchema)
-export default Product
+const Product = mongoose.model("Product", productSchema);
+export default Product;
 
 export const productValidation = (product: IProduct, reqType: any) => {
   const schema = Joi.object({
@@ -149,7 +159,7 @@ export const productValidation = (product: IProduct, reqType: any) => {
       Joi.object({
         rating: Joi.number(),
         user: Joi.objectId(),
-      }),
+      })
     ),
     reviews: Joi.number(),
 
@@ -158,7 +168,7 @@ export const productValidation = (product: IProduct, reqType: any) => {
       Joi.object({
         like: Joi.string(),
         user: Joi.objectId(),
-      }),
+      })
     ),
     image: Joi.string(),
     images: Joi.array().items(Joi.string()),
@@ -168,9 +178,8 @@ export const productValidation = (product: IProduct, reqType: any) => {
       put: (schema: any) => schema.optional(),
     }),
     attributes: Joi.array(),
-    smallDesc:Joi.string(),
-    sub:Joi.objectId().required()
-
-  })
-  return schema.tailor(reqType).validate(product)
-}
+    smallDesc: Joi.string(),
+    sub: Joi.objectId().required(),
+  });
+  return schema.tailor(reqType).validate(product);
+};

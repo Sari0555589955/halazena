@@ -8,6 +8,7 @@ import {
   Typography,
   Avatar,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,20 +18,19 @@ import { motion } from "framer-motion";
 import {
   publicFontFamily,
   colors,
+  publicButton,
 } from "../../components/publicStyle/publicStyle";
 import Loader from "../../components/loader/loader";
 
 export const AboutUsShared = ({ data, isLoading }) => {
   const { pathname } = useLocation();
   const [_, { language }] = useTranslation();
-  const isHomePage = pathname === navLinks[0].link;
+  const isHomePage = pathname === "/" ? true : false;
   const aboutUsSection = data?.sections[0];
-  console.log("about", data);
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
-        bgcolor:
-          pathname === "/" ? `${colors.newLightColor} !important` : "#fff",
         py: 3,
       }}
     >
@@ -55,61 +55,19 @@ export const AboutUsShared = ({ data, isLoading }) => {
       ) : aboutUsSection ? (
         <Box
           sx={{
-            width: 0.9,
+            width: 0.97,
             mx: "auto",
           }}
         >
-          <Grid container border borderColor={"red"}>
+          <Grid container>
             <Grid
               item
-              md={7}
+              md={6}
               xs={12}
               sx={{
-                px: 3,
-                wordBreak: "break-word",
-                textAlign: {
-                  md: "initial",
-                  xs: "center",
-                },
-                height: {
-                  md: "42vh",
-                  xs: "auto",
-                },
-              }}
-            >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: "bolder",
-                  my: 4,
-                  fontSize: {
-                    md: "33px",
-                    xs: "26px",
-                  },
-                  fontFamily: publicFontFamily,
-                }}
-              >
-                {aboutUsSection?.type}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: publicFontFamily,
-                  my: 4,
-                  fontWeight: "bold",
-                }}
-                dangerouslySetInnerHTML={{
-                  __html: aboutUsSection?.description,
-                }}
-              />
-            </Grid>
-            <Grid
-              item
-              md={5}
-              xs={12}
-              sx={{
-                transform: {
-                  md: !isHomePage ? "translateY(-130px)" : 0,
-                  xs: "translateX(0)",
+                display: {
+                  md: "none",
+                  xs: "block",
                 },
               }}
             >
@@ -121,8 +79,101 @@ export const AboutUsShared = ({ data, isLoading }) => {
                   }
                   sx={{
                     height: {
-                      lg: "50vh",
-                      xs: "35vh",
+                      lg: 500,
+                      xs: 300,
+                    },
+                    width: "100%",
+                    borderRadius: 0,
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+              sx={{
+                width: {
+                  md: 0.9,
+                  xs: 1,
+                },
+                wordBreak: "break-word",
+                textAlign: {
+                  md: "initial",
+                  xs: "center",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  height: {
+                    md: "42vh",
+                    xs: "auto",
+                  },
+                  px: 3,
+                  py: 1.5,
+                  width: 0.97,
+                  bgcolor:
+                    pathname === "/"
+                      ? `${colors.lightGreen} !important`
+                      : "#fff",
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: "bolder",
+                    my: 4,
+                    fontSize: {
+                      md: "33px",
+                      xs: "26px",
+                    },
+                    fontFamily: publicFontFamily,
+                  }}
+                >
+                  {aboutUsSection?.type}
+                </Typography>
+                <Box
+                  sx={{
+                    fontFamily: publicFontFamily,
+                    my: 4,
+                    fontWeight: "bold",
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: aboutUsSection?.description,
+                  }}
+                />
+                {isHomePage && (
+                  <Button
+                    sx={publicButton}
+                    onClick={() => navigate("/aboutUs")}
+                  >
+                    {language === "en" ? "Read more" : "اقرأ المزيد"}
+                  </Button>
+                )}
+              </Box>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+              sx={{
+                display: {
+                  md: "block",
+                  xs: "none",
+                },
+              }}
+            >
+              <Box>
+                <Avatar
+                  // src={`${imageBaseUrl}/${aboutUsSection.image}`}
+                  src={
+                    "https://images.pexels.com/photos/3060330/pexels-photo-3060330.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  }
+                  sx={{
+                    height: {
+                      lg: 500,
+                      xs: 300,
                     },
                     width: "100%",
                     borderRadius: 0,

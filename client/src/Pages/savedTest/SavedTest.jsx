@@ -23,6 +23,9 @@ import {
 } from "../../components/publicStyle/publicStyle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { useAddToCartMutation, useGetAllCartsQuery } from "../../APIs/cartApi";
+import { useNavigate } from "react-router-dom";
+
 const SavedTest = () => {
   const [_, { language: lang }] = useTranslation();
   const {
@@ -30,6 +33,9 @@ const SavedTest = () => {
     isError: isErrSaved,
     error,
   } = useGetAllSavedProductsQuery();
+  const { data: cartData, isError: isErrCart } = useGetAllCartsQuery();
+  const navigate = useNavigate();
+  const [addToCart] = useAddToCartMutation();
   const [deleteSavedProduct] = useDeleteSavedProductMutation();
   const deleteProduct = (id) => {
     deleteSavedProduct(id).then(({ data, error }) => {
@@ -39,6 +45,18 @@ const SavedTest = () => {
       if (error) {
         toast.error(error?.data[`error_${lang}`]);
       }
+    });
+  };
+  const handleAddToCart = (productId) => {
+    addToCart({
+      product: productId,
+      properties: [],
+      // properties: myAttributes,
+    }).then((res) => {
+      if (res?.data) {
+        toast.success(res?.data[`success_${lang}`]);
+      }
+      toast.error(res?.error?.data[`error_${lang}`]);
     });
   };
   return (
@@ -99,7 +117,9 @@ const SavedTest = () => {
                     width: 100,
                     my: "10px",
                     mx: "auto",
+                    cursor: "pointer",
                   }}
+                  onClick={() => navigate(`/productDetails/${item?._id}`)}
                 />
                 <Typography
                   mb="10px"
@@ -120,11 +140,41 @@ const SavedTest = () => {
                       fontSize: "17px",
                       borderRadius: "20px",
                       padding: "5px 10px",
+                      transition: "0.4s all",
+                      width: 0.9,
+                      mx: "auto",
+                      color:
+                        !isErrCart &&
+                        cartData?.cart?.find(
+                          ({ product }) => product?._id === item?.product?._id
+                        )
+                          ? "#fff !important"
+                          : "#000 !important",
+                      bgcolor:
+                        !isErrCart &&
+                        cartData?.cart?.find(
+                          ({ product }) => product?._id === item?.product?._id
+                        )
+                          ? `${colors.newLightColor} !important`
+                          : "transparent !important",
+                      "&:active": {
+                        transform: "scale(0.95)",
+                      },
                     }}
+                    onClick={() => handleAddToCart(item?.product?._id)}
                   >
-                    {lang === "en" ? "Add to cart" : "إضافة إلي السلة"}
+                    {!isErrCart &&
+                    cartData?.cart?.find(
+                      ({ product }) => product?._id === item?.product?._id
+                    )
+                      ? lang === "en"
+                        ? "Remove from cart"
+                        : "حذف من السلة"
+                      : lang === "en"
+                      ? "Add to cart"
+                      : "إضافة إلي السلة"}
                   </Button>
-                  <Stack
+                  {/* <Stack
                     direction="row"
                     justifyContent={"center"}
                     alignItems={"center"}
@@ -140,7 +190,6 @@ const SavedTest = () => {
                           transform: "scale(1)",
                         },
                       }}
-                      // onClick={() => inc(item)}
                     />
                     <Typography
                       fontFamily={publicFontFamily}
@@ -166,7 +215,7 @@ const SavedTest = () => {
                       }}
                       // onClick={() => dec(item)}
                     />
-                  </Stack>
+                  </Stack> */}
                 </Stack>
               </Box>
             </Grid>

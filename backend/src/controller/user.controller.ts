@@ -19,22 +19,15 @@ export const createUser = async (req: AuthenticatedRequest, res: Response) => {
     //1) if user email is exist then return error user Exist
     //2) user email not exist then create new user
     //3) req.user.email is empty then update the existed empty user
-
-
-
     // then we NEED TO UPDATE THE USER DATAT
     const userExist = await User.findOne({ email: req.body.email })
-
     if (userExist) {
         return res.status(400).send({
             error_en: 'Email is Been Taken Already', error_ar: 'تم استخدام البريد الإلكتروني بالفعل'
         })
-
     }
     else {
-
         if (user.email == '') {
-
             const updatedUser = await User.findByIdAndUpdate(user._id, {
                 ...req.body,
                 password: bcrypt.hashSync(req.body.password, 10)
@@ -51,8 +44,6 @@ export const createUser = async (req: AuthenticatedRequest, res: Response) => {
             res.status(200).send({ success_en: "User Created Successfully", success_ar: "تم اضافة المستخدم بنجاح", user })
         }
     }
-
-
 
 
 

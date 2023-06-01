@@ -95,7 +95,7 @@ const DepartmentsSlider = () => {
               {categories?.map((category) => (
                 <SplideSlide>
                   <StyledBox
-                    onClick={() => navigate(`/departments/كل_العيادات`)}
+                    onClick={() => navigate(`/departments/${category._id}`)}
                     sx={{
                       height: {
                         lg: 240,

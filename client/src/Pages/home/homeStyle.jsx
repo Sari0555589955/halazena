@@ -2,12 +2,7 @@ export const colors = {
   lightMainColor: "#BC6146",
   heavyMainColor: "#B83806",
 };
-export const cardsContainerStyle = {
-  mx: "auto",
-  width: {
-    xs: 1,
-  },
-};
+
 export const sectionStyle = {
   // bgcolor: "#FDF5EE",
   pb: {

@@ -17,16 +17,10 @@ export const CardsStackStyle = {
 };
 export const cardStyle = {
   wrapper: {
-    width: {
-      lg: "400px",
-      md: 0.4,
-      xs: 0.92,
-    },
     pb: 12,
     px: 5,
   },
   card: {
-    border: "1px solid red",
     bgcolor: "#f3f3f3",
     borderRadius: "20px",
     width: {

@@ -2,3 +2,6 @@
 body {
   /* position: relative; */
 }
+.products_slider .splide__pagination {
+  display: none !important;
+}

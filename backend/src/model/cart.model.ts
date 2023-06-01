@@ -38,7 +38,7 @@ export const cartValidation = (cart: ICart, reqType: any) => {
     user: Joi.objectId().alter({
       post: (schema: any) => schema.required(),
     }),
-    quantity: Joi.number().alter({
+    Quantity: Joi.number().alter({
       post: (schema: any) => schema.required(),
     }),
     price: Joi.number().alter({

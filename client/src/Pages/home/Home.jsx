@@ -5,7 +5,7 @@ import CardsTest from "../../components/cards/CardsTest";
 import useFetchProducts from "./homeComponents/cards/useFetchProducts";
 import useFetchMostSellingProducts from "./homeComponents/cards/useFetchMostSellingProducts";
 import useFetchMostNewiestProducts from "./homeComponents/cards/useFetchMostNewiestProducts";
-import { cardsContainerStyle, sectionStyle } from "./homeStyle";
+import { sectionStyle } from "./homeStyle";
 import { motion } from "framer-motion";
 import { AboutUsShared } from "../aboutUs/AboutUsPage";
 import { useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ function Home() {
       </Box>
       {mostSellingProducts[0] && mostNewiestProducts[0] ? (
         <Box sx={sectionStyle}>
-          <Box sx={{ ...cardsContainerStyle, pt: 3 }}>
+          <Box sx={{ pt: 3 }}>
             <CardsTest
               items={mostNewiestProducts}
               title={language === "en" ? "most newiest" : "الأحدث"}
@@ -53,7 +53,7 @@ function Home() {
             )}
             <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
           </Box>
-          <Box sx={{ ...cardsContainerStyle, mt: 7 }}>
+          <Box sx={{ mt: 7 }}>
             <CardsTest
               items={mostSellingProducts}
               title={language === "en" ? "most selling" : "الأكثر مبيعاً"}

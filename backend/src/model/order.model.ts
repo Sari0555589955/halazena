@@ -1,39 +1,96 @@
-import Joi, { required } from 'joi'
-import mongoose, { Schema } from 'mongoose'
+import Joi, { required } from "joi";
+import mongoose, { Schema } from "mongoose";
 
 export interface IOrder {
-  user: mongoose.Schema.Types.ObjectId
-  firstName: string
-  lastName: string
-  products: []
-  subTotal: number
-  totalQuantity: number
-  shipping: number
-  total: number
-  city: string
-  country: string
-  address: string
-  orderNotes: string
-  payInCash: boolean
-  formalName: string
-  creditCard: number
-  expirationDate: Date
-  protectionSymbol: number
-  orderStatus: string
-  phoneNumber: number
-  email: string
-  properties: [{ key: String; value: String }]
+  user: mongoose.Schema.Types.ObjectId;
+  firstName_en: string;
+  firstName_ar: string;
+
+  lastName_en: string;
+  lastName_ar: string;
+
+  city_en: string;
+  city_ar: string;
+
+  country_en: string;
+  country_ar: string;
+
+  address_en: string;
+  address_ar: string;
+
+  orderNotes_en: string;
+  orderNotes_ar: string;
+
+  formalName_en: string;
+  formalName_ar: string;
+
+  products: [];
+  subTotal: number;
+  totalQuantity: number;
+  shipping: number;
+  total: number;
+  payInCash: boolean;
+  creditCard: number;
+  expirationDate: Date;
+  protectionSymbol: number;
+  orderStatus: string;
+  phoneNumber: number;
+  email: string;
+  properties: [{ key: String; value: String }];
 }
 
 const orderSchema = new Schema<IOrder>(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
 
-    firstName: { type: String },
-    lastName: { type: String },
+    firstName_en: { type: String },
+    firstName_ar: { type: String },
+
+    lastName_en: { type: String },
+    lastName_ar: { type: String },
+
+    city_en: {
+      type: String,
+      required: true,
+    },
+    city_ar: {
+      type: String,
+      required: true,
+    },
+
+    country_en: {
+      type: String,
+      required: true,
+    },
+    country_ar: {
+      type: String,
+      required: true,
+    },
+    address_en: {
+      type: String,
+      required: true,
+    },
+    address_ar: {
+      type: String,
+      required: true,
+    },
+    orderNotes_en: {
+      type: String,
+      required: false,
+    },
+    orderNotes_ar: {
+      type: String,
+      required: false,
+    },
+    formalName_en: {
+      type: String,
+    },
+    formalName_ar: {
+      type: String,
+    },
     products: {
       type: [],
       default: [],
@@ -50,29 +107,10 @@ const orderSchema = new Schema<IOrder>(
       type: Number,
       default: 0,
     },
-    city: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
 
-    address: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
-    },
-    orderNotes: {
-      type: String,
-      required: false,
-    },
-    formalName: {
-      type: String,
     },
     payInCash: {
       type: Boolean,
@@ -89,8 +127,8 @@ const orderSchema = new Schema<IOrder>(
     },
     orderStatus: {
       type: String,
-      num: ['pending', 'done'],
-      default: 'pending',
+      num: ["pending", "done"],
+      default: "pending",
     },
     totalQuantity: {
       type: Number,
@@ -101,22 +139,55 @@ const orderSchema = new Schema<IOrder>(
     },
     properties: { type: [{ key: String, value: String }] },
   },
-  { timestamps: true },
-)
+  { timestamps: true }
+);
 
-const Order = mongoose.model('Order', orderSchema)
-export default Order
+const Order = mongoose.model("Order", orderSchema);
+export default Order;
 
 export const orderValidation = (order: IOrder, reqType: any) => {
   const schema: any = Joi.object<IOrder>({
     user: Joi.objectId(),
-    firstName: Joi.string().alter({
+    firstName_en: Joi.string().alter({
       post: (schema: any) => schema.required(),
       put: (schema: any) => schema.optional(),
     }),
-    lastName: Joi.string().alter({
+    firstName_ar: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+      put: (schema: any) => schema.optional(),
+    }),
+    lastName_en: Joi.string().alter({
       post: (schema: any) => schema.required(),
     }),
+    lastName_ar: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    city_en: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    city_ar: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    country_en: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    country_ar: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    address_en: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    address_ar: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    formalName_en: Joi.alternatives().conditional("payInCash", [
+      { is: false, then: Joi.string().required(), otherwise: Joi.string() },
+    ]),
+    formalName_ar: Joi.alternatives().conditional("payInCash", [
+      { is: false, then: Joi.string().required(), otherwise: Joi.string() },
+    ]),
+    orderNotes_en: Joi.optional(),
+    orderNotes_ar: Joi.optional(),
     email: Joi.string().alter({
       post: (schema: any) => schema.required(),
       put: (schema: any) => schema.optional(),
@@ -126,36 +197,24 @@ export const orderValidation = (order: IOrder, reqType: any) => {
     shipping: Joi.number(),
     totalQuantity: Joi.number(),
     total: Joi.number(),
-    city: Joi.string().alter({
-      post: (schema: any) => schema.required(),
-    }),
+
     phoneNumber: Joi.number().alter({
       post: (schema: any) => schema.required(),
       put: (schema: any) => schema.optional(),
     }),
-    country: Joi.string().alter({
-      post: (schema: any) => schema.required(),
-    }),
-    address: Joi.string().alter({
-      post: (schema: any) => schema.required(),
-    }),
 
-    formalName: Joi.alternatives().conditional('payInCash', [
-      { is: false, then: Joi.string().required(), otherwise: Joi.string() },
-    ]),
     payInCash: Joi.boolean(),
-    creditCard: Joi.alternatives().conditional('payInCash', [
+    creditCard: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.number().required(), otherwise: Joi.number() },
     ]),
-    expirationDate: Joi.alternatives().conditional('payInCash', [
+    expirationDate: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.date().required(), otherwise: Joi.date() },
     ]),
-    protectionSymbol: Joi.alternatives().conditional('payInCash', [
+    protectionSymbol: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.number().required(), otherwise: Joi.number() },
     ]),
-    orderStatus: Joi.string().valid('pending', 'done'),
-    orderNotes: Joi.optional(),
-    properties:Joi.optional(),
-  })
-  return schema.tailor(reqType).validate(order)
-}
+    orderStatus: Joi.string().valid("pending", "done"),
+    properties: Joi.optional(),
+  });
+  return schema.tailor(reqType).validate(order);
+};

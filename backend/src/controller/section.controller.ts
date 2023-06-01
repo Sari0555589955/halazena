@@ -2,7 +2,6 @@ import { AuthenticatedRequest } from "../middleWares/authentication.middleWare";
 import { Response } from 'express'
 import Section from "../model/section.model";
 import { asyncHandler } from "../middleWares/asyncHandler";
-
 // add section wither it is slider or banner or what ever 
 //ROUTE /POST /unStore/api/v1/section/add
 //access: private(admin,super admin)

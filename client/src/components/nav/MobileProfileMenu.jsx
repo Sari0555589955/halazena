@@ -46,6 +46,7 @@ export default function MobileProfileMenu() {
     item.name_en === "Logout" ? handleLogout() : navigate(item.path);
     handleClose();
   };
+  console.log("currentUser",currentUser)
   return (
     <div>
       <Button

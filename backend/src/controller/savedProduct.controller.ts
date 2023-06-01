@@ -71,7 +71,7 @@ export const getAllSavedProducts = asyncHandler(async (req: AuthenticatedRequest
     if (!savedProducts[0]) {
         return res.status(400).send({ error_en: "Saved Products Are Not Found", error_ar: 'لم يتم العثور على المنتجات المحفوظة' })
     }
-    res.status(200).send({ success_en: "SavedProducts Are Fetched Successfully", success_ar: "تم جلب المنتجات المحفوظة بنجاح", products: savedProducts, count: savedProducts.length })
+    res.status(200).send({ success_en: "Saved Products Are Fetched Successfully", success_ar: "تم جلب المنتجات المحفوظة بنجاح", products: savedProducts, count: savedProducts.length })
 })
 
 export const getSavedProductByUser = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {

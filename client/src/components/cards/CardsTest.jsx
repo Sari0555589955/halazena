@@ -5,22 +5,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 
-import {
-  Box,
-  Button,
-  CardActionArea,
-  CardActions,
-  Grid,
-  Rating,
-  Skeleton,
-  Stack,
-} from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { motion } from "framer-motion";
-import { imageBaseUrl } from "../../components/service";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-// import useAddSavedProduct from "../../Pages/savedProduct/useAddSavedProduct";
-// import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-// import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+
 import { CardsStackStyle, cardStyle, colors } from "./cardStyle";
 import ProductDetailsModal from "./ProductDetailsModal";
 import { useNavigate } from "react-router";
@@ -37,182 +24,8 @@ import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { useGetAllSavedProductsQuery } from "../../APIs/SavedProductApi";
 import { publicFontFamily, publicSizes } from "../publicStyle/publicStyle";
-export const CustomCard = ({ item }) => {
-  const [addSavedProduct] = useAddToSavedProduct();
-  const [mutateAddToCart] = useAddToCart();
-  const [updateProduct] = useUpdateProductMutation();
-  const navigate = useNavigate();
-  const onSavedClicked = (item) => {
-    addSavedProduct({ product: item?._id });
-  };
-  const [_, { language }] = useTranslation();
-  const handleAddToCart = (item) => {
-    mutateAddToCart({
-      product: item._id,
-    });
-  };
-
-  const handleUpdateProduct = (item) => {
-    updateProduct({ productId: item?._id, product: item }).then(
-      ({ data, error }) => {
-        if (!error) {
-        } else {
-          toast.error("some Error While updating ");
-        }
-      }
-    );
-  };
-  async function getAllProductsBySub(sub, pageNum) {}
-  const {
-    data: savedProducts,
-    isError: isErrSaved,
-    error,
-  } = useGetAllSavedProductsQuery();
-  const checkSavedExisted = (product) => {
-    savedProducts?.products?.find(
-      (savPro) => savPro.product._id === product._id
-    )
-      ? true
-      : false;
-  };
-  return (
-    <Card
-      sx={cardStyle.card}
-      component={motion.div}
-      initial={{ y: 300 }}
-      whileInView={{
-        y: 50,
-        transition: {
-          type: "spring",
-          bounce: 0.5,
-          duration: 0.6,
-        },
-      }}
-    >
-      <Box
-        sx={{
-          position: "relative",
-          "&:hover .animated_box": {
-            top: cardStyle.card.animatedBox.animatedTop,
-          },
-        }}
-      >
-        <CardMedia
-          sx={cardStyle.card.cardMedia}
-          component="img"
-          image={imageBaseUrl + item?.images[0]}
-          alt={item.title}
-        />
-      </Box>
-      <CardContent
-        sx={{
-          p: cardStyle.card.cardContent.padding,
-          bgcolor: cardStyle.card.cardContent.bg,
-          //   height: "37.5vh",
-          border: "1px solid blue",
-        }}
-      >
-        <Typography
-          gutterBottom
-          variant="h5"
-          component="div"
-          align={"center"}
-          sx={{
-            fontWeight: "bolder",
-            color: cardStyle.card.cardContent.color1,
-            fontFamily: publicFontFamily,
-          }}
-        >
-          {item?.title}
-        </Typography>
-
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          gap={2}
-        >
-          <Typography
-            sx={{
-              color: "#B83806",
-              fontWeight: "bolder",
-              fontSize: publicSizes.xSmall,
-              fontFamily: publicFontFamily,
-            }}
-          >
-            {item?.price} {language === "en" ? "SAR" : "ريال سعودي"}
-          </Typography>
-          <Button
-            sx={{
-              minWidth: 0,
-              pointerEvents:
-                savedProducts &&
-                !isErrSaved &&
-                savedProducts?.products.find(
-                  (saved) => saved.product._id === item._id
-                )
-                  ? "none"
-                  : "auto",
-              cursor:
-                savedProducts &&
-                !isErrSaved &&
-                savedProducts?.products.find(
-                  (saved) => saved.product._id === item._id
-                )
-                  ? "default"
-                  : "pointer",
-            }}
-            onClick={() =>
-              savedProducts &&
-              !isErrSaved &&
-              savedProducts?.products.find(
-                (saved) => saved.product._id === item._id
-              )
-                ? undefined
-                : onSavedClicked(item)
-            }
-          >
-            {savedProducts &&
-            !isErrSaved &&
-            savedProducts?.products.find(
-              (saved) => saved.product._id === item._id
-            ) ? (
-              <FavoriteIcon
-                sx={{
-                  color: colors.newMainColor,
-                }}
-              />
-            ) : (
-              <FavoriteBorderIcon
-                sx={{
-                  color: "#bbb",
-                }}
-              />
-            )}
-          </Button>
-        </Stack>
-        <Button
-          sx={{
-            bgcolor: `${colors.newMainColor} !important`,
-            color: "#fff",
-            width: 1,
-            py: "2px",
-            fontSize: "18px",
-            mt: "5px",
-            borderRadius: "40px",
-            py: "3px",
-            fontWeight: "bold",
-            fontFamily: publicFontFamily,
-          }}
-          onClick={() => navigate(`/productDetails/${item._id}`)}
-        >
-          {language === "en" ? "Select item" : "أختار عنصر"}
-        </Button>
-      </CardContent>
-    </Card>
-  );
-};
-export default function Cards({
+import ProductCard from "../productCard/ProductCard";
+export default function CardsTest({
   items,
   title,
   singleDepartmentName,
@@ -233,9 +46,9 @@ export default function Cards({
       key={title ? title : undefined}
     >
       <Stack
-        direction="row"
+        direction={"row"}
         alignItems={"center"}
-        justifyContent={pathname === "/" ? "center" : "center"}
+        justifyContent={"center"}
         sx={{
           ...CardsStackStyle.cardsHeader,
           width: autoWidth,
@@ -295,6 +108,7 @@ export default function Cards({
           })} */}
         {items && items[0] && (
           <Splide
+            className="products_slider"
             hasTrack={false}
             options={{
               type: "loop",
@@ -333,7 +147,10 @@ export default function Cards({
               {items?.map((item, index) => (
                 <SplideSlide>
                   <Box key={index} sx={cardStyle.wrapper}>
-                    <CustomCard item={item} />
+                    <ProductCard
+                      item={item}
+                      // extraStyle={{ width: { xl: 375, lg: 0.5, xs: 1 } }}
+                    />
                   </Box>
                 </SplideSlide>
               ))}

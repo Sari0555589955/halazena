@@ -64,7 +64,7 @@ const SignUp = () => {
         .required(lang === "en" ? "Phone is required*" : "*رقم الهاتف مطلوب"),
       email: yup
         .string()
-        .email()
+        .email(lang === "en" ? "Invalid email" : "بريد إلكتروني خاطئ")
         .required(
           lang === "en" ? "Email is required*" : "*البريد الالكتروني مطلوب"
         ),
@@ -78,7 +78,7 @@ const SignUp = () => {
       protectionSymbol: yup.number(),
     }),
     onSubmit: (values) => {
-      signUp(values)
+      signUp(values);
     },
   });
   return (
