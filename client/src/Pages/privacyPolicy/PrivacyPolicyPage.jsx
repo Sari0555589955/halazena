@@ -23,20 +23,7 @@ const PrivacyPolicyPage = () => {
         overflow: "hidden",
       }}
     >
-      <CardMedia
-        component="img"
-        sx={{
-          position: "absolute",
-          top: "10vh",
-          height: "100%",
-          width: "100%",
-          margin: lang === "en" ? "0 0 0 -20%" : "0 -20% 0 0",
-          transform: lang === "ar" ? "rotateY(180deg)" : "rotateY(0deg)",
-          opacity: 0.1,
-          zIndex: -1,
-        }}
-        src={bckwall}
-      />
+      
       {isLoading ? (
         <Stack
           direction="row"

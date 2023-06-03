@@ -24,7 +24,7 @@ export const navLinks = [
   { title: "Profile", link: "/profile" },
 ];
 const iconStyle = {
-  color: colors.newMainColor,
+  color: colors.grey,
   fontSize: "20px",
 };
 export const ProfileMenuData = [
@@ -80,8 +80,8 @@ export const NavLinksData = () => {
       link: "/aboutUs",
     },
     {
-      title_en: "Departments",
-      title_ar: "الأقسام",
+      title_en: "Products",
+      title_ar: "المنتجات",
       nestedLinks: useFetchCategories(),
     },
     {

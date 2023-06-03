@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const SignIn = () => {
   const [_, { language: lang }] = useTranslation();
-  const { currentUser } = useSelector((state) => state);
   const navigate = useNavigate();
   const [authUser] = useLogin();
   const formik = useFormik({

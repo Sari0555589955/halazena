@@ -72,11 +72,8 @@ function App() {
         theme="dark"
       />
       <NavTest />
-      {/* <Nav /> */}
-      {/* <Cards /> */}
       <AppRoutes />
       <Footer />
-      <Copyright />
       <ScrollingUpDuringRouting />
     </BrowserRouter>
   );

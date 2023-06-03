@@ -8,36 +8,17 @@ function Logo({ imagePath, text }) {
   return (
     <Box sx={logoStyles} onClick={() => navigate("/")}>
       {imagePath && (
-        <>
-          <Avatar
-            sx={{
-              display: {
-                md: "block",
-                xs: "none",
-              },
-              height: "50px",
-              width: "auto",
-              borderRadius: 0,
-              mx: "auto",
-              transform: "rotate(0)",
-            }}
-            src={imagePath}
-          />
-          <Avatar
-            sx={{
-              display: {
-                md: "none",
-                xs: "block",
-              },
-              height: "50px",
-              width: "auto",
-              borderRadius: 0,
-              mx: "auto",
-              transform: "rotate(0)",
-            }}
-            src={whiteLogo}
-          />
-        </>
+        <Avatar
+          sx={{
+           
+            height: "50px",
+            width: "auto",
+            borderRadius: 0,
+            mx: "auto",
+            transform: "rotate(0)",
+          }}
+          src={imagePath}
+        />
       )}
     </Box>
   );

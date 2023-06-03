@@ -3,7 +3,7 @@ import { Button, Menu, Stack, Typography } from "@mui/material";
 import { ProfileMenuData, profile_cart_likesData } from "./nav.data";
 import { useTranslation } from "react-i18next";
 import { colors, publicFontFamily } from "../publicStyle/publicStyle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "./../../store/Store";
@@ -21,6 +21,7 @@ export default function MobileProfileMenu() {
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const open = Boolean(anchorEl);
   const handleLogout = () => {
     handleClose();
@@ -32,7 +33,7 @@ export default function MobileProfileMenu() {
       dispatch(setSaved(0));
       dispatch(setCart(0));
       navigate("/");
-      dispatch(removeCurrentUser())
+      dispatch(removeCurrentUser());
     });
   };
   const handleClick = (event) => {
@@ -46,7 +47,6 @@ export default function MobileProfileMenu() {
     item.name_en === "Logout" ? handleLogout() : navigate(item.path);
     handleClose();
   };
-  console.log("currentUser",currentUser)
   return (
     <div>
       <Button
@@ -73,10 +73,7 @@ export default function MobileProfileMenu() {
                 lg: "27px",
                 xs: "25",
               },
-              color: {
-                md: colors.newMainColor,
-                xs: "#fff",
-              },
+              color: colors[pathname === "/profile" ? "newMainColor" : "grey"],
             }}
           />
         ) : (
@@ -86,10 +83,7 @@ export default function MobileProfileMenu() {
                 lg: "27px",
                 xs: "25px",
               },
-              color: {
-                md: colors.newMainColor,
-                xs: "#fff",
-              },
+              color: colors[pathname === "/profile" ? "newMainColor" : "grey"],
             }}
           />
         )}
@@ -120,6 +114,16 @@ export default function MobileProfileMenu() {
               cursor: "pointer",
               gap: "10px",
               p: "10px",
+              bgcolor:
+                item.name_en === "Profile" && pathname === "/profile"
+                  ? `${colors.newMainColor} !important `
+                  : undefined,
+              svg: {
+                color:
+                  item.name_en === "Profile" && pathname === "/profile"
+                    ? `#fff !important `
+                    : undefined,
+              },
             }}
           >
             {item.icon}
@@ -127,6 +131,10 @@ export default function MobileProfileMenu() {
               sx={{
                 fontFamily: publicFontFamily,
                 fontWeight: "bold",
+                color:
+                  item.name_en === "Profile" && pathname === "/profile"
+                    ? `#fff !important `
+                    : undefined,
               }}
             >
               {item[`name_${language}`]}

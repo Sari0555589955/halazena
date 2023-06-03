@@ -83,6 +83,7 @@ const CompletePaymentPage = () => {
           </Box>
 
           {userOrder?.products.map(({ product }, indx) => {
+            console.log("userOder", product);
             return (
               <Box
                 className="product"
@@ -95,7 +96,7 @@ const CompletePaymentPage = () => {
               >
                 <CardMedia
                   alt={product.title}
-                  src={imageBaseUrl + product.images[0]}
+                  src={`${imageBaseUrl}/${product?.images[0]}`}
                   component="img"
                   sx={{
                     height: "140px",
@@ -110,10 +111,7 @@ const CompletePaymentPage = () => {
                     }}
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   />
-                  {/* <p>
-                {lang === "en" ? "will be delivered" : "سيتم التسليم"}:
-                12-12-2022
-              </p> */}
+                 
                 </div>
               </Box>
             );

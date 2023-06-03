@@ -28,7 +28,7 @@ export default function NavLinks() {
             disableRipple
             onClick={() => navigate(item.link)}
             sx={{
-              color: pathname === item.link ? colors.newMainHeavyColor : "#000",
+              color: pathname === item.link ? colors.newMainColor : "#000",
 
               fontSize: {
                 lg: "16px",

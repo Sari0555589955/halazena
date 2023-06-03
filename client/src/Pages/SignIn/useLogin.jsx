@@ -3,17 +3,12 @@ import { useLazyGetMeQuery, useLoginMutation } from "../../APIs/UserApis";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { store } from "../../store/Store";
-import {
-  savedProductsApi,
-  useLazyGetAllSavedProductsQuery,
-} from "../../APIs/SavedProductApi";
-import cartApi, { useLazyGetAllCartsQuery } from "../../APIs/cartApi";
+import { useLazyGetAllSavedProductsQuery } from "../../APIs/SavedProductApi";
+import { useLazyGetAllCartsQuery } from "../../APIs/cartApi";
 import { useDispatch } from "react-redux";
 import { setSaved } from "../../APIs/savedSlice";
 import { setCart } from "../../APIs/cartSlice";
 import { setCurrentUser } from "../../APIs/userSlice";
-
 function useLogin() {
   const navigate = useNavigate();
   const [login] = useLoginMutation();

@@ -78,7 +78,7 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
                 onClick={() => navigate(item.link)}
                 sx={{
                   color:
-                    pathname === item.link ? colors.lightMainColor : "#000",
+                    pathname === item.link ? colors.newLightColor : "#000",
                   fontSize: "16px",
                   textTransform: "capitalize",
                   fontWeight: "bold",
@@ -101,13 +101,13 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
               backgroundColor: "transparent !important",
               display: "block",
               color:
-                pathname === "/privacyPolicy" ? colors.lightMainColor : "#000",
+                pathname === "/privacyPolicy" ? colors.newMainColor : "#000",
               fontFamily: publicFontFamily,
             }}
           >
             {lang === "en" ? "Privacy Policy" : "سياسة الخصوصية"}
           </Button>
-          <MobileProfileMenu />
+          {/* <MobileProfileMenu /> */}
         </Box>
       </Drawer>
     </Box>

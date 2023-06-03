@@ -1,8 +1,9 @@
 export const colors = {
-  lightMainColor: "#BC6146",
-  heavyMainColor: "#B83806",
-  newMainColor: "#C29997",
-  newMainHeavyColor: "#a97674",
+  newMainColor: "#C0924D",
+  newMainHeavyColor: "#C0924D",
+  newLightColor: "#EDCB94",
+  lightGreen: "#99ECEA",
+  grey: "#5E5E5E",
 };
 
 export const logoStyles = {
@@ -24,10 +25,6 @@ export const customDrawerIcon = {
   },
   px: 0.5,
   svg: {
-    color: {
-      md: colors.newMainColor,
-      xs: "#fff",
-    },
     fontSize: {
       xs: "22px",
       md: "25px",
@@ -35,7 +32,7 @@ export const customDrawerIcon = {
   },
   ".MuiBadge-badge": {
     cursor: "pointer",
-    position : "absolute",
+    position: "absolute",
     backgroundColor: {
       md: colors.newMainHeavyColor,
       xs: "#f3f3f3",

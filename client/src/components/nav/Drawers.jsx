@@ -13,7 +13,7 @@ import { customDrawerIcon, colors } from "./nav.styes";
 import { profile_cart_likesData } from "./nav.data";
 import LanguageToggler from "./LanguageToggler";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { store } from "./../../store/Store";
 import {
@@ -48,6 +48,7 @@ export default function Drawers() {
             key={index}
             data={item?.data[0] ? item?.data : []}
             name={item.name}
+            path={item.name === "cart" ? "/cart" : "/savedProducts"}
           />
         );
       })}
@@ -73,9 +74,11 @@ export default function Drawers() {
   );
 }
 
-export const CustomDrawer = ({ icon, data, name }) => {
+export const CustomDrawer = ({ icon, data, name, path }) => {
   // const { data: savedProducts, isError: savedError } =
   //   useGetAllSavedProductsQuery();
+  const { pathname } = useLocation();
+  console.log("name", name);
   const { savedProducts: savedData, getSaved } = useFetchSavedProducts();
   const { data: carts, isError: isErrCart } = useGetAllCartsQuery();
   const { carts: cartData, getCarts } = useFetchCart();
@@ -125,62 +128,65 @@ export const CustomDrawer = ({ icon, data, name }) => {
     setCallDrawerData(true);
   };
   const [_, { language }] = useTranslation();
-  const [user, setUser] = React.useState(null);
 
-  const list = (anchor) => (
-    <Box
-      sx={{
-        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
-      }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      {data && data[0] && (
-        <List>
-          {[...data]
-            .filter(({ name_en }) => {
-              return false
-                ? name_en !== "Profile" && name_en !== "Logout"
-                : name_en !== "Login" && name_en !== "Register";
-            })
-            .map((text, index) => (
-              <Box
-                key={text.name_en}
-                style={{ textDecoration: "none", color: "black" }}
-                onClick={() => {
-                  if (text.name_en == "Logout") {
-                    handleLogout();
-                  } else {
-                    handleNavigation(text.path);
-                  }
-                }}
-              >
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <Box>
-                        <SvgIcon component={text.icon} inheritViewBox />
-                      </Box>
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={language === "en" ? text.name_en : text.name_ar}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              </Box>
-            ))}
-        </List>
-      )}
-      {name === "likes" || name === "cart" ? (
-        <DrawerItem
-          name={name}
-          data={name === "likes" ? savedData[0] && savedData : cartData}
-        />
-      ) : null}
-      {/* <Divider /> */}
-    </Box>
-  );
+  const list = (anchor) => {
+    return (
+      <Box
+        sx={{
+          width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+        }}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        {data && data[0] && (
+          <List>
+            {[...data]
+              .filter(({ name_en }) => {
+                return false
+                  ? name_en !== "Profile" && name_en !== "Logout"
+                  : name_en !== "Login" && name_en !== "Register";
+              })
+              .map((text) => (
+                <Box
+                  key={text.name_en}
+                  style={{ textDecoration: "none", color: "black" }}
+                  onClick={() => {
+                    if (text.name_en == "Logout") {
+                      handleLogout();
+                    } else {
+                      handleNavigation(text.path);
+                    }
+                  }}
+                >
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <Box>
+                          <SvgIcon component={text.icon} inheritViewBox />
+                        </Box>
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          language === "en" ? text.name_en : text.name_ar
+                        }
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                </Box>
+              ))}
+          </List>
+        )}
+        {name === "likes" || name === "cart" ? (
+          <DrawerItem
+            name={name}
+            data={name === "likes" ? savedData[0] && savedData : cartData}
+          />
+        ) : null}
+        {/* <Divider /> */}
+      </Box>
+    );
+  };
   return (
     <div>
       {[language === "en" ? "right" : "left"].map((anchor) => (
@@ -191,36 +197,40 @@ export const CustomDrawer = ({ icon, data, name }) => {
               mt: "6px",
               cursor: "pointer",
               transform: language === "en" ? "rotateY(180deg)" : 0,
+              svg: {
+                color: colors[pathname === path ? "newMainColor" : "grey"],
+              },
               display: {
                 md: "initial",
                 xs: name === "profile" ? "none" : undefined,
               },
             }}
-            onClick={toggleDrawer(anchor, true)}
+            // onClick={toggleDrawer(anchor, true)}
           >
             <Badge
+              sx={{
+                ".MuiBadge-badge": {
+                  bgcolor: colors.light,
+                },
+              }}
               badgeContent={
                 name == "likes"
                   ? savedProducts?.products[0] && !isErrSaved
                     ? savedProducts?.products.length
-                    : 0
+                    : undefined
                   : name == "cart"
                   ? carts?.cart[0] && !isErrCart
                     ? carts?.cart.length
-                    : 0
+                    : undefined
                   : undefined
               }
               showZero={name != "profile"}
-              onClick={() =>
-                name !== "profile" && name === "cart"
-                  ? navigate("/cart")
-                  : navigate("/savedProducts")
-              }
+              onClick={() => navigate(path)}
             >
               {icon}
             </Badge>
           </Box>
-          {name === "profile" && (
+          {/* {name === "profile" && (
             <Drawer
               anchor={anchor}
               open={state[anchor]}
@@ -228,7 +238,7 @@ export const CustomDrawer = ({ icon, data, name }) => {
             >
               {list(anchor)}
             </Drawer>
-          )}
+          )} */}
         </React.Fragment>
       ))}
     </div>

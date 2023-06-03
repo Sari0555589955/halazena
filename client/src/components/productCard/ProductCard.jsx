@@ -218,7 +218,6 @@ const ProductCard = ({ item, externalWidth }) => {
           ...cardStyle.card,
           width: externalWidth ? externalWidth : "initial",
           p: "10px",
-          border: "1px solid red",
         }}
       >
         <Stack direction="row" justifyContent={"flex-end"}>

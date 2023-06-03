@@ -78,9 +78,9 @@ const CartTest = () => {
     }
   };
   const handleClearAllCart = () => {
-    clearCart().then(({data}) => {
-      if (data) { 
-        toast.success(data[`success_${language}`])
+    clearCart().then(({ data }) => {
+      if (data) {
+        toast.success(data[`success_${language}`]);
       }
     });
   };
@@ -540,8 +540,8 @@ const CartTest = () => {
                         component="img"
                         src={`${imageBaseUrl}/${item?.product?.images[0]}`}
                         sx={{
-                          height: 150,
-                          width: 100,
+                          height: 100,
+                          width: 150,
                           objectFit: "contain",
                         }}
                       />
@@ -549,6 +549,7 @@ const CartTest = () => {
                         sx={{
                           height: 100,
                           overflow: "hidden",
+                          width: 325,
                         }}
                       >
                         <Typography

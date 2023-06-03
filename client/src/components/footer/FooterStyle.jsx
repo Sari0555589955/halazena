@@ -2,7 +2,6 @@ import { colors } from "../publicStyle/publicStyle";
 
 export const footerStyle = {
   color: "#fff",
-  bgcolor: colors.newMainColor,
 };
 export const iconBoxStyle = {
   color: "blue",

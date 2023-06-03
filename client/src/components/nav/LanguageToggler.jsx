@@ -34,10 +34,7 @@ const LanguageToggler = () => {
             lg: "5px",
             xs: "2px",
           },
-          borderColor: {
-            md: colors.newMainColor,
-            xs: "#fff",
-          },
+          borderColor: colors.grey,
           p: "3px 20px",
         }}
       >
@@ -45,10 +42,7 @@ const LanguageToggler = () => {
           component="span"
           sx={{
             fontSize: "17px",
-            color: {
-              md: colors.newMainColor,
-              xs: "#fff",
-            },
+            color: colors.grey
           }}
         >
           {language === "en" ? "AR" : "EN"}

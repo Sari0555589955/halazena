@@ -33,7 +33,7 @@ function DrawerAppBar(props) {
     <Box
       sx={{
         display:
-          pathname === "/sign-in" || pathname === "/register"
+          pathname === "/sign-in" || pathname === "/register" || pathname === "/thanksOrder"
             ? "none"
             : "block",
         position: "fixed",
@@ -44,6 +44,7 @@ function DrawerAppBar(props) {
         width: "100%",
         zIndex: 1000,
         bgcolor: "transparent",
+        zIndex :"1000"
       }}
     >
       <CssBaseline />
@@ -51,22 +52,14 @@ function DrawerAppBar(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          bgcolor: {
-            md: "#fff",
-            xs: colors.newMainColor,
-          },
+          bgcolor: "transparent",
           py: 1.5,
           width: {
             xs: 1,
             md: 0.92,
           },
           mx: "auto",
-          // borderRadius: {
-          //   lg: "50px",
-          //   md: "35px",
-          //   xs: 1,
-          // },
-          // boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+        
           px: {
             lg: "60px",
             md: "30px",
@@ -86,7 +79,6 @@ function DrawerAppBar(props) {
                 md: "none",
                 xs: "flex",
               },
-              backgroundColor: `${colors.newMainColor} !important`,
               borderRadius: 1,
               p: {
                 sm: 0.8,
@@ -94,7 +86,7 @@ function DrawerAppBar(props) {
               },
             }}
           >
-            <MenuIcon sx={{ fontSize: "19px", color: "#fff" }} />
+            <MenuIcon sx={{ fontSize: "19px", color: colors.grey }} />
           </IconButton>
           <Box>
             <Logo imagePath={urlPath} />
@@ -103,18 +95,15 @@ function DrawerAppBar(props) {
                 fontWeight: "bold",
                 cursor: "pointer",
                 fontFamily: publicFontFamily,
-                color: {
-                  md: "#000",
-                  xs: "#fff",
-                },
+                color: "#000",
               }}
               onClick={() => navigate("/")}
             >
-              {language === "en" ? "ABAYA STORE" : "متجر عباية"}
+              {language === "en" ? "Hala Zena" : "حلي زينة"}
             </Typography>
           </Box>
         </Stack>
-        <Stack direction="row" alignItems="center" justifyContent="flex-start" >
+        <Stack direction="row" alignItems="center" justifyContent="flex-start">
           <NavLinks />
           <Drawers handleDrawerToggle={handleDrawerToggle} />
         </Stack>

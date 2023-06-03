@@ -20,10 +20,11 @@ export const publicSizes = {
   },
 };
 export const colors = {
-  newMainColor: "#C29997",
-  newMainHeavyColor: "#a97674",
+  newMainColor: "#C0924D",
+  newMainHeavyColor: "#C0924D",
   newLightColor: "#EDCB94",
   lightGreen: "#99ECEA",
+  grey: "#5E5E5E",
 };
 
 export const publicButton = {

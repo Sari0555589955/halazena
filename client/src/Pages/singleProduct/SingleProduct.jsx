@@ -412,9 +412,8 @@ function SingleProduct() {
                     sx={{
                       borderRadius: "10px",
                       backgroundColor:
-                        checkActivity && !productInCart
-                          ? `#b19593 !important`
-                          : `${colors.newLightColor} !important`,
+                        // checkActivity && !productInCart
+                        `${colors.newLightColor} !important`,
                       fontFamily: publicFontFamily,
                     }}
                     disabled={!checkActivity || productInCart}

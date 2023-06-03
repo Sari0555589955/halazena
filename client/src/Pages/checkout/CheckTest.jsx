@@ -42,7 +42,8 @@ const CheckTest = () => {
           }
           toast.success(lang === "en" ? data?.success_en : data?.success_ar);
           setTimeout(() => {
-            navigate("/completePayment");
+            // navigate("/completePayment");
+            navigate("/thanksOrder");
           }, 2000);
         }
       );

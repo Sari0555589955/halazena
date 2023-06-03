@@ -21,15 +21,16 @@ const DepartmentsSlider = () => {
   const StyledBox = styled(Box)({
     display: "flex",
     alignItems: "center",
+
     justifyContent: "center",
     color: "#000",
     borderRadius: "10px",
     cursor: "pointer",
-    backgroundColor: "#fff",
     transition: "0.7s all",
+    backgroundColor: "#f4f4f4 ",
     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
     "&:hover": {
-      backgroundColor: "#f8f8f8",
+      backgroundColor: "#b7b7b7",
       transform: "scale(0.97)",
     },
   });

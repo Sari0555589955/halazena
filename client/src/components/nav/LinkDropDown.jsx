@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from "react-i18next";
-import { publicFontFamily } from "../publicStyle/publicStyle";
+import { colors, publicFontFamily } from "../publicStyle/publicStyle";
 import { Box } from "@mui/material";
 const LinkDropDown = ({
   item,
@@ -42,12 +42,13 @@ const LinkDropDown = ({
         disableRipple
         sx={{
           ...moreStyle,
-          color: footerTextColor ? footerTextColor : "#000",
+          color: pathname.includes('/department') ? `${colors.newMainHeavyColor} !important` : "#000",
           fontWeight: "bolder",
           textTransform: "capitalize",
-          fontSize: "14px",
+          fontSize: "16px",
           backgroundColor: "transparent !important",
           fontFamily: publicFontFamily,
+
         }}
       >
         {item[`title_${lang}`]}
@@ -82,6 +83,14 @@ const LinkDropDown = ({
               }}
               sx={{
                 fontFamily: publicFontFamily,
+                bgcolor:
+                  pathname === `/departments/${nested?._id}`
+                    ? `${colors.newMainColor} !important`
+                    : undefined,
+                color:
+                  pathname === `/departments/${nested?._id}`
+                    ? `#fff !important`
+                    : undefined,
               }}
             >
               {nested?.name}
@@ -95,9 +104,14 @@ const LinkDropDown = ({
           }}
           sx={{
             fontFamily: publicFontFamily,
+            bgcolor:
+              pathname === `/departments`
+                ? `${colors.newMainColor} !important`
+                : undefined,
+            color: pathname === `/departments` ? `#fff !important` : undefined,
           }}
         >
-          {lang === "en" ? "All Departments" : "جميع الأقسام"}
+          {lang === "en" ? "All Products" : "جميع المنتجات"}
         </MenuItem>
       </Menu>
     </Box>
