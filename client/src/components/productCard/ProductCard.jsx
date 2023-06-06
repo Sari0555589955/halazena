@@ -292,7 +292,7 @@ const ProductCard = ({ item, externalWidth }) => {
             fontWeight: "bold",
           }}
         >
-          {item.title}
+          {item[`title_${language}`]}
         </Typography>
         <Stack direction="row" justifyContent="space-between" mt="30px">
           <Button

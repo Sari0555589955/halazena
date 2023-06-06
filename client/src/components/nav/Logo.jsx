@@ -10,8 +10,10 @@ function Logo({ imagePath, text }) {
       {imagePath && (
         <Avatar
           sx={{
-           
-            height: "50px",
+            height: {
+              md: 70,
+              xs: 60,
+            },
             width: "auto",
             borderRadius: 0,
             mx: "auto",

@@ -27,6 +27,7 @@ import twitterImg from "../../assets/twitter.png";
 import instagramImg from "../../assets/instagram.png";
 import facebookImg from "../../assets/facebook.png";
 import youtubeImg from "../../assets/youtube.png";
+import imgPath from "../../assets/zena.png";
 const Footer = () => {
   const { pathname } = useLocation();
   const [_, { language: lang }] = useTranslation();
@@ -219,9 +220,7 @@ const Footer = () => {
               },
             }}
             component={"img"}
-            src={
-              "https://tse4.mm.bing.net/th?id=OIP.UJg7816ozCB-u-xWZkQNBAHaHa&pid=Api&P=0&h=180"
-            }
+            src={imgPath}
           />
           <Stack
             sx={{

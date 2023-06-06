@@ -14,7 +14,7 @@ import MobileSidebar from "./MobileSidebar";
 import LanguageToggler from "./LanguageToggler";
 import { colors } from "./nav.styes";
 import { motion } from "framer-motion";
-import urlPath from "../../assets/Group.png";
+import urlPath from "../../assets/zena.png";
 import { useTranslation } from "react-i18next";
 import { publicFontFamily } from "../publicStyle/publicStyle";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -33,7 +33,9 @@ function DrawerAppBar(props) {
     <Box
       sx={{
         display:
-          pathname === "/sign-in" || pathname === "/register" || pathname === "/thanksOrder"
+          pathname === "/sign-in" ||
+          pathname === "/register" ||
+          pathname === "/thanksOrder"
             ? "none"
             : "block",
         position: "fixed",
@@ -44,7 +46,7 @@ function DrawerAppBar(props) {
         width: "100%",
         zIndex: 1000,
         bgcolor: "transparent",
-        zIndex :"1000"
+        zIndex: "1000",
       }}
     >
       <CssBaseline />
@@ -59,7 +61,7 @@ function DrawerAppBar(props) {
             md: 0.92,
           },
           mx: "auto",
-        
+
           px: {
             lg: "60px",
             md: "30px",
@@ -90,17 +92,6 @@ function DrawerAppBar(props) {
           </IconButton>
           <Box>
             <Logo imagePath={urlPath} />
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                cursor: "pointer",
-                fontFamily: publicFontFamily,
-                color: "#000",
-              }}
-              onClick={() => navigate("/")}
-            >
-              {language === "en" ? "Hala Zena" : "حلي زينة"}
-            </Typography>
           </Box>
         </Stack>
         <Stack direction="row" alignItems="center" justifyContent="flex-start">

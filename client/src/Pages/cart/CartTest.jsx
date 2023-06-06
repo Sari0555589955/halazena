@@ -557,14 +557,14 @@ const CartTest = () => {
                           fontFamily={publicFontFamily}
                           fontWeight={"bold"}
                         >
-                          {item.product?.title}
+                          {item.product[`title_${language}`]}
                         </Typography>
                         <Typography
                           variant="body2"
                           fontFamily={publicFontFamily}
                           fontWeight={"bold"}
                         >
-                          {item?.product?.smallDesc}
+                          {item?.product?.price}
                         </Typography>
                       </Box>
                     </Stack>

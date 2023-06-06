@@ -46,7 +46,7 @@ const AppRoutes = () => {
           <Route path="/checkout" element={<CheckTest />} />
         </Route>
         <Route path="/thanksOrder" element={<ThanksOrderPage />} />
-        <Route element={<ProtectedRoutes condition={!currentUser} />}>
+        <Route element={<ProtectedRoutes condition={!currentUser?.email} />}>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
         </Route>

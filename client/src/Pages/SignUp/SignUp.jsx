@@ -22,7 +22,7 @@ import {
   colors,
   publicFontFamily,
 } from "../../components/publicStyle/publicStyle";
-import image from "../../assets/Group.png";
+import image from "../../assets/zena.png";
 import { useNavigate } from "react-router-dom";
 import Person2Icon from "@mui/icons-material/Person2";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -156,16 +156,7 @@ const SignUp = () => {
               }}
             />
           </Stack>
-          <Typography
-            sx={{
-              fontSize: "25px",
-              fontWeight: "bold",
-              textAlign: "center",
-              fontFamily: publicFontFamily,
-            }}
-          >
-            {lang === "en" ? "APAYA STORE" : "متجر عباية"}
-          </Typography>
+          
         </Box>
       </Grid>
       <Grid
@@ -221,8 +212,8 @@ const SignUp = () => {
               }}
             >
               {lang === "en"
-                ? "welcome back to apaya store"
-                : "مرحباً في متجر عباية"}
+                ? "welcome back to hala zena store"
+                : "مرحباً في متجر حلى زينة"}
             </Typography>
 
             <Box

@@ -93,7 +93,7 @@ const LinkDropDown = ({
                     : undefined,
               }}
             >
-              {nested?.name}
+              {nested[`name_${lang}`]}
             </MenuItem>
           );
         })}

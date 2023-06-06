@@ -276,10 +276,7 @@ export default function Cards({
       },
     },
   };
-  const autoWidth = {
-    lg: subCategories && subCategories?.length > 0 ? "calc(100vw - 200px)" : 1,
-    xs: 1,
-  };
+
   const { pathname } = useLocation();
   const [_, { language }] = useTranslation();
   return (
@@ -290,7 +287,6 @@ export default function Cards({
         justifyContent={pathname === "/" ? "flex-start" : "center"}
         sx={{
           ...CardsStackStyle.cardsHeader,
-          width: autoWidth,
         }}
       >
         <Typography
@@ -300,10 +296,11 @@ export default function Cards({
             textTransform: "capitalize",
             bgcolor: pathname === "/" ? colors.newMainColor : undefined,
             color: pathname === "/" ? "#fff" : "#000",
+            fontFamily: publicFontFamily,
             fontWeight: "bold",
             fontSize: {
-              lg: "20px",
-              xs: "18px",
+              lg: "30px",
+              xs: "22px",
             },
             py: {
               lg: "20px",
@@ -330,7 +327,7 @@ export default function Cards({
         flexWrap="wrap"
         sx={{
           ...CardsStackStyle,
-          width: autoWidth,
+          width: 0.9,
           mx: "auto",
         }}
       >
@@ -338,13 +335,11 @@ export default function Cards({
           items[0] &&
           items.map((item, index) => {
             return (
-              <Box key={index} sx={cardStyle.wrapper}>
-                {/* <CustomCard item={item} /> */}
-                <ProductCard
-                  item={item}
-                  externalWidth={{ lg: 400, md: 0.5, xs: 1 }}
-                />
-              </Box>
+              <ProductCard
+                key={index}
+                item={item}
+                externalWidth={{ lg: 400, md: 0.5, xs: 0.9 }}
+              />
             );
           })}
       </Stack>

@@ -13,9 +13,17 @@ export interface IProduct {
   category: mongoose.Schema.Types.ObjectId;
   price: number;
   attributes: {
-    type: [{ key: String; values: Array<string> }];
+    type: [
+      {
+        key_en: String;
+        key_ar: String;
+        value: Array<{
+          en: String;
+          ar: String;
+        }>;
+      }
+    ];
   };
-
   sale: Number;
   images: string[];
   likes: [{ like: string; user: mongoose.Schema.Types.ObjectId }];
@@ -23,14 +31,13 @@ export interface IProduct {
     { rating: number; user: mongoose.Schema.Types.ObjectId; ref: "User" }
   ];
   reviews: number;
-
   avgRating: number;
   count: number;
   payInCash: boolean;
-  smallDesc: String;
+  smallDesc_ar: String;
+  smallDesc_en: String;
   sub: ObjectId;
 }
-
 const productSchema = new Schema<IProduct>(
   {
     title_en: {
@@ -49,7 +56,6 @@ const productSchema = new Schema<IProduct>(
       type: String,
       required: true,
     },
-
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
@@ -92,17 +98,18 @@ const productSchema = new Schema<IProduct>(
       default: false,
     },
     attributes: {
-      type: [{ key: String, values: Array }],
+      type: [{ key_en: String, key_ar: String, values: Array }],
       default: [
-        { key: "color", values: [] },
-        { key: "size", values: [] },
+        { key_en: "weight", key_ar: "الوزن", values: [] },
+        { key_en: "size", key_ar: "الحجم", values: [] },
       ],
     },
     sub: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
     },
-    smallDesc: String,
+    smallDesc_ar: String,
+    smallDesc_en: String,
   },
   { timestamps: true }
 );
@@ -136,25 +143,27 @@ productSchema.pre("findOneAndDelete", async function () {
 productSchema.post("findOneAndDelete", async function () {
   await Order.deleteMany({ products: { $size: 0 } });
 });
-
 const Product = mongoose.model("Product", productSchema);
 export default Product;
-
 export const productValidation = (product: IProduct, reqType: any) => {
   const schema = Joi.object({
-    title: Joi.string().alter({
+    title_ar: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
+    title_en: Joi.string().alter({
       post: (schema: any) => schema.required(),
     }),
     category: Joi.objectId(),
-    description: Joi.string().alter({
+    description_ar: Joi.string().alter({
       post: (schema: any) => schema.required(),
     }),
-
+    description_en: Joi.string().alter({
+      post: (schema: any) => schema.required(),
+    }),
     price: Joi.number().alter({
       post: (schema: any) => schema.required(),
       put: (schema: any) => schema.forbidden(),
     }),
-
     ratins: Joi.array().items(
       Joi.object({
         rating: Joi.number(),
@@ -162,7 +171,6 @@ export const productValidation = (product: IProduct, reqType: any) => {
       })
     ),
     reviews: Joi.number(),
-
     avgRating: Joi.number(),
     likes: Joi.array().items(
       Joi.object({
@@ -178,7 +186,8 @@ export const productValidation = (product: IProduct, reqType: any) => {
       put: (schema: any) => schema.optional(),
     }),
     attributes: Joi.array(),
-    smallDesc: Joi.string(),
+    smallDesc_en: Joi.string(),
+    smallDesc_ar: Joi.string(),
     sub: Joi.objectId().required(),
   });
   return schema.tailor(reqType).validate(product);

@@ -113,8 +113,7 @@ export const deleteFromCart = asyncHandler(
 export const getCartWithUser = asyncHandler(
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const foundUser = req.user;
-    const carts = await Cart.find({});
-    if (foundUser && carts[0]) {
+    if (foundUser) {
       const productsInCart = await Cart.find({ user: foundUser._id }).populate(
         "product"
       );

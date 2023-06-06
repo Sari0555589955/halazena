@@ -46,7 +46,7 @@ const ThanksOrderPage = () => {
           <Button sx={{ ...publicButton }} onClick={() => navigate("/")}>
             {language === "en" ? "Go To Home Page" : "إذهب الي الرئيسية"}
           </Button>
-          <Button
+          {/* <Button
             sx={{
               ...publicButton,
               bgcolor: "transparent",
@@ -56,7 +56,7 @@ const ThanksOrderPage = () => {
             onClick={() => navigate("/cart")}
           >
             {language === "en" ? "Go To cart" : "إذهب إلي السلة"}
-          </Button>
+          </Button> */}
         </Stack>
       </Box>
     </Stack>

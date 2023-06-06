@@ -24,7 +24,11 @@ const cartSchema = new Schema<ICart>({
     type: Number,
     default: 1,
   },
-  properties: { type: [{ key: String, value: String }] },
+  properties: {
+    type: [
+      { key_en: String, key_ar: String, value_en: String, value_ar: String },
+    ],
+  },
 });
 
 const Cart = mongoose.model("Cart", cartSchema);

@@ -5,13 +5,15 @@ import { Box, Stack, Typography } from "@mui/material";
 import { publicFontFamily } from "../../components/publicStyle/publicStyle";
 import ProductCard from "../../components/productCard/ProductCard";
 import Loader from "../../components/loader/loader";
+import { useTranslation } from "react-i18next";
 
 const SeparateDepartment = ({ category }) => {
   const { products, error, isLoading } = useFetchDepartments(category?._id);
+  const [_, { language: lang }] = useTranslation();
 
   return (
     <Box>
-      {category?.name && products[0] && (
+      {category?.name_en && products[0] && (
         <>
           <Typography
             sx={{
@@ -21,7 +23,7 @@ const SeparateDepartment = ({ category }) => {
               fontWeight: "bold",
             }}
           >
-            {category?.name}
+            {category[`name_${lang}`]}
           </Typography>
           <Stack
             sx={{

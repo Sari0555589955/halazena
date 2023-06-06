@@ -7,6 +7,7 @@ import {
   Avatar,
   Rating,
   CircularProgress,
+  InputBase,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,13 +39,14 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 function SingleProduct() {
   const { productId } = useParams();
   const [open, setOpen] = React.useState(false);
+  const { currentUser } = useSelector((state) => state);
   const [getSingleProduct] = useLazyGetSingleProductQuery();
   const { data: dataCart, isSuccess: cartIsSuccess } = useGetAllCartsQuery();
   const [addRating] = useAddRatingMutation();
   const [_, { language: lang }] = useTranslation();
   const [product, setProduct] = React.useState();
   const navigate = useNavigate();
-
+  const [attrs, setAttrs] = useState([]);
   React.useEffect(() => {
     getSingleProduct(productId).then(({ data, error }) => {
       if (data.product) {
@@ -70,33 +72,42 @@ function SingleProduct() {
   };
   const [myAttributes, setMyAttributes] = React.useState([]);
   const checkActivity =
-    (product?.attributes?.length > 0 && myAttributes[0]) ||
+    (product?.attributes?.length > 0 && myAttributes?.length > 0) ||
     !product?.attributes?.length > 0;
-
   const productInCart =
     cartIsSuccess &&
     dataCart?.cart?.find(
       (earchProduct) => earchProduct?.product?._id === product?._id
     );
-  const addAttributes = (key, value) => {
-    let attrIsExisted = myAttributes.find((item) => item.key === key);
+  console.log("state Attributes", myAttributes);
+  const addAttributes = (attribute, value) => {
+    let attrIsExisted = myAttributes.find(
+      (item) => item?.key_en === attribute?.key_en
+    );
     if (!attrIsExisted) {
-      setMyAttributes([...myAttributes, { key, value }]);
+      const newAttr = {
+        key_en: attribute.key_en,
+        key_ar: attribute.key_ar,
+        value_en: value.en,
+        value_ar: value.ar,
+      };
+      setMyAttributes([...myAttributes, { ...newAttr }]);
     } else {
-      setMyAttributes((atts) =>
-        atts.map((att) =>
-          att.key === key
+      setMyAttributes((atts) => {
+        return atts.map((att) =>
+          att.key_en === attribute.key_en
             ? {
                 ...att,
-                value,
+                value_en: value.en,
+                value_ar: value.ar,
               }
             : att
-        )
-      );
+        );
+      });
     }
   };
   const [addToCart, { isLoading: addingItemLoading }] = useAddToCartMutation();
-  const handleAddToCart = () => {
+  const handleAddToCart = (method) => {
     addToCart({
       product: productId,
       properties: myAttributes,
@@ -104,6 +115,11 @@ function SingleProduct() {
     }).then((res) => {
       if (res?.error) toast.error(res?.error?.data[`error_${lang}`]);
       toast.success(res?.data[`success_${lang}`]);
+      if (method === "creatingOrder") {
+        setTimeout(() => {
+          navigate("/checkout");
+        }, 500);
+      }
     });
   };
   const [getMe] = useLazyGetMeQuery();
@@ -129,8 +145,11 @@ function SingleProduct() {
       }
     });
   }, []);
+  console.log("myAttributes", myAttributes);
+
   const [imageStart, setImageStart] = React.useState(0);
   const [count, setCount] = useState(1);
+
   return (
     <Box sx={style}>
       {!product ? (
@@ -153,7 +172,7 @@ function SingleProduct() {
           <Grid
             item
             xs={12}
-            lg={8}
+            lg={7}
             sx={{
               py: {
                 md: "150px",
@@ -205,7 +224,7 @@ function SingleProduct() {
                     lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
                 }}
               >
-                {product?.title}
+                {product[`title_${lang}`]}
               </Typography>
               <Box
                 sx={{
@@ -215,6 +234,7 @@ function SingleProduct() {
                 <h4
                   style={{
                     fontFamily: publicFontFamily,
+                    fontSize: "20px",
                   }}
                 >
                   {lang === "en" ? "Description" : "الوصف"}
@@ -222,10 +242,11 @@ function SingleProduct() {
                 <p
                   style={{
                     fontFamily: publicFontFamily,
+                    fontSize: "18px",
                   }}
                   className="my-3 lead"
                 >
-                  {product?.smallDesc}
+                  {product[`smallDesc_${lang}`]}
                 </p>
                 <div className="my-3 d-flex align-items-center ">
                   {alert ? (
@@ -258,10 +279,8 @@ function SingleProduct() {
                 <Box>
                   {product?.attributes?.map(
                     (attribute) =>
-                      attribute.values.length > 0 && (
+                      attribute?.values?.length > 0 && (
                         <Stack
-                          direction="row"
-                          alignItems="center"
                           sx={{
                             mt: "10px",
                             gap: "6px",
@@ -270,46 +289,62 @@ function SingleProduct() {
                           <Typography
                             sx={{
                               fontFamily: publicFontFamily,
+                              fontWeight: "bold",
+                              fontSize: "22px",
+                              color: colors.newLightColor,
                             }}
                           >
-                            {attribute.key}
+                            {attribute[`key_${lang}`]}
                           </Typography>
                           <Stack
                             direction="row"
                             alignItems="center"
                             flexWrap="wrap"
                             sx={{
-                              gap: "5px",
+                              gap: {
+                                md: "10px",
+                                xs: "5px",
+                              },
                             }}
                           >
                             {attribute?.values?.map((value) => {
-                              const check = myAttributes.find(
-                                (att) => att.value === value
-                              );
                               return (
-                                <Button
-                                  disableRipple
-                                  sx={{
-                                    px: "10px",
-                                    border: `1px solid ${
-                                      check ? "#fff" : "#000"
-                                    } !important`,
-                                    color: check ? "#fff" : "#000",
-                                    transform: "scale(1) !important",
-                                    backgroundColor: productInCart
-                                      ? "#ccc"
-                                      : check
-                                      ? `${colors.newMainColor} !important`
-                                      : "#fff !important",
-                                    fontFamily: publicFontFamily,
-                                  }}
-                                  disabled={productInCart}
-                                  onClick={() =>
-                                    addAttributes(attribute.key, value)
-                                  }
+                                <Stack
+                                  direction="row"
+                                  alignItems="center"
+                                  gap="0px"
                                 >
-                                  {value}
-                                </Button>
+                                  <InputBase
+                                    name={attribute?.key_en}
+                                    value={value[lang]}
+                                    disableRipple
+                                    type="radio"
+                                    id={value[lang]}
+                                    sx={{
+                                      px: "10px",
+                                      accentColor: colors.newLightColor,
+                                      // color: check ? "#fff" : "#000",
+                                      transform: "scale(1) !important",
+                                      fontFamily: publicFontFamily,
+                                    }}
+                                    disabled={productInCart}
+                                    onChange={() =>
+                                      addAttributes(attribute, value)
+                                    }
+                                  />
+                                  <Typography
+                                    component="label"
+                                    htmlFor={value[lang]}
+                                    sx={{
+                                      fontFamily: publicFontFamily,
+                                      fontWeight: "bold",
+                                      fontSize: "20px",
+                                      cursor: !productInCart && "pointer",
+                                    }}
+                                  >
+                                    {value[lang]}
+                                  </Typography>
+                                </Stack>
                               );
                             })}
                           </Stack>
@@ -326,7 +361,7 @@ function SingleProduct() {
                 >
                   <ReactStars
                     count={5}
-                    onChange={ratingChanged}
+                    onChange={(value) => ratingChanged(_, value)}
                     size={24}
                     isHalf={true}
                     value={Math.floor(product?.avgRating)}
@@ -346,7 +381,6 @@ function SingleProduct() {
                     >
                       {product?.price * product?.sale} ريال
                     </span>
-
                     {product?.price != product?.price * product?.sale && (
                       <span
                         style={{
@@ -359,48 +393,51 @@ function SingleProduct() {
                     )}
                   </div>
                 </Stack>
-                <Stack
-                  direction="row"
-                  justifyContent={"flex-start"}
-                  alignItems={"center"}
-                  gap="10px"
-                >
-                  <AddCircleIcon
-                    sx={{
-                      cursor: "pointer",
-                      color: colors.newLightColor,
-                      transform: "scale(1.2)",
-                      transition: "all 0.2s",
-                      "&:active": {
-                        transform: "scale(1)",
-                      },
-                    }}
-                    onClick={() => setCount(count + 1)}
-                  />
-                  <Typography
-                    fontFamily={publicFontFamily}
-                    variant="h6"
-                    fontWeight={"bold"}
-                    align={"center"}
+                {!productInCart && (
+                  <Stack
+                    direction="row"
+                    justifyContent={"flex-start"}
+                    alignItems={"center"}
+                    gap="10px"
                   >
-                    {count}
-                  </Typography>
+                    <AddCircleIcon
+                      sx={{
+                        cursor: "pointer",
+                        color: colors.newLightColor,
+                        transform: "scale(1.2)",
+                        transition: "all 0.2s",
+                        "&:active": {
+                          transform: "scale(1)",
+                        },
+                      }}
+                      onClick={() => setCount(count + 1)}
+                    />
+                    <Typography
+                      fontFamily={publicFontFamily}
+                      variant="h6"
+                      fontWeight={"bold"}
+                      align={"center"}
+                    >
+                      {count}
+                    </Typography>
+                    {console.log("currentUser", currentUser)}
+                    <RemoveCircleIcon
+                      sx={{
+                        display: "block",
+                        cursor: count !== 1 && "pointer",
+                        pointerEvents: count === 1 && "none",
+                        color: count === 1 ? "#bbb" : colors.newLightColor,
+                        transform: "scale(1.2)",
+                        transition: "all 0.2s",
+                        "&:active": {
+                          transform: "scale(1)",
+                        },
+                      }}
+                      onClick={() => setCount(count - 1)}
+                    />
+                  </Stack>
+                )}
 
-                  <RemoveCircleIcon
-                    sx={{
-                      display: "block",
-                      cursor: count !== 1 && "pointer",
-                      pointerEvents: count === 1 && "none",
-                      color: count === 1 ? "#bbb" : colors.newLightColor,
-                      transform: "scale(1.2)",
-                      transition: "all 0.2s",
-                      "&:active": {
-                        transform: "scale(1)",
-                      },
-                    }}
-                    onClick={() => setCount(count - 1)}
-                  />
-                </Stack>
                 <Stack
                   direction="row"
                   alignItems="flex-start"
@@ -419,7 +456,7 @@ function SingleProduct() {
                     disabled={!checkActivity || productInCart}
                     onClick={() =>
                       checkActivity && !productInCart
-                        ? handleAddToCart(_, 20)
+                        ? handleAddToCart()
                         : undefined
                     }
                   >
@@ -437,18 +474,27 @@ function SingleProduct() {
 
                     <i className="fa-solid fa-cart-shopping mx-2"></i>
                   </Button>
-                  <Button
-                    className="text-white py-3 px-2 btn border-0"
-                    sx={{
-                      borderRadius: "10px",
-                      bgcolor: "transparent",
-                      color: "#000",
-                      border: `2px solid ${colors.newLightColor}`,
-                      fontFamily: publicFontFamily,
-                    }}
-                  >
-                    {lang === "en" ? "Order now" : "اطلب الآن"}
-                  </Button>
+                  {currentUser?.email && (
+                    <Button
+                      className="text-white py-3 px-2 btn border-0"
+                      sx={{
+                        borderRadius: "10px",
+                        bgcolor: productInCart
+                          ? `${colors.newLightColor} !important`
+                          : "transparent",
+                        color: productInCart ? "#fff" : "#000",
+                        border: `2px solid ${colors.newLightColor}`,
+                        fontFamily: publicFontFamily,
+                      }}
+                      onClick={() =>
+                        checkActivity && !productInCart
+                          ? handleAddToCart("creatingOrder")
+                          : undefined
+                      }
+                    >
+                      {lang === "en" ? "Order now" : "اطلب الآن"}
+                    </Button>
+                  )}
                 </Stack>
               </Box>
               {/* <div className="my-3">
@@ -467,24 +513,26 @@ function SingleProduct() {
                       </div> */}
             </Box>
             {/* <Box
-                dangerouslySetInnerHTML={{ __html: product?.description }}
-                sx={{
-                  mt: "10px",
-                }}
-              /> */}
+              dangerouslySetInnerHTML={{
+                __html: product[`description_${lang}`],
+              }}
+              sx={{
+                mt: "10px",
+              }}
+            /> */}
             {/* End */}
           </Grid>
           <Grid
             item
             xs={12}
-            lg={4}
+            lg={5}
             sx={{
               py: {
                 md: "150px",
                 xs: "110px",
               },
               px: 1,
-              bgcolor: colors.newLightColor,
+              // bgcolor: colors.newLightColor,
             }}
           >
             {/* <Avatar
@@ -569,8 +617,8 @@ function SingleProduct() {
                   height: "100%",
                   width: "100%",
                 }}
-                src={imageBaseUrl + product?.images[imageStart]}
-                alt=""
+                // src={imageBaseUrl + "/" +  product?.images[imageStart]}
+                alt={product[`title_${lang}`]}
               />
             </Box>
             <Stack
@@ -595,7 +643,9 @@ function SingleProduct() {
                 >
                   <img
                     src={imageBaseUrl + image}
-                    alt={lang === "en" ? "Product" : "منتج"}
+                    alt={
+                      lang === "en" ? `Product${index + 1}` : `منتج${index + 1}`
+                    }
                     style={{ height: "100%", width: "100%" }}
                   />
                 </Box>

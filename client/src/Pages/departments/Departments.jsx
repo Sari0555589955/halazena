@@ -34,9 +34,12 @@ function Departments() {
   });
   const [getAllSubCategories] = useLazyGetAllSubCategoriesQuery();
   const [getAllProductsBySubId] = useLazyGetAllProductsBySubIdQuery();
-  const singleDepartmentName = useFetchCategories()?.find(({ _id }) =>
+  const singleDepartmentName_en = useFetchCategories()?.find(({ _id }) =>
     _id === categoryId ? true : false
-  )?.name;
+  )?.name_en;
+  const singleDepartmentName_ar = useFetchCategories()?.find(({ _id }) =>
+    _id === categoryId ? true : false
+  )?.name_ar;
   console.log("categoryId", categoryId);
   const fetchCategories = () =>
     getAllSubCategories(
@@ -69,7 +72,6 @@ function Departments() {
       setAllCategories(dataCategories?.categories?.category);
     }
   }, [dataCategories]);
-
   return (
     <Box
       sx={{
@@ -83,56 +85,33 @@ function Departments() {
         <>
           {categoryId ? (
             <>
-              <Stack
-                sx={{
-                  flexDirection: {
-                    lg: "row",
-                    xs: "column",
-                  },
-                  justifyContent: "space-between",
-                }}
-              >
+              <Stack>
                 {subCategories?.length > 0 && (
                   <Box
                     sx={{
                       mt: "20px",
-                      width: {
-                        lg: 400,
-                        xs: 1,
-                      },
-                      display: {
-                        lg: "block",
-                        xs: "flex",
-                      },
+                      width: 1,
+                      display: "flex",
                       justifyContent: "center",
                       gap: "20px",
                     }}
                   >
                     {subCategories?.map((sub, index) => (
-                      <Stack
-                        key={sub._id}
+                      <Button
+                        disableRipple
                         sx={{
-                          mt: index === 0 ? "10px" : "15px",
-                          flexDirection: "row",
-                          justifyContent: "center",
+                          bgcolor: "#fff !important",
+                          color: "#000",
+                          transform: "scale(1) !important",
+                          boxShadow: "0px 1px 2px #000 !important",
+                          fontFamily: publicFontFamily,
+                          fontSize: publicSizes.xSmall,
+                          fontWeight: "bold",
                         }}
+                        onClick={() => getAllProductsBySub(sub._id, 1)}
                       >
-                        <Button
-                          disableRipple
-                          sx={{
-                            bgcolor: "#fff !important",
-                            color: "#000",
-                            transform: "scale(1) !important",
-                            boxShadow: "0px 1px 2px #000 !important",
-                            fontFamily: publicFontFamily,
-                            fontSize: publicSizes.xSmall,
-                            fontWeight: "bold",
-                          }}
-                          onClick={() => getAllProductsBySub(sub._id, 1)}
-                        >
-                          {sub?.name}
-                        </Button>
-                      </Stack>
+                        {sub?.name}
+                      </Button>
                     ))}
                     {showResetBtn ? (
                       <Stack
@@ -159,9 +138,13 @@ function Departments() {
                     ) : undefined}
                   </Box>
                 )}
-
-                <Box>
-                  <Stack
+                <Box
+                  sx={{
+                    pb: "100px",
+                  }}
+                >
+                  {/* Categories */}
+                  {/* <Stack
                     sx={{
                       flexDirection: "row",
                       alignItems: "center",
@@ -195,7 +178,7 @@ function Departments() {
                           {category?.name}
                         </Button>
                       ))}
-                  </Stack>
+                  </Stack> */}
                   <Cards
                     subCategories={subCategories}
                     setSubCategories={setSubCategories}
@@ -206,7 +189,11 @@ function Departments() {
                           : undefined
                         : products
                     }
-                    singleDepartmentName={singleDepartmentName}
+                    singleDepartmentName={
+                      language === "en"
+                        ? singleDepartmentName_en
+                        : singleDepartmentName_ar
+                    }
                   />
                 </Box>
               </Stack>
@@ -217,12 +204,6 @@ function Departments() {
                   justifyContent={"center"}
                   sx={{
                     height: "10vh",
-                    width: {
-                      lg: "calc(100% - 200px)",
-                      xs: 1,
-                    },
-                    mr: language === "ar" ? "auto" : undefined,
-                    ml: language === "en" ? "auto" : undefined,
                     py: "6vh",
                   }}
                 >
@@ -242,11 +223,13 @@ function Departments() {
             <Box
               sx={{
                 width: {
-                  lg: 1500,
+                  xl: 1500,
+                  lg: 1200,
                   md: 0.9,
-                  xs: 0.97,
+                  xs: 0.92,
                 },
                 mx: "auto",
+                mb: "50px",
               }}
             >
               {allCategories?.map((category) => (

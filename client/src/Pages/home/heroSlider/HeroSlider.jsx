@@ -102,7 +102,9 @@ const HeroSlider = () => {
                             fontWeight: "bold",
                           }}
                         >
-                          {slide?.title ? slide?.title : "كيك"}
+                          {slide?.title_en
+                            ? slide[`title_${language}`]
+                            : "Old Title"}
                         </Typography>
                         <Typography
                           sx={{
@@ -120,11 +122,14 @@ const HeroSlider = () => {
                             mt: "10px",
                           }}
                         >
-                          {slide?.description
-                            ? slide?.description.length > 160
-                              ? `${slide?.description.slice(0, 160)}...`
-                              : slide?.description
-                            : "qqqqqqq"}
+                          {slide[`description_${language}`]
+                            ? slide[`description_${language}`].length > 160
+                              ? `${slide[`description_${language}`].slice(
+                                  0,
+                                  160
+                                )}...`
+                              : slide[`description_${language}`]
+                            : "Old Description"}
                         </Typography>
                       </>
                       <Box

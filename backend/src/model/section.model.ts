@@ -45,12 +45,22 @@ export default Section;
 export const sectionValidation = (section: ISection, reqType: any) => {
   const schema = Joi.object({
     type: Joi.string().valid("slider", "banner", "aboutus", "privacy"),
-    title: Joi.alternatives().conditional("type", [
+    title_en: Joi.alternatives().conditional("type", [
       { is: "slider", then: Joi.optional() },
       { is: "aboutus", then: Joi.string().required() },
       { is: "privacy", then: Joi.string().required() },
     ]),
-    description: Joi.alternatives().conditional("type", [
+    title_ar: Joi.alternatives().conditional("type", [
+      { is: "slider", then: Joi.optional() },
+      { is: "aboutus", then: Joi.string().required() },
+      { is: "privacy", then: Joi.string().required() },
+    ]),
+    description_en: Joi.alternatives().conditional("type", [
+      { is: "slider", then: Joi.optional() },
+      { is: "aboutus", then: Joi.string().required() },
+      { is: "privacy", then: Joi.string().required() },
+    ]),
+    description_ar: Joi.alternatives().conditional("type", [
       { is: "slider", then: Joi.optional() },
       { is: "aboutus", then: Joi.string().required() },
       { is: "privacy", then: Joi.string().required() },

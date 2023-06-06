@@ -15,7 +15,7 @@ import {
   colors,
   publicFontFamily,
 } from "../../components/publicStyle/publicStyle";
-import image from "../../assets/Group.png";
+import image from "../../assets/zena.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const SignIn = () => {
@@ -117,16 +117,6 @@ const SignIn = () => {
               }}
             />
           </Stack>
-          <Typography
-            sx={{
-              fontSize: "25px",
-              fontWeight: "bold",
-              textAlign: "center",
-              fontFamily: publicFontFamily,
-            }}
-          >
-            {lang === "en" ? "APAYA STORE" : "متجر عباية"}
-          </Typography>
         </Box>
       </Grid>
       <Grid
@@ -174,8 +164,8 @@ const SignIn = () => {
               }}
             >
               {lang === "en"
-                ? "welcome back to apaya store"
-                : "مرحباً في متجر عباية"}
+                ? "welcome back to hala zena store"
+                : "مرحباً في متجر حلى زينة"}
             </Typography>
 
             <Box

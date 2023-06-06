@@ -12,8 +12,15 @@ import Product from "../model/product.model";
 //Route: post /UnStore/api/v1/category/add
 
 export const addCategory = async (req: AuthenticatedRequest, res: Response) => {
-  const category = await Category.findOne({ name: req.body.name });
-  if (category) {
+  const category_en = await Category.findOne({ name_en: req.body.name_en });
+  if (category_en) {
+    return res.status(400).send({
+      error_en: "Category Already Exist",
+      error_ar: "الفئة موجودة بالفعل",
+    });
+  }
+  const category_ar = await Category.findOne({ name_ar: req.body.name_ar });
+  if (category_ar) {
     return res.status(400).send({
       error_en: "Category Already Exist",
       error_ar: "الفئة موجودة بالفعل",

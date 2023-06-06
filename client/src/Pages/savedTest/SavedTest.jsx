@@ -111,7 +111,7 @@ const SavedTest = () => {
                 </Stack>
                 <Avatar
                   src={imageBaseUrl + item.product.images[0]}
-                  alt={item.product.title}
+                  alt={item.product[`title_${lang}`]}
                   sx={{
                     height: 100,
                     width: 100,
@@ -119,7 +119,7 @@ const SavedTest = () => {
                     mx: "auto",
                     cursor: "pointer",
                   }}
-                  onClick={() => navigate(`/productDetails/${item?._id}`)}
+                  onClick={() => navigate(`/productDetails/${item?.product._id}`)}
                 />
                 <Typography
                   mb="10px"
@@ -130,7 +130,7 @@ const SavedTest = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {item.product.title}
+                  {item.product[`title_${lang}`]}
                 </Typography>
                 <Stack direction="row" justifyContent="space-between" mt="5px">
                   <Button

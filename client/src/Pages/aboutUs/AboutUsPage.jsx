@@ -131,7 +131,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
                     fontFamily: publicFontFamily,
                   }}
                 >
-                  {aboutUsSection?.type}
+                  {aboutUsSection[`title_${language}`]}
                 </Typography>
                 <Box
                   sx={{
@@ -140,7 +140,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
                     fontWeight: "bold",
                   }}
                   dangerouslySetInnerHTML={{
-                    __html: aboutUsSection?.description,
+                    __html: aboutUsSection[`description_${language}`],
                   }}
                 />
                 {isHomePage && (
@@ -166,10 +166,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
             >
               <Box>
                 <Avatar
-                  // src={`${imageBaseUrl}/${aboutUsSection.image}`}
-                  src={
-                    "https://images.pexels.com/photos/3060330/pexels-photo-3060330.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  }
+                  src={`${imageBaseUrl}/${aboutUsSection.image}`}
                   sx={{
                     height: {
                       lg: 500,

@@ -114,8 +114,8 @@ const DepartmentsSlider = () => {
                         }}
                         src={`${imageBaseUrl}/${category?.image}`}
                       />
-                      <Typography variant="h6" mt="6px">
-                        {category?.name}
+                      <Typography variant="h6" mt="6px" align = "center" >
+                        {category[`name_${language}`]}
                       </Typography>
                     </Box>
                   </StyledBox>

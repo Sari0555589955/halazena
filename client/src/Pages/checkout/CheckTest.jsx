@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { checkoutButtonStyle } from "./check_assets/checkoutStyle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useNavigate } from "react-router-dom";
+import { useClearCartMutation } from "../../APIs/cartApi";
 
 const CheckTest = () => {
   const [getMe] = useLazyGetMeQuery();
@@ -23,6 +24,7 @@ const CheckTest = () => {
   const [_, { language: lang }] = useTranslation();
   const dispatch = useDispatch();
   const [addOrder] = useAddOrderMutation();
+  const [clearCart] = useClearCartMutation();
   const formik = useFormik({
     initialValues: { ...formikData.values },
     validationSchema: Yup.object({ ...formikData.errors }),
@@ -41,6 +43,7 @@ const CheckTest = () => {
             );
           }
           toast.success(lang === "en" ? data?.success_en : data?.success_ar);
+          clearCart();
           setTimeout(() => {
             // navigate("/completePayment");
             navigate("/thanksOrder");

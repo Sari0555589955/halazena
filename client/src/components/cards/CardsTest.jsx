@@ -147,10 +147,7 @@ export default function CardsTest({
               {items?.map((item, index) => (
                 <SplideSlide>
                   <Box key={index} sx={cardStyle.wrapper}>
-                    <ProductCard
-                      item={item}
-                      // extraStyle={{ width: { xl: 375, lg: 0.5, xs: 1 } }}
-                    />
+                    <ProductCard item={item} />
                   </Box>
                 </SplideSlide>
               ))}
