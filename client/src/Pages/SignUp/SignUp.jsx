@@ -122,7 +122,6 @@ const SignUp = () => {
               width: "99%",
               objectFit: "contain",
               opacity: 0.15,
-              transform: lang === "en" ? "rotateY(180deg)" : "rotateY(0)",
             }}
           />
         </Box>
@@ -152,7 +151,6 @@ const SignUp = () => {
               crossorigin="anonymous"
               style={{
                 height: "100%",
-                transform: lang === "en" ? "rotateY(180deg)" : "rotateY(0)",
               }}
             />
           </Stack>
@@ -565,7 +563,7 @@ const SignUp = () => {
                   fontWeight: "bold",
                 }}
               >
-                {lang === "en" ? "Login" : "تسجيل الدخول"}
+                {lang === "en" ? "Create an account" : "إنشاء حساب"}
               </ButtonBase>
 
               <Box
@@ -578,7 +576,7 @@ const SignUp = () => {
                 <Typography
                   sx={{ color: "#AEB0B2", fontFamily: publicFontFamily }}
                 >
-                  {lang === "en" ? "don't have an account?" : "ليس لديك حساب؟"}
+                  {lang === "en" ? "have an account?" : "لديك حساب؟"}
                 </Typography>
                 <Typography
                   sx={{

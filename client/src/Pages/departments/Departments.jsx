@@ -21,13 +21,12 @@ function Departments() {
   const { categoryId } = useParams();
   const { pathname } = useLocation();
   const { products, error, isLoading } = useFetchDepartments(categoryId);
-  const navigate = useNavigate();
   const [_, { language }] = useTranslation();
   const [subCategories, setSubCategories] = React.useState();
   const { data: dataCategories } = useGetAllCategoriesQuery();
   const [allCategories, setAllCategories] = React.useState();
   const [showResetBtn, setShowResetBtn] = React.useState(false);
-
+  const [activedSub, setActivedSub] = React.useState("");
   const [subProducts, setSubProducts] = React.useState({
     data: null,
     errorMessage: "",
@@ -40,7 +39,7 @@ function Departments() {
   const singleDepartmentName_ar = useFetchCategories()?.find(({ _id }) =>
     _id === categoryId ? true : false
   )?.name_ar;
-  console.log("categoryId", categoryId);
+
   const fetchCategories = () =>
     getAllSubCategories(
       pathname === "/departments" ? undefined : categoryId
@@ -64,6 +63,7 @@ function Departments() {
         errorMessage: error ? error?.data[`error_${language}`] : undefined,
         data: data ? data?.products?.products : undefined,
       });
+      setActivedSub(id);
     });
     setShowResetBtn(true);
   };
@@ -72,6 +72,7 @@ function Departments() {
       setAllCategories(dataCategories?.categories?.category);
     }
   }, [dataCategories]);
+
   return (
     <Box
       sx={{
@@ -85,7 +86,7 @@ function Departments() {
         <>
           {categoryId ? (
             <>
-              <Stack>
+              <Box>
                 {subCategories?.length > 0 && (
                   <Box
                     sx={{
@@ -93,51 +94,70 @@ function Departments() {
                       width: 1,
                       display: "flex",
                       justifyContent: "center",
-                      gap: "20px",
                     }}
                   >
-                    {subCategories?.map((sub, index) => (
+                    {subCategories?.map((sub) => (
                       <Button
                         disableRipple
                         sx={{
-                          bgcolor: "#fff !important",
-                          color: "#000",
+                          bgcolor:
+                            activedSub === sub?._id
+                              ? `${colors.newLightColor} !important`
+                              : "#fff !important",
+                          color: activedSub === sub?._id ? "#fff" : "#000",
                           transform: "scale(1) !important",
-                          boxShadow: "0px 1px 2px #000 !important",
+                          // boxShadow: "0px 1px 2px #000 !important",
                           fontFamily: publicFontFamily,
                           fontSize: publicSizes.xSmall,
                           fontWeight: "bold",
+                          border: `1px solid ${
+                            activedSub === sub?._id
+                              ? colors.newLightColor
+                              : "#ddd"
+                          }`,
                         }}
                         onClick={() => getAllProductsBySub(sub._id, 1)}
                       >
-                        {sub?.name}
+                        {sub[`name_${language}`]}
                       </Button>
                     ))}
-                    {showResetBtn ? (
-                      <Stack
-                        sx={{
-                          mt: "15px",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Button
-                          disableRipple
-                          sx={{
-                            color: "#000",
-                            transform: "scale(1) !important",
-                            boxShadow: "0px 1px 2px #7AA7C7 !important",
-                            bgcolor: "#EBF4FB !important",
-                            border: "1px solid #7AA7C7",
-                          }}
-                          onClick={() => fetchCategories()}
-                        >
-                          {language === "en" ? "Reset" : "إعادة"}
-                        </Button>
-                      </Stack>
-                    ) : undefined}
                   </Box>
                 )}
+                {showResetBtn ? (
+                  <Stack
+                    sx={{
+                      mt: "10px",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Button
+                      disableRipple
+                      sx={{
+                        // color: "#000",
+                        // transform: "scale(1) !important",
+                        // boxShadow: "0px 1px 2px #7AA7C7 !important",
+                        // bgcolor: "#EBF4FB !important",
+                        // border: "1px solid #7AA7C7",
+
+                        color: "#000",
+                        transform: "scale(1) !important",
+                        // boxShadow: "0px 1px 2px #000 !important",
+                        fontFamily: publicFontFamily,
+                        fontSize: publicSizes.xSmall,
+                        fontWeight: "bold",
+                        border: "1px solid #ddd",
+                        transition: "all 0.4s",
+                      }}
+                      onClick={() => {
+                        fetchCategories();
+                        setActivedSub("");
+                      }}
+                    >
+                      {language === "en" ? "Reset" : "إعادة"}
+                    </Button>
+                  </Stack>
+                ) : undefined}
                 <Box
                   sx={{
                     pb: "100px",
@@ -196,7 +216,7 @@ function Departments() {
                     }
                   />
                 </Box>
-              </Stack>
+              </Box>
               {subProducts?.errorMessage && (
                 <Stack
                   direction="row"

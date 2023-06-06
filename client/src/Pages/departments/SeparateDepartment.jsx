@@ -18,7 +18,10 @@ const SeparateDepartment = ({ category }) => {
           <Typography
             sx={{
               textAlign: "center",
-              fontSize: "20px",
+              fontSize: {
+                md: "30px",
+                xs: "20px",
+              },
               fontFamily: `${publicFontFamily} !important`,
               fontWeight: "bold",
             }}
@@ -32,8 +35,11 @@ const SeparateDepartment = ({ category }) => {
                 lg: "row",
                 xs: "column",
               },
-              justifyContent: "space-evenly",
-              gap: "15px",
+              justifyContent: "center",
+              gap: {
+                md: "30px",
+                xs: "20px",
+              },
             }}
           >
             {products?.map((product) => (

@@ -322,11 +322,11 @@ export default function Cards({
         </Typography>
       </Stack>
       <Stack
-        direction="row"
-        justifyContent={"center"}
         flexWrap="wrap"
         sx={{
           ...CardsStackStyle,
+          flexDirection: "row",
+          justifyContent: "center",
           width: 0.9,
           mx: "auto",
         }}

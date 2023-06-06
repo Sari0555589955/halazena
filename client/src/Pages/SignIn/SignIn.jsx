@@ -83,7 +83,6 @@ const SignIn = () => {
               width: "99%",
               objectFit: "contain",
               opacity: 0.15,
-              transform: lang === "en" ? "rotateY(180deg)" : "rotateY(0)",
             }}
           />
         </Box>
@@ -113,7 +112,6 @@ const SignIn = () => {
               crossorigin="anonymous"
               style={{
                 height: "100%",
-                transform: lang === "en" ? "rotateY(180deg)" : "rotateY(0)",
               }}
             />
           </Stack>
@@ -346,7 +344,7 @@ const SignIn = () => {
                   }}
                   onClick={() => navigate("/register")}
                 >
-                  {lang === "en" ? "Sign up" : "أشترك"}
+                  {lang === "en" ? "Sign up" : "اشترك"}
                 </Typography>
               </Box>
             </Box>
