@@ -28,40 +28,32 @@ export const addSection = asyncHandler(
           { new: true }
         );
         if (!updateSection) {
-          return res
-            .status(400)
-            .send({
-              errror_en: `Cant Update Section ${type}`,
-              error_ar: `لم يتم العثور على قسم ${type} سبب التحديث غير قادر`,
-            });
-        }
-        res
-          .status(200)
-          .send({
-            success_en: `Section ${type} updated Successfully `,
-            success_ar: `${type} تم تحديث القسم بنجاح`,
+          return res.status(400).send({
+            errror_en: `Cant Update Section ${type}`,
+            error_ar: `لم يتم العثور على قسم ${type} سبب التحديث غير قادر`,
           });
+        }
+        res.status(200).send({
+          success_en: `Section ${type} updated Successfully `,
+          success_ar: `${type} تم تحديث القسم بنجاح`,
+        });
       } else {
         const section = new Section({ ...req.body });
         section.save();
-        res
-          .status(200)
-          .send({
-            success_en: "Section Added Successfully",
-            success_ar: "تمت إضافة القسم بنجاح",
-            section,
-          });
-      }
-    } else {
-      const section = new Section({ ...req.body });
-      section.save();
-      res
-        .status(200)
-        .send({
+        res.status(200).send({
           success_en: "Section Added Successfully",
           success_ar: "تمت إضافة القسم بنجاح",
           section,
         });
+      }
+    } else {
+      const section = new Section({ ...req.body });
+      section.save();
+      res.status(200).send({
+        success_en: "Section Added Successfully",
+        success_ar: "تمت إضافة القسم بنجاح",
+        section,
+      });
     }
 
     // this endPoint for add and for update at the same time
@@ -77,20 +69,16 @@ export const getAllSections = asyncHandler(
     const filterationOptions = req.query.type ? { type: req.query.type } : {};
     const sections = await Section.find(filterationOptions);
     if (!sections[0]) {
-      return res
-        .status(400)
-        .send({
-          error_en: "Sections Are Not Found",
-          error_ar: "لم يتم العثور على الأقسام",
-        });
-    }
-    res
-      .status(200)
-      .send({
-        success_en: "sections are fetched successfully",
-        success_ar: "تم جلب الأقسام بنجاح",
-        sections,
+      return res.status(400).send({
+        error_en: "Sections Are Not Found",
+        error_ar: "لم يتم العثور على الأقسام",
       });
+    }
+    res.status(200).send({
+      success_en: "sections are fetched successfully",
+      success_ar: "تم جلب الأقسام بنجاح",
+      sections,
+    });
   }
 );
 
@@ -106,20 +94,16 @@ export const updateSection = asyncHandler(
       { new: true }
     );
     if (!section) {
-      return res
-        .status(400)
-        .send({
-          error_en: "Section Cant Be Updated Cause it's not Found",
-          error_ar: "لا يمكن تحديث القسم لأنه غير موجود",
-        });
-    }
-    res
-      .status(200)
-      .send({
-        success_en: "section updated successfully",
-        success_ar: "تم تحديث القسم بنجاح",
-        section,
+      return res.status(400).send({
+        error_en: "Section Cant Be Updated Cause it's not Found",
+        error_ar: "لا يمكن تحديث القسم لأنه غير موجود",
       });
+    }
+    res.status(200).send({
+      success_en: "section updated successfully",
+      success_ar: "تم تحديث القسم بنجاح",
+      section,
+    });
   }
 );
 
@@ -129,20 +113,16 @@ export const deleteSection = asyncHandler(
   async (req: AuthenticatedRequest, res: Response) => {
     const section = await Section.findByIdAndDelete(req.params.sectionId);
     if (!section) {
-      return res
-        .status(400)
-        .send({
-          error_en: "Section Cant Be delete Cause it's not Found",
-          error_ar: "لا يمكن حذف القسم لأنه غير موجود",
-        });
-    }
-    res
-      .status(200)
-      .send({
-        success_en: "section delete successfully",
-        success_ar: "تم حذف القسم بنجاح",
-        section,
+      return res.status(400).send({
+        error_en: "Section Cant Be delete Cause it's not Found",
+        error_ar: "لا يمكن حذف القسم لأنه غير موجود",
       });
+    }
+    res.status(200).send({
+      success_en: "section delete successfully",
+      success_ar: "تم حذف القسم بنجاح",
+      section,
+    });
   }
 );
 
@@ -152,19 +132,15 @@ export const getSectionById = asyncHandler(
   async (req: AuthenticatedRequest, res: Response) => {
     const section = await Section.findById(req.params.sectionId);
     if (!section) {
-      return res
-        .status(400)
-        .send({
-          error_en: "section not Found",
-          error_ar: "لا يمكن حذف القسم لأنه غير موجود",
-        });
-    }
-    res
-      .status(200)
-      .send({
-        success_en: "section delete successfully",
-        success_ar: "القسم غير موجود",
-        section,
+      return res.status(400).send({
+        error_en: "section not Found",
+        error_ar: "لا يمكن حذف القسم لأنه غير موجود",
       });
+    }
+    res.status(200).send({
+      success_en: "section is not existed or delete successfully",
+      success_ar: "القسم غير موجود أو تم حذفه",
+      section,
+    });
   }
 );

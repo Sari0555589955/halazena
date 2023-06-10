@@ -22,7 +22,7 @@ router
   );
 router.route("/getAll").get(getAllSections);
 router
-  .route("/getById")
+  .route("/getById/:sectionId")
   .get(
     Authentication,
     checkRole(Roles.ADMIN, Roles.SUB_ADMIN, Roles.SUPER_ADMIN),

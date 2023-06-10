@@ -23,14 +23,12 @@ export const addProduct = async (req: AuthenticatedRequest, res: Response) => {
   const newProduct = new Product({ ...req.body });
   // add category to the product
   if (req.params.category) {
-    const isCategoryFound: any = await Category.findOne({
-      name: req.params.category,
-    });
+    const isCategoryFound: any = await Category.findById(req.params.category);
     if (isCategoryFound) {
       newProduct.category = isCategoryFound;
     } else {
       // create new category and add it
-      const newCategory: any = new Category({ name_en: req.params.category });
+      const newCategory: any = new Category(req.params.category);
       await newCategory.save();
       newProduct.category = newCategory;
     }

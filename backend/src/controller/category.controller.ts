@@ -156,6 +156,7 @@ export const getAllCategory = asyncHandler(
 export const getAllSubCategories = asyncHandler(
   async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const id = req.params.id;
+    console.log("mohamed salah hassan", id);
     const subCategories = await Category.find({ sub: id });
     for (let index = 0; index < subCategories.length; index++) {
       const cate: any = subCategories[index];
