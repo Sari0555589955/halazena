@@ -33,6 +33,7 @@ router
   .put(
     Authentication,
     checkRole(Roles.ADMIN, Roles.SUPER_ADMIN),
+    validate(sectionValidation, "PUT"),
     updateSection
   );
 router

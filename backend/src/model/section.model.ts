@@ -49,26 +49,36 @@ export const sectionValidation = (section: ISection, reqType: any) => {
       { is: "slider", then: Joi.optional() },
       { is: "aboutus", then: Joi.string().required() },
       { is: "privacy", then: Joi.string().required() },
+      { is: "slider", then: Joi.string().required() },
+      { is: "banner", then: Joi.string().required() },
     ]),
     title_ar: Joi.alternatives().conditional("type", [
       { is: "slider", then: Joi.optional() },
       { is: "aboutus", then: Joi.string().required() },
       { is: "privacy", then: Joi.string().required() },
+      { is: "slider", then: Joi.string().required() },
+      { is: "banner", then: Joi.string().required() },
     ]),
     description_en: Joi.alternatives().conditional("type", [
       { is: "slider", then: Joi.optional() },
       { is: "aboutus", then: Joi.string().required() },
       { is: "privacy", then: Joi.string().required() },
+      { is: "slider", then: Joi.string().required() },
+      { is: "banner", then: Joi.string().required() },
     ]),
     description_ar: Joi.alternatives().conditional("type", [
       { is: "slider", then: Joi.optional() },
       { is: "aboutus", then: Joi.string().required() },
       { is: "privacy", then: Joi.string().required() },
+      { is: "slider", then: Joi.string().required() },
+      { is: "banner", then: Joi.string().required() },
     ]),
     image: Joi.alternatives().conditional("type", [
       { is: "slider", then: Joi.string().required() },
       { is: "banner", then: Joi.string().required() },
       { is: "aboutus", then: Joi.string().required() },
+      { is: "privacy", then: Joi.string().required() },
+      { is: "banner", then: Joi.string().required() },
     ]),
     alignment: Joi.when("type", [
       {

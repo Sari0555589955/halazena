@@ -1,35 +1,36 @@
-import Joi, { required } from 'joi'
-import mongoose, { Schema } from 'mongoose'
+import Joi, { required } from "joi";
+import mongoose, { Schema } from "mongoose";
 
 export interface IOrder {
-  user: mongoose.Schema.Types.ObjectId
-  firstName: string
-  lastName: string
-  products: []
-  subTotal: number
-  totalQuantity: number
-  shipping: number
-  total: number
-  city: string
-  country: string
-  address: string
-  orderNotes: string
-  payInCash: boolean
-  formalName: string
-  creditCard: number
-  expirationDate: Date
-  protectionSymbol: number
-  orderStatus: string
-  phoneNumber: number
-  email: string
-  properties: [{ key: String; value: String }]
+  user: mongoose.Schema.Types.ObjectId;
+  firstName: string;
+  lastName: string;
+  products: [];
+  subTotal: number;
+  totalQuantity: number;
+  shipping: number;
+  total: number;
+  city: string;
+  country: string;
+  address: string;
+  orderNotes: string;
+  payInCash: boolean;
+  formalName: string;
+  creditCard: number;
+  expirationDate: Date;
+  protectionSymbol: number;
+  orderStatus: string;
+  phoneNumber: number;
+  receiptTime: number;
+  email: string;
+  properties: [{ key: String; value: String }];
 }
 
 const orderSchema = new Schema<IOrder>(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
 
     firstName: { type: String },
@@ -89,8 +90,8 @@ const orderSchema = new Schema<IOrder>(
     },
     orderStatus: {
       type: String,
-      num: ['pending', 'done'],
-      default: 'pending',
+      num: ["pending", "done"],
+      default: "pending",
     },
     totalQuantity: {
       type: Number,
@@ -99,13 +100,17 @@ const orderSchema = new Schema<IOrder>(
       type: Number,
       required: true,
     },
+    receiptTime: {
+      type: Number,
+      required: true,
+    },
     properties: { type: [{ key: String, value: String }] },
   },
-  { timestamps: true },
-)
+  { timestamps: true }
+);
 
-const Order = mongoose.model('Order', orderSchema)
-export default Order
+const Order = mongoose.model("Order", orderSchema);
+export default Order;
 
 export const orderValidation = (order: IOrder, reqType: any) => {
   const schema: any = Joi.object<IOrder>({
@@ -140,22 +145,22 @@ export const orderValidation = (order: IOrder, reqType: any) => {
       post: (schema: any) => schema.required(),
     }),
 
-    formalName: Joi.alternatives().conditional('payInCash', [
+    formalName: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.string().required(), otherwise: Joi.string() },
     ]),
     payInCash: Joi.boolean(),
-    creditCard: Joi.alternatives().conditional('payInCash', [
+    creditCard: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.number().required(), otherwise: Joi.number() },
     ]),
-    expirationDate: Joi.alternatives().conditional('payInCash', [
+    expirationDate: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.date().required(), otherwise: Joi.date() },
     ]),
-    protectionSymbol: Joi.alternatives().conditional('payInCash', [
+    protectionSymbol: Joi.alternatives().conditional("payInCash", [
       { is: false, then: Joi.number().required(), otherwise: Joi.number() },
     ]),
-    orderStatus: Joi.string().valid('pending', 'done'),
+    orderStatus: Joi.string().valid("pending", "done"),
     orderNotes: Joi.optional(),
-    properties:Joi.optional(),
-  })
-  return schema.tailor(reqType).validate(order)
-}
+    properties: Joi.optional(),
+  });
+  return schema.tailor(reqType).validate(order);
+};

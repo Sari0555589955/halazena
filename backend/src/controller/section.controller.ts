@@ -16,7 +16,12 @@ export const addSection = asyncHandler(
     if (alignment) {
       filterationObject = { ...filterationObject, alignment };
     }
-    if (type == "banner" || type == "aboutus" || type == "privacy") {
+    if (
+      type == "banner" ||
+      type == "aboutus" ||
+      type == "privacy" ||
+      type == "slider"
+    ) {
       // CHECK IF THERE IS SECTION WITH THE SAME TYPE OR NOT
       const sectionExist = await Section.findOne(filterationObject);
 
@@ -111,13 +116,15 @@ export const updateSection = asyncHandler(
 // ROUTE DELETE /unStore/api/v1/section/delete/sectionId
 export const deleteSection = asyncHandler(
   async (req: AuthenticatedRequest, res: Response) => {
-    const section = await Section.findByIdAndDelete(req.params.sectionId);
+    // const section = await Section.findByIdAndDelete(req.params.sectionId);
+    const section = await Section.findById(req.params.sectionId);
     if (!section) {
       return res.status(400).send({
         error_en: "Section Cant Be delete Cause it's not Found",
         error_ar: "لا يمكن حذف القسم لأنه غير موجود",
       });
     }
+    await Section.findByIdAndDelete(section._id);
     res.status(200).send({
       success_en: "section delete successfully",
       success_ar: "تم حذف القسم بنجاح",
