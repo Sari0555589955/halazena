@@ -45,7 +45,10 @@ const StaticInputText = ({
           // #1976d2
           border: 1,
           borderColor: touched && error ? "red" : "#000",
-          borderRadius: "15px",
+          borderRadius: {
+            lg: "15px",
+            xs: "10px",
+          },
         }}
       />
       <Box

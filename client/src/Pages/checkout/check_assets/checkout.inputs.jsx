@@ -44,6 +44,7 @@ export const inputsData = [
     label_en: "address",
     label_ar: "العنوان",
   },
+
   {
     type: "text",
     name: "orderNotes",
@@ -67,6 +68,7 @@ export const formikData = {
     expirationDate: "",
     protectionSymbol: "",
     orderNotes: "",
+    receiptDay: 5,
   },
   errors: {
     firstName: Yup.string().required(
@@ -84,6 +86,14 @@ export const formikData = {
         language === "en" ? "Email is Required" : "البريد الإلكتروني مطلوب"
       ),
     country: Yup.string().required("Country is required"),
+    receiptDay: Yup.number()
+      .min(5, language === "en" ? "maximum days 30" : "5 ايام كحد ادني")
+      .max(30, language === "en" ? "maximum days 30" : "30 يوما كحد أقصى")
+      .required(
+        language === "en"
+          ? "receipt after days is Required"
+          : "الإستلام بعد ايام مطلوب"
+      ),
     city: Yup.string().required(
       language === "en" ? "City is required" : "المدينة مطلوبة"
     ),

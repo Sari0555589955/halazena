@@ -83,10 +83,11 @@ const CheckTest = () => {
         address: "",
         formalName: "",
         expirationDate: "",
+        receiptDay: 5,
       });
     }
   }, [carts]);
-  // const [selected, setSelected] = useState(0);
+  console.log("formik values", formik.values);
   return (
     <Box
       sx={{
@@ -100,69 +101,6 @@ const CheckTest = () => {
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        {/* <Grid container mt="10px">
-          {!formik.values.payInCash && (
-            <>
-              <Box
-                sx={{
-                  width: 0.97,
-                  mx: "auto",
-                }}
-              >
-                <Typography variant="h4">
-                  {language === "en" ? "Payment" : "الدفع"}
-                </Typography>
-                <Typography variant="h6">
-                  {language === "en"
-                    ? "Choose payment method"
-                    : "أختر طريقة الدفع"}
-                </Typography>
-              </Box>
-              {[...Array(5)].map((_, index) => (
-                <Grid item xl={2.38} lg={3} md={4} xs={12}>
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="center"
-                    sx={{
-                      mt: "20px",
-                      width: 0.9,
-                      mx: "auto",
-                      height: "150px",
-                      border: 1,
-                      borderColor: "divider",
-                      borderRadius: "10px",
-                      position: "relative",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setSelected(index)}
-                  >
-                    {selected === index && (
-                      <CheckCircleIcon
-                        sx={{
-                          position: "absolute",
-                          top: "-10px",
-                          right: language === "ar" ? "-5px" : undefined,
-                          left: language === "en" ? "-5px" : undefined,
-                        }}
-                      />
-                    )}
-                    <CardMedia
-                      component="img"
-                      src={
-                        "https://tse3.mm.bing.net/th?id=OIP.F387clXSIAjQrTo1cExmKgHaE8&pid=Api&P=0"
-                      }
-                      sx={{
-                        height: "60px",
-                        width: "auto",
-                      }}
-                    />
-                  </Stack>
-                </Grid>
-              ))}
-            </>
-          )}
-        </Grid> */}
         <FormCheckout inputsData={inputsData} formik={formik} />
         <Button sx={checkoutButtonStyle} type="submit">
           {lang === "en" ? "Checkout" : "دفع"}

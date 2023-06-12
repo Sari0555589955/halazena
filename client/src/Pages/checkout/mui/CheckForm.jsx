@@ -1,4 +1,12 @@
-import { Box, FormLabel, Grid, Input, InputBase, Stack } from "@mui/material";
+import {
+  Box,
+  FormLabel,
+  Grid,
+  Input,
+  InputBase,
+  Stack,
+  Typography,
+} from "@mui/material";
 import DynamicInputText from "./DynamicInputText";
 import StaticInputText from "./StaticInputText";
 import { useTranslation } from "react-i18next";
@@ -23,6 +31,19 @@ const FormCheckout = ({ inputsData, formik }) => {
           </Grid>
         );
       })}
+      <Grid md={6} xs={12} mt={3}>
+        <StaticInputText
+          index={0}
+          type="number"
+          name="receiptDay"
+          value={values.receiptDay}
+          error={errors.receiptDay}
+          label={language === "en" ? "receipt after days" : "الإستلام بعد ايام"}
+          touched={touched.receiptDay}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+      </Grid>
       {!values.payInCash && (
         <>
           <Grid md={6} xs={12} mt={3}>

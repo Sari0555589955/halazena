@@ -30,9 +30,9 @@ const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<AboutUsPage />} />
         {/* <Route path="/savedProducts" element={<ProductsListForCart_Saved />} /> */}
-        <Route path="/cart" element={<CartTest />} />
         {/* <Route path="/profile" element={<ProfileTest />} /> */}
         {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
+        <Route path="/cart" element={<CartTest />} />
         <Route path="/contactUs" element={<ContactUsPage />} />
         <Route path="/departments" element={<Departments />} />
         <Route path="/departments/:categoryId" element={<Departments />} />
@@ -44,6 +44,7 @@ const AppRoutes = () => {
         <Route element={<ProtectedRoutes condition={currentUser?.email} />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/checkout" element={<CheckTest />} />
+
         </Route>
         <Route path="/thanksOrder" element={<ThanksOrderPage />} />
         <Route element={<ProtectedRoutes condition={!currentUser?.email} />}>

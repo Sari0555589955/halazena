@@ -420,7 +420,6 @@ function SingleProduct() {
                     >
                       {count}
                     </Typography>
-                    {console.log("currentUser", currentUser)}
                     <RemoveCircleIcon
                       sx={{
                         display: "block",

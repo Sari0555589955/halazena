@@ -8,8 +8,6 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import bckwall from "../../assets/Group.png";
 import { useTranslation } from "react-i18next";
 import {
   useDeleteSavedProductMutation,
@@ -21,11 +19,9 @@ import {
   colors,
   publicFontFamily,
 } from "../../components/publicStyle/publicStyle";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useAddToCartMutation, useGetAllCartsQuery } from "../../APIs/cartApi";
 import { useNavigate } from "react-router-dom";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 const SavedTest = () => {
   const [_, { language: lang }] = useTranslation();
   const {
@@ -104,7 +100,7 @@ const SavedTest = () => {
                 }}
               >
                 <Stack direction="row" justifyContent={"flex-end"}>
-                  <FavoriteIcon
+                  <DeleteIcon
                     sx={{ color: colors.newLightColor, cursor: "pointer" }}
                     onClick={() => deleteProduct(item.product._id)}
                   />
@@ -119,7 +115,9 @@ const SavedTest = () => {
                     mx: "auto",
                     cursor: "pointer",
                   }}
-                  onClick={() => navigate(`/productDetails/${item?.product._id}`)}
+                  onClick={() =>
+                    navigate(`/productDetails/${item?.product._id}`)
+                  }
                 />
                 <Typography
                   mb="10px"

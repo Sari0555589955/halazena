@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllPrivcayQuery } from "../../APIs/privacyApi";
-import { Box, CardMedia, CircularProgress, Stack } from "@mui/material";
+import { Box, CardMedia, CircularProgress, Grid, Stack } from "@mui/material";
 import { colors } from "../../components/publicStyle/publicStyle";
 import { useTranslation } from "react-i18next";
 import bckwall from "../../assets/Group.png";
+import { imageBaseUrl } from "../../components/service";
 
 const PrivacyPolicyPage = () => {
   const { data, isLoading } = useGetAllPrivcayQuery();
@@ -23,7 +24,6 @@ const PrivacyPolicyPage = () => {
         overflow: "hidden",
       }}
     >
-      
       {isLoading ? (
         <Stack
           direction="row"
@@ -40,24 +40,52 @@ const PrivacyPolicyPage = () => {
           />
         </Stack>
       ) : (
-        <Box
-          sx={{
-            px: {
-              lg: "70px",
-              md: "30px",
-              xs: "20px",
-            },
-          }}
-        >
-          <h2>{lang === "en" ? "privacy" : "الخصوصيه"}</h2>
-          <p className="lead fw-bold" style={{ fontSize: "1.8rem" }}>
-            {privacy?.title}
-          </p>
-          <div
-            style={{ fontWeight: "bold" }}
-            dangerouslySetInnerHTML={{ __html: privacy?.description }}
-          />
-        </Box>
+        privacy && (
+          <Box
+            sx={{
+              px: {
+                lg: "70px",
+                md: "30px",
+                xs: "20px",
+              },
+            }}
+          >
+            <Grid container>
+              <Grid item xs={12} lg={6}>
+                <h2>{lang === "en" ? "privacy" : "الخصوصيه"}</h2>
+                <p className="lead fw-bold" style={{ fontSize: "1.8rem" }}>
+                  {privacy[`title_${lang}`]}
+                </p>
+                <div
+                  style={{ fontWeight: "bold" }}
+                  dangerouslySetInnerHTML={{
+                    __html: privacy[`description_${lang}`],
+                  }}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                lg={6}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  src={`${imageBaseUrl}/${privacy.image}`}
+                  sx={{
+                    height: 400,
+                    width: 500,
+                    objectFit: "contain",
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        )
       )}
     </Box>
   );

@@ -31,7 +31,7 @@ const Profile = () => {
   const { currentUser } = useSelector((state) => state);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (currentUser !== null) {
+    if (currentUser?.email) {
       setUserId(currentUser?._id);
       const vals = {
         ...currentUser,
