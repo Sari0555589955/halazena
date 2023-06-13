@@ -1,0 +1,70 @@
+.Container {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 45px;
+    margin: 25px;
+}
+
+.Search {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.SearchContainer {
+    background: #F5F5F5;
+    border-radius: 7px;
+    padding: 5px 15px;
+    width: 250px;
+}
+
+.Delete {
+    background-color: #ffc107;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 25px;
+    transition: font-size 0.5s ease;
+    transition: backround-color 0.5s ease;
+}
+
+.Delete:hover {
+    color:rgb(253, 59, 0) ;
+    background-color: #ffc107;
+}
+
+.Delete:active {
+    background-color: rgb(4, 187, 4);
+    color: chartreuse;
+    font-size: 27px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .Table {
+        overflow-x: scroll;
+    }
+    .SearchContainer {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .Container {
+        background-color: #fff;
+        border-radius: 15px;
+    }
+    
+}
+
+.Add {
+    color: rgb(4, 185, 4);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.Sub {
+    color: white;
+    background-color: darkorange;
+    padding: 2px;
+    font-size: 25px;
+    border-radius: 50%;
+}
