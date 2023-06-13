@@ -31,15 +31,19 @@ const mongodb_1 = require("mongodb");
 const mongoose_1 = __importStar(require("mongoose"));
 const joi_1 = __importDefault(require("joi"));
 const categorySchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    sub: { type: mongodb_1.ObjectId, ref: 'Category' },
+    name_en: { type: String, required: true },
+    name_ar: { type: String, required: true },
+    sub: { type: mongodb_1.ObjectId, ref: "Category" },
     count: Number,
 }, { timestamps: true });
-const Category = mongoose_1.default.model('Category', categorySchema);
+const Category = mongoose_1.default.model("Category", categorySchema);
 exports.default = Category;
 const categoryValidation = (category) => {
     const schema = joi_1.default.object({
-        name: joi_1.default.string().alter({
+        name_en: joi_1.default.string().alter({
+            post: (schema) => schema.required(),
+        }),
+        name_ar: joi_1.default.string().alter({
             post: (schema) => schema.required(),
         }),
         sub: joi_1.default.objectId().optional(),

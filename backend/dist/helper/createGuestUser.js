@@ -32,13 +32,12 @@ const user_model_1 = __importDefault(require("../model/user.model"));
 // }
 const createGuestUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // let _id = await generateRandomUserId();
-    console.log('befor Error; a;jdfoaodfapdfadjofjf');
-    const user = new user_model_1.default();
-    yield user.save();
+    const user = new user_model_1.default({ email: '', role: 'user' });
+    user.save();
     // GENERATE TOKEN OF THAT USER AND RETURN IT TO THE FRONT SIDE
-    console.log('user GetBack: ', user);
     const token = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET);
     if (token) {
+        console.log('user GetBack:khaidhfiahsdifhiasdhifhiadshifahidsfh ', user);
         return res.status(200).send({ success_en: "Token For Guest User", token });
     }
     res.status(400).send({ error_en: "Cant Send Token To Guest user" });

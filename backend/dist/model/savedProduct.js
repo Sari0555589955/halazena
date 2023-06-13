@@ -32,14 +32,14 @@ const mongoose_1 = __importStar(require("mongoose"));
 const savedProductSchema = new mongoose_1.Schema({
     product: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Product'
+        ref: "Product",
     },
     user: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "User"
-    }
+        ref: "User",
+    },
 });
-const SavedProduct = mongoose_1.default.model('SavedProduct', savedProductSchema);
+const SavedProduct = mongoose_1.default.model("SavedProduct", savedProductSchema);
 exports.default = SavedProduct;
 const savedProductValidation = (savedProduct, reqType) => {
     const schema = joi_1.default.object({

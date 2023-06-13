@@ -18,12 +18,12 @@ const user_model_1 = __importDefault(require("../model/user.model"));
 const Authentication = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const token = (_a = req.headers['authorization']) === null || _a === void 0 ? void 0 : _a.trim();
-    console.log('reqUrl: ', req.originalUrl, token);
-    if (!token) {
+    if (token === "null") {
         return res.status(401).send({ error_en: 'unauthorized Person', error_ar: 'مستخدم غير مصرح' });
     }
     if (token) {
         const { id } = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        console.log('token', id);
         const user = yield user_model_1.default.findById(id);
         if (!user) {
             return res.status(401).send({ error_en: "Invalid Token", error_ar: 'رمز مميز غير صالح' });

@@ -60,7 +60,7 @@ exports.getAllSavedProducts = (0, asyncHandler_1.asyncHandler)((req, res) => __a
     if (!savedProducts[0]) {
         return res.status(400).send({ error_en: "Saved Products Are Not Found", error_ar: 'لم يتم العثور على المنتجات المحفوظة' });
     }
-    res.status(200).send({ success_en: "SavedProducts Are Fetched Successfully", success_ar: "تم جلب المنتجات المحفوظة بنجاح", products: savedProducts, count: savedProducts.length });
+    res.status(200).send({ success_en: "Saved Products Are Fetched Successfully", success_ar: "تم جلب المنتجات المحفوظة بنجاح", products: savedProducts, count: savedProducts.length });
 }));
 exports.getSavedProductByUser = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const savedProducts = yield savedProduct_1.default.find({ user: req.body.user }).populate('product');

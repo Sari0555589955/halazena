@@ -22,18 +22,25 @@ const product_model_1 = __importDefault(require("../model/product.model"));
 //access: private(superAdmin,admin)
 //Route: post /UnStore/api/v1/category/add
 const addCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const category = yield category_model_1.default.findOne({ name: req.body.name });
-    if (category) {
+    const category_en = yield category_model_1.default.findOne({ name_en: req.body.name_en });
+    if (category_en) {
         return res.status(400).send({
-            error_en: 'Category Already Exist',
-            error_ar: 'الفئة موجودة بالفعل',
+            error_en: "Category Already Exist",
+            error_ar: "الفئة موجودة بالفعل",
+        });
+    }
+    const category_ar = yield category_model_1.default.findOne({ name_ar: req.body.name_ar });
+    if (category_ar) {
+        return res.status(400).send({
+            error_en: "Category Already Exist",
+            error_ar: "الفئة موجودة بالفعل",
         });
     }
     const newCategory = new category_model_1.default(Object.assign({}, req.body));
     yield newCategory.save();
     res.status(200).send({
-        success_en: 'Category Added Successfully',
-        success_ar: 'تمت إضافة الفئة بنجاح',
+        success_en: "Category Added Successfully",
+        success_ar: "تمت إضافة الفئة بنجاح",
         category: newCategory,
     });
 });
@@ -49,15 +56,15 @@ const addSubCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
     });
     if (subcategory) {
         return res.status(400).send({
-            error_en: 'Sub category Already Exist',
-            error_ar: 'الفئة الفرعيه موجودة بالفعل',
+            error_en: "Sub category Already Exist",
+            error_ar: "الفئة الفرعيه موجودة بالفعل",
         });
     }
     const newSubCategory = new category_model_1.default(Object.assign(Object.assign({}, req.body), { sub: req.params.id }));
     yield newSubCategory.save();
     res.status(200).send({
-        success_en: 'Sub category Added Successfully',
-        success_ar: 'تمت إضافة الفئة الفرعيه بنجاح',
+        success_en: "Sub category Added Successfully",
+        success_ar: "تمت إضافة الفئة الفرعيه بنجاح",
         category: newSubCategory,
     });
 });
@@ -77,14 +84,17 @@ exports.getAllCategory = (0, asyncHandler_1.asyncHandler)((req, res) => __awaite
     }
     let stats = {};
     cats.map((cat) => {
-        if (!stats[cat.name]) {
-            stats[cat.name] = [0, 0];
+        if (!stats[cat.name_en]) {
+            stats[cat.name_en] = [0, 0];
+        }
+        if (!stats[cat.name_ar]) {
+            stats[cat.name_ar] = [0, 0];
         }
     });
     // 2 COUNT HOW MANY PRODUCT FROM THAT CATEGORY
     const products = yield product_model_1.default.find({}).populate({
-        path: 'category',
-        model: 'Category',
+        path: "category",
+        model: "Category",
     });
     products.forEach((product) => {
         var _a;
@@ -99,11 +109,11 @@ exports.getAllCategory = (0, asyncHandler_1.asyncHandler)((req, res) => __awaite
     // GET ALL ORDERS THEN POPULATE PRODUCT THEN POPULATE ORDERS THEN CALCULATE THE TOTAL FOR EACH PRODUCT IS BEEN SAILED
     const orders = yield order_model_1.default.find({}).populate([
         {
-            path: 'products.product',
-            model: 'Product',
+            path: "products.product",
+            model: "Product",
             populate: {
-                path: 'category',
-                model: 'Category',
+                path: "category",
+                model: "Category",
             },
         },
     ]);
@@ -127,13 +137,13 @@ exports.getAllCategory = (0, asyncHandler_1.asyncHandler)((req, res) => __awaite
         .limit(limit);
     if (!category[0]) {
         return res.status(400).send({
-            error_en: 'Categories Are Not Found',
-            error_ar: 'لم يتم العثور على الفئات ',
+            error_en: "Categories Are Not Found",
+            error_ar: "لم يتم العثور على الفئات ",
         });
     }
     res.status(200).send({
-        success_en: 'Category Fetched  Successfully',
-        success_ar: 'تم جلب الفئة بنجاح   ',
+        success_en: "Category Fetched  Successfully",
+        success_ar: "تم جلب الفئة بنجاح   ",
         categories: { count: pages, category, stats },
     });
 }));
@@ -142,6 +152,7 @@ exports.getAllCategory = (0, asyncHandler_1.asyncHandler)((req, res) => __awaite
 //access: private (SUPER ADMIN,SUB ADMIN,ADMIN)
 exports.getAllSubCategories = (0, asyncHandler_1.asyncHandler)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
+    console.log("mohamed salah hassan", id);
     const subCategories = yield category_model_1.default.find({ sub: id });
     for (let index = 0; index < subCategories.length; index++) {
         const cate = subCategories[index];
@@ -149,8 +160,8 @@ exports.getAllSubCategories = (0, asyncHandler_1.asyncHandler)((req, res, next) 
         cate.count = count.length;
     }
     res.status(200).send({
-        success_en: 'Categories Fetched  Successfully',
-        success_ar: 'تم جلب الفئات بنجاح   ',
+        success_en: "Categories Fetched  Successfully",
+        success_ar: "تم جلب الفئات بنجاح   ",
         subCategories,
     });
 }));
@@ -172,13 +183,13 @@ const getCategoryById = (req, res) => __awaiter(void 0, void 0, void 0, function
     const category = yield category_model_1.default.findById(req.params.id);
     if (!category) {
         return res.status(400).send({
-            error_en: 'Categorie is Not Found',
-            error_ar: 'لم يتم العثور على الفئة',
+            error_en: "Categorie is Not Found",
+            error_ar: "لم يتم العثور على الفئة",
         });
     }
     res.status(200).send({
-        success_en: 'Category Fetched  Successfully',
-        success_ar: 'تم جلب الفئة بنجاح   ',
+        success_en: "Category Fetched  Successfully",
+        success_ar: "تم جلب الفئة بنجاح   ",
         category,
     });
 });
@@ -190,13 +201,13 @@ const updateCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const category = yield category_model_1.default.findByIdAndUpdate(req.params.id, Object.assign({}, req.body), { new: true });
     if (!category) {
         return res.status(400).send({
-            error_en: 'Categorie is Not Found',
-            error_ar: 'لم يتم العثور على الفئة',
+            error_en: "Categorie is Not Found",
+            error_ar: "لم يتم العثور على الفئة",
         });
     }
     res.status(200).send({
-        success_en: 'Category Updated  Successfully',
-        success_ar: 'تم تحديث الفئة بنجاح  ',
+        success_en: "Category Updated  Successfully",
+        success_ar: "تم تحديث الفئة بنجاح  ",
         category,
     });
 });
@@ -209,10 +220,10 @@ const deleteCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
     // before Deleting the category you should delete all the products related to it
     const findCategoryPRoducts = yield product_model_1.default.find({
         category: req.params.id,
-    }).populate({ path: 'category', model: 'Category' });
+    }).populate({ path: "category", model: "Category" });
     const findSubRoducts = yield product_model_1.default.find({
         sub: req.params.id,
-    }).populate({ path: 'sub', model: 'Category' });
+    }).populate({ path: "sub", model: "Category" });
     if (findCategoryPRoducts[0]) {
         return res.status(400).send({
             error_en: `You Cant Delete Category ${(_a = findCategoryPRoducts[0].category) === null || _a === void 0 ? void 0 : _a.name} Untill You Remove All Products Related To It`,
@@ -227,13 +238,13 @@ const deleteCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const category = yield category_model_1.default.findByIdAndDelete(req.params.id);
     if (!category) {
         return res.status(400).send({
-            error_en: 'Categorie is Not Found',
-            error_ar: 'لم يتم العثور على الفئة',
+            error_en: "Categorie is Not Found",
+            error_ar: "لم يتم العثور على الفئة",
         });
     }
     res.status(200).send({
-        success_en: 'Category Deleted  Successfully',
-        success_ar: 'تم حذف الفئة بنجاح ',
+        success_en: "Category Deleted  Successfully",
+        success_ar: "تم حذف الفئة بنجاح ",
         category,
     });
 });
@@ -245,11 +256,11 @@ exports.categoryTotalAmount_TotalSum = (0, asyncHandler_1.asyncHandler)((req, re
     // after the the order is been created then i need to get the category from that product
     const orders = yield order_model_1.default.find({}).populate([
         {
-            path: 'products.product',
-            model: 'Product',
+            path: "products.product",
+            model: "Product",
             populate: {
-                path: 'category',
-                model: 'Category',
+                path: "category",
+                model: "Category",
             },
         },
     ]);

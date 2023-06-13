@@ -7,4 +7,5 @@ export const DBConnection = () => {
     .catch((e) => {
       console.log(`Error: ${e.message}`.red);
     });
+  mongoose.set("strictQuery", true);
 };

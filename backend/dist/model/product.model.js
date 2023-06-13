@@ -41,17 +41,25 @@ const joi_1 = __importDefault(require("joi"));
 const savedProduct_1 = __importDefault(require("./savedProduct"));
 const order_model_1 = __importDefault(require("./order.model"));
 const productSchema = new mongoose_1.Schema({
-    title: {
+    title_en: {
+        type: String,
+        required: true,
+    },
+    title_ar: {
+        type: String,
+        required: true,
+    },
+    description_en: {
+        type: String,
+        required: true,
+    },
+    description_ar: {
         type: String,
         required: true,
     },
     category: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Category',
-    },
-    description: {
-        type: String,
-        required: true,
+        ref: "Category",
     },
     price: { type: Number, required: true },
     sale: {
@@ -61,10 +69,10 @@ const productSchema = new mongoose_1.Schema({
     images: [
         {
             type: String,
-            default: 'https://images.pexels.com/photos/5693889/pexels-photo-5693889.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+            default: "https://images.pexels.com/photos/5693889/pexels-photo-5693889.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         },
     ],
-    likes: [{ user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' } }],
+    likes: [{ user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User" } }],
     count: {
         type: Number,
         default: 1,
@@ -72,7 +80,7 @@ const productSchema = new mongoose_1.Schema({
     ratings: [
         {
             rating: Number,
-            user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' },
+            user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User" },
         },
     ],
     avgRating: {
@@ -88,17 +96,18 @@ const productSchema = new mongoose_1.Schema({
         default: false,
     },
     attributes: {
-        type: [{ key: String, values: Array }],
+        type: [{ key_en: String, key_ar: String, values: Array }],
         default: [
-            { key: 'color', values: [] },
-            { key: 'size', values: [] },
+            { key_en: "weight", key_ar: "الوزن", values: [] },
+            { key_en: "size", key_ar: "الحجم", values: [] },
         ],
     },
     sub: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'Category',
+        ref: "Category",
     },
-    smallDesc: String,
+    smallDesc_ar: String,
+    smallDesc_en: String,
 }, { timestamps: true });
 // productSchema.pre('save', async function (next) {
 //   if (!this.isNew) return next()
@@ -108,15 +117,13 @@ const productSchema = new mongoose_1.Schema({
 //   ]
 //   this.attributes = data
 // })
-productSchema.pre('findOneAndDelete', function () {
+productSchema.pre("findOneAndDelete", function () {
     return __awaiter(this, void 0, void 0, function* () {
         let product = yield this.model.findOne(this.getQuery());
-        // delete the cascaded saved product
-        console.log('productId; ', product === null || product === void 0 ? void 0 : product._id);
         let savedProduct = yield savedProduct_1.default.findOneAndDelete({
             product: product === null || product === void 0 ? void 0 : product._id,
         });
-        console.log('savedProducat: ', savedProduct);
+        console.log("savedProducat: ", savedProduct);
         // deleting the product from inside the category
         yield order_model_1.default.updateMany({}, {
             $pull: {
@@ -127,20 +134,26 @@ productSchema.pre('findOneAndDelete', function () {
         });
     });
 });
-productSchema.post('findOneAndDelete', function () {
+productSchema.post("findOneAndDelete", function () {
     return __awaiter(this, void 0, void 0, function* () {
         yield order_model_1.default.deleteMany({ products: { $size: 0 } });
     });
 });
-const Product = mongoose_1.default.model('Product', productSchema);
+const Product = mongoose_1.default.model("Product", productSchema);
 exports.default = Product;
 const productValidation = (product, reqType) => {
     const schema = joi_1.default.object({
-        title: joi_1.default.string().alter({
+        title_ar: joi_1.default.string().alter({
+            post: (schema) => schema.required(),
+        }),
+        title_en: joi_1.default.string().alter({
             post: (schema) => schema.required(),
         }),
         category: joi_1.default.objectId(),
-        description: joi_1.default.string().alter({
+        description_ar: joi_1.default.string().alter({
+            post: (schema) => schema.required(),
+        }),
+        description_en: joi_1.default.string().alter({
             post: (schema) => schema.required(),
         }),
         price: joi_1.default.number().alter({
@@ -165,8 +178,9 @@ const productValidation = (product, reqType) => {
             put: (schema) => schema.optional(),
         }),
         attributes: joi_1.default.array(),
-        smallDesc: joi_1.default.string(),
-        sub: joi_1.default.objectId().required()
+        smallDesc_en: joi_1.default.string(),
+        smallDesc_ar: joi_1.default.string(),
+        sub: joi_1.default.objectId().required(),
     });
     return schema.tailor(reqType).validate(product);
 };

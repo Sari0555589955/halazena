@@ -21,7 +21,7 @@ export interface IOrder {
   protectionSymbol: number;
   orderStatus: string;
   phoneNumber: number;
-  receiptTime: number;
+  receiptDay: number;
   email: string;
   properties: [{ key: String; value: String }];
 }
@@ -100,7 +100,7 @@ const orderSchema = new Schema<IOrder>(
       type: Number,
       required: true,
     },
-    receiptTime: {
+    receiptDay: {
       type: Number,
       required: true,
     },
@@ -160,6 +160,7 @@ export const orderValidation = (order: IOrder, reqType: any) => {
     ]),
     orderStatus: Joi.string().valid("pending", "done"),
     orderNotes: Joi.optional(),
+    receiptDay: Joi.number().min(5).max(30).required(),
     properties: Joi.optional(),
   });
   return schema.tailor(reqType).validate(order);

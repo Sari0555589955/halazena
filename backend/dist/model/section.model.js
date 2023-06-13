@@ -30,52 +30,81 @@ exports.sectionValidation = void 0;
 const joi_1 = __importDefault(require("joi"));
 const mongoose_1 = __importStar(require("mongoose"));
 const sectionSchem = new mongoose_1.Schema({
-    title: {
+    title_en: {
         type: String,
-        default: ''
+        default: "",
     },
-    description: {
+    title_ar: {
         type: String,
-        default: ''
+        default: "",
+    },
+    description_en: {
+        type: String,
+        default: "",
+    },
+    description_ar: {
+        type: String,
+        default: "",
     },
     image: {
         type: String,
-        default: ''
+        default: "",
     },
     type: {
         type: String,
-        enum: ['slider', 'banner', 'aboutus', 'privacy']
+        enum: ["slider", "banner", "aboutus", "privacy"],
     },
     alignment: {
         type: String,
-    }
+    },
 });
-const Section = mongoose_1.default.model('Section', sectionSchem);
+const Section = mongoose_1.default.model("Section", sectionSchem);
 exports.default = Section;
 const sectionValidation = (section, reqType) => {
     const schema = joi_1.default.object({
-        type: joi_1.default.string().valid('slider', 'banner', 'aboutus', 'privacy'),
-        title: joi_1.default.alternatives().conditional('type', [
-            { is: 'slider', then: joi_1.default.optional() },
-            { is: 'aboutus', then: joi_1.default.string().required() },
-            { is: 'privacy', then: joi_1.default.string().required() },
+        type: joi_1.default.string().valid("slider", "banner", "aboutus", "privacy"),
+        title_en: joi_1.default.alternatives().conditional("type", [
+            { is: "slider", then: joi_1.default.optional() },
+            { is: "aboutus", then: joi_1.default.string().required() },
+            { is: "privacy", then: joi_1.default.string().required() },
+            { is: "slider", then: joi_1.default.string().required() },
+            { is: "banner", then: joi_1.default.string().required() },
         ]),
-        description: joi_1.default.alternatives().conditional('type', [
-            { is: 'slider', then: joi_1.default.optional() },
-            { is: 'aboutus', then: joi_1.default.string().required() },
-            { is: 'privacy', then: joi_1.default.string().required() },
+        title_ar: joi_1.default.alternatives().conditional("type", [
+            { is: "slider", then: joi_1.default.optional() },
+            { is: "aboutus", then: joi_1.default.string().required() },
+            { is: "privacy", then: joi_1.default.string().required() },
+            { is: "slider", then: joi_1.default.string().required() },
+            { is: "banner", then: joi_1.default.string().required() },
         ]),
-        image: joi_1.default.alternatives().conditional('type', [
-            { is: 'slider', then: joi_1.default.string().required() },
-            { is: 'banner', then: joi_1.default.string().required() },
-            { is: 'aboutus', then: joi_1.default.string().required() },
+        description_en: joi_1.default.alternatives().conditional("type", [
+            { is: "slider", then: joi_1.default.optional() },
+            { is: "aboutus", then: joi_1.default.string().required() },
+            { is: "privacy", then: joi_1.default.string().required() },
+            { is: "slider", then: joi_1.default.string().required() },
+            { is: "banner", then: joi_1.default.string().required() },
         ]),
-        alignment: joi_1.default.when('type', [
+        description_ar: joi_1.default.alternatives().conditional("type", [
+            { is: "slider", then: joi_1.default.optional() },
+            { is: "aboutus", then: joi_1.default.string().required() },
+            { is: "privacy", then: joi_1.default.string().required() },
+            { is: "slider", then: joi_1.default.string().required() },
+            { is: "banner", then: joi_1.default.string().required() },
+        ]),
+        image: joi_1.default.alternatives().conditional("type", [
+            { is: "slider", then: joi_1.default.string().required() },
+            { is: "banner", then: joi_1.default.string().required() },
+            { is: "aboutus", then: joi_1.default.string().required() },
+            { is: "privacy", then: joi_1.default.string().required() },
+            { is: "banner", then: joi_1.default.string().required() },
+        ]),
+        alignment: joi_1.default.when("type", [
             {
-                is: 'banner', then: joi_1.default.string().required(),
+                is: "banner",
+                then: joi_1.default.string().required(),
                 otherwise: joi_1.default.optional(),
-            }
-        ]).valid('horizontal', 'vertical')
+            },
+        ]).valid("horizontal", "vertical"),
     });
     return schema.tailor(reqType).validate(section);
 };

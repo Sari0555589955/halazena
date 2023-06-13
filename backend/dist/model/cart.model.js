@@ -42,7 +42,11 @@ const cartSchema = new mongoose_1.Schema({
         type: Number,
         default: 1,
     },
-    properties: { type: [{ key: String, value: String }] },
+    properties: {
+        type: [
+            { key_en: String, key_ar: String, value_en: String, value_ar: String },
+        ],
+    },
 });
 const Cart = mongoose_1.default.model("Cart", cartSchema);
 exports.default = Cart;
@@ -54,7 +58,7 @@ const cartValidation = (cart, reqType) => {
         user: joi_1.default.objectId().alter({
             post: (schema) => schema.required(),
         }),
-        quantity: joi_1.default.number().alter({
+        Quantity: joi_1.default.number().alter({
             post: (schema) => schema.required(),
         }),
         price: joi_1.default.number().alter({

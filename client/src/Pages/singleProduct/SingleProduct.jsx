@@ -616,7 +616,7 @@ function SingleProduct() {
                   height: "100%",
                   width: "100%",
                 }}
-                // src={imageBaseUrl + "/" +  product?.images[imageStart]}
+                src={imageBaseUrl + product?.images[imageStart]}
                 alt={product[`title_${lang}`]}
               />
             </Box>

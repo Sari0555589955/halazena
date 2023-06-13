@@ -26,13 +26,22 @@ Joi.objectId = require("joi-objectid")(Joi);
 dotenv.config({ path: path.join(__dirname, "./config/dev.env") });
 const app = express();
 const options = {
-  key: fs.readFileSync(path.join(__dirname, `./key.pem`)),
-  cert: fs.readFileSync(path.join(__dirname, `./key.crt`)),
+  key: fs.readFileSync(
+    path.join(
+      __dirname,
+      `../../../../etc/letsencrypt/live/saritest.store/privkey.pem`
+    )
+  ),
+  cert: fs.readFileSync(
+    path.join(
+      __dirname,
+      `../../../../etc/letsencrypt/live/saritest.store/fullchain.pem`
+    )
+  ),
 };
 const ser = https.createServer(options, app);
 import { deleteGuest } from "./automations/deleteGuestUser";
 import { deleteImages } from "./automations/deleteImages";
-Joi.objectId = require("joi-objectid")(Joi);
 dotenv.config({ path: path.join(__dirname, "./config/dev.env") });
 // deleteGuest()
 // deleteImages()

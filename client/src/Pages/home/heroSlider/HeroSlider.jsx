@@ -51,11 +51,7 @@ const HeroSlider = () => {
                     className="home_slider"
                     sx={{
                       // backgroundImage: `url(${IMAGE_URL}${slide?.image})`,
-                      background: `linear-gradient(${
-                        language === "en" ? "90" : "270"
-                      }deg, rgba(184,192,208,1) 9%, rgba(137,177,255,0.06206232492997199) 44%), url(${
-                        imageBaseUrl + "/" + slide?.image
-                      })`,
+                      background: `url(${imageBaseUrl + slide?.image})`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
                       backgroundPosition: "left",

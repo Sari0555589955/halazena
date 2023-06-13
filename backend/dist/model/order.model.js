@@ -32,7 +32,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 const orderSchema = new mongoose_1.Schema({
     user: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: "User",
     },
     firstName: { type: String },
     lastName: { type: String },
@@ -90,8 +90,8 @@ const orderSchema = new mongoose_1.Schema({
     },
     orderStatus: {
         type: String,
-        num: ['pending', 'done'],
-        default: 'pending',
+        num: ["pending", "done"],
+        default: "pending",
     },
     totalQuantity: {
         type: Number,
@@ -100,9 +100,13 @@ const orderSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
+    receiptDay: {
+        type: Number,
+        required: true,
+    },
     properties: { type: [{ key: String, value: String }] },
 }, { timestamps: true });
-const Order = mongoose_1.default.model('Order', orderSchema);
+const Order = mongoose_1.default.model("Order", orderSchema);
 exports.default = Order;
 const orderValidation = (order, reqType) => {
     const schema = joi_1.default.object({
@@ -136,21 +140,22 @@ const orderValidation = (order, reqType) => {
         address: joi_1.default.string().alter({
             post: (schema) => schema.required(),
         }),
-        formalName: joi_1.default.alternatives().conditional('payInCash', [
+        formalName: joi_1.default.alternatives().conditional("payInCash", [
             { is: false, then: joi_1.default.string().required(), otherwise: joi_1.default.string() },
         ]),
         payInCash: joi_1.default.boolean(),
-        creditCard: joi_1.default.alternatives().conditional('payInCash', [
+        creditCard: joi_1.default.alternatives().conditional("payInCash", [
             { is: false, then: joi_1.default.number().required(), otherwise: joi_1.default.number() },
         ]),
-        expirationDate: joi_1.default.alternatives().conditional('payInCash', [
+        expirationDate: joi_1.default.alternatives().conditional("payInCash", [
             { is: false, then: joi_1.default.date().required(), otherwise: joi_1.default.date() },
         ]),
-        protectionSymbol: joi_1.default.alternatives().conditional('payInCash', [
+        protectionSymbol: joi_1.default.alternatives().conditional("payInCash", [
             { is: false, then: joi_1.default.number().required(), otherwise: joi_1.default.number() },
         ]),
-        orderStatus: joi_1.default.string().valid('pending', 'done'),
+        orderStatus: joi_1.default.string().valid("pending", "done"),
         orderNotes: joi_1.default.optional(),
+        receiptDay: joi_1.default.number().min(5).max(30).required(),
         properties: joi_1.default.optional(),
     });
     return schema.tailor(reqType).validate(order);

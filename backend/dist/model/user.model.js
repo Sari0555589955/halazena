@@ -31,18 +31,18 @@ const joi_1 = __importDefault(require("joi"));
 const mongoose_1 = __importStar(require("mongoose"));
 const enums_enum_1 = require("../enum/enums.enum");
 const userSchema = new mongoose_1.Schema({
-    fullName_en: { type: String, },
+    fullName_en: { type: String },
     firstName: { type: String },
     lastName: { type: String },
-    userName_en: { type: String, },
+    userName_en: { type: String },
     // userName_ar: { type: String, },
-    email: { type: String, default: '' },
-    password: { type: String, default: '' },
+    email: { type: String, default: "" },
+    password: { type: String, default: "" },
     phone: { type: String },
     role: {
         type: String,
         enum: enums_enum_1.Roles,
-        default: enums_enum_1.Roles.USER
+        default: enums_enum_1.Roles.USER,
     },
     ip: {
         type: String,
@@ -58,10 +58,10 @@ const userSchema = new mongoose_1.Schema({
     },
     status: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 }, { timestamps: true });
-const User = mongoose_1.default.model('User', userSchema);
+const User = mongoose_1.default.model("User", userSchema);
 const userValidation = (user, reqType) => {
     const schema = joi_1.default.object({
         fullName_en: joi_1.default.string(),
@@ -73,7 +73,7 @@ const userValidation = (user, reqType) => {
         }),
         password: joi_1.default.string().alter({
             post: (schema) => schema.required(),
-            put: (schema) => schema.optional()
+            put: (schema) => schema.optional(),
         }),
         phone: joi_1.default.number(),
         role: joi_1.default.string().valid(enums_enum_1.Roles.ADMIN, enums_enum_1.Roles.SUB_ADMIN, enums_enum_1.Roles.SUPER_ADMIN, enums_enum_1.Roles.USER),
