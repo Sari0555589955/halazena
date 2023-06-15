@@ -36,13 +36,20 @@ const LanguageToggler = () => {
           },
           borderColor: colors.grey,
           p: "3px 20px",
+          "&:hover": {
+            borderColor: colors.newMainColor,
+            bgcolor: colors.newMainColor,
+            span: {
+              color: "#fff",
+            },
+          },
         }}
       >
         <Typography
           component="span"
           sx={{
             fontSize: "17px",
-            color: colors.grey
+            color: colors.grey,
           }}
         >
           {language === "en" ? "AR" : "EN"}

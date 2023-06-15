@@ -9,18 +9,22 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import App from "./App";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import i18n from "./Translation/i18n";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// old
 // export const baseURL = "https://www.saritest.store:8080/unStore/api/v1";
 // export const imageURL = `https://www.saritest.store:8080/uploads`;
-export const baseURL = "https://saritest.store:4200/unStore/api/v1";
-export const imageURL = `https://saritest.store:4200/uploads`;
+// current
+// export const baseURL = "https://saritest.store:4200/unStore/api/v1";
+// export const imageURL = `https://saritest.store:4200/uploads`;
+export const baseURL = "http://localhost:5000/unStore/api/v1";
+export const imageURL = `http://localhost:5000/uploads/`;
 axios.defaults.headers.common["authorization"] = localStorage.getItem("token");
 root.render(
   <Provider store={store}>
-    <ToastContainer rtl={i18n.language === 'en' ? false : true} />
+    <ToastContainer rtl={i18n.language === "en" ? false : true} />
 
     <App />
   </Provider>

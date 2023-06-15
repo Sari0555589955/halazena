@@ -6,6 +6,8 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addSubSection } from "../store/sectionsSlice";
+import { imageURL } from "..";
+import SectionsServices from "../httpServices/Sections.services";
 
 const AddSubCategory = ({ id }) => {
   const dispatch = useDispatch();
@@ -20,18 +22,27 @@ const AddSubCategory = ({ id }) => {
       name_en: yup.string().required(),
     }),
     onSubmit: (values) => {
-      CategoriesServices.addSection(
-        `category/addSub/${id}`,
-        values
-      ).then((data) => {
-        toast.success(i18n.language === 'en' ? data.success_en : data.success_ar);
-        dispatch(addSubSection(data?.category))
-      }).catch(e => {
-        toast.error(i18n.language === 'en' ? e.response.data.error_en : e.response.data.error_ar )
+      CategoriesServices.addSection(`category/addSub/${id}`, {
+        ...values,
+        image: "not-used",
       })
-      formik.resetForm( );
+        .then((data) => {
+          toast.success(
+            i18n.language === "en" ? data.success_en : data.success_ar
+          );
+          dispatch(addSubSection(data?.category));
+        })
+        .catch((e) => {
+          toast.error(
+            i18n.language === "en"
+              ? e.response.data.error_en
+              : e.response.data.error_ar
+          );
+        });
+      formik.resetForm();
     },
   });
+
   return (
     <div
       className="modal fade "
@@ -44,14 +55,14 @@ const AddSubCategory = ({ id }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h1 className="modal-title fs-5" id={"Add" + id}>
-              {i18n.language === "en" ? "Add sub section" : "إضافة قسم فرعي"}
+              {i18n.language === "en" ? "Add sub section" : "إضافة فئة فرعية"}
             </h1>
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="modal-body">
               <label>
                 {i18n.language === "en"
-                  ? `Sub section name arabic`
+                  ? `Sub Category name arabic`
                   : `إسم القسم الفرعي عربي`}
               </label>
               <input
@@ -64,8 +75,8 @@ const AddSubCategory = ({ id }) => {
               />
               <label>
                 {i18n.language === "en"
-                  ? `Sub section name english`
-                  : `إسم القسم الفرعي إنجليزي`}
+                  ? `Sub categor name english`
+                  : `إسم الفئة الفرعية إنجليزي`}
               </label>
               <input
                 name="name_en"

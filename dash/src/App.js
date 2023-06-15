@@ -23,11 +23,10 @@ import Admins from "./Admins/Admins";
 import SingleSectionPage from "./singeSection/SingleSectionPage";
 import EditSectionPage from "./editSection/EditSectionPage";
 import AddSectionPage from "./addSection/AddSectionPage";
+import SingleCategoryPage from "./singleCategory/SingleCategoryPage";
 const App = () => {
   const { i18n } = useTranslation();
-
   document.body.dir = i18n.dir();
-
   return (
     <BrowserRouter>
       <Routes>
@@ -35,6 +34,10 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/users" element={<Users />} />
           <Route path="/categories" element={<Categories />} />
+          <Route
+            path="/categories/:categoryId"
+            element={<SingleCategoryPage />}
+          />
           <Route path="/sections" element={<Sections />} />
           <Route path="/sections/:sectionId" element={<SingleSectionPage />} />
           <Route

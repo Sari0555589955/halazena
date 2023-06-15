@@ -1,9 +1,18 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CardMedia,
+  CircularProgress,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/core";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import sliderWall from "../../../assets/backSlide.jpg";
 import { useTranslation } from "react-i18next";
 import {
   colors,
@@ -13,33 +22,63 @@ import "./sliderStyle.css";
 import { useGetAllSlidersQuery } from "../../../APIs/SectionApis";
 import { imageBaseUrl } from "../../../components/service";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/loader/loader";
+import CustomError from "../../../components/Error/Error";
 const HeroSlider = () => {
   const [_, { language }] = useTranslation();
-  const { data } = useGetAllSlidersQuery();
+  const { data, isLoading, error } = useGetAllSlidersQuery();
   const navigate = useNavigate();
   return (
-    <section>
-      <section
-        className="slider slider-homePage"
-        style={{
-          direction: "ltr",
-        }}
-      >
-        <Splide
-          aria-label="My Favorite Images"
-          className="biolife-carousel"
-          options={{
-            type: "loop",
-            autoplay: true,
-            pauseOnHover: false,
-            resetProgress: false,
-            speed: "2000",
-            arrows: true,
-            interval: "4000",
+    <section
+      style={{
+        overflow: "visible",
+      }}
+    >
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "60vh",
           }}
         >
-          {data?.sections &&
-            data?.sections.map((slide, index) => (
+          <CircularProgress
+            sx={{
+              color: colors.newMainColor,
+            }}
+          />
+        </Box>
+      ) : data?.sections?.length > 0 && !error ? (
+        <Box
+          className="slider slider-homePage"
+          sx={{
+            backgroundImage: `url(${sliderWall})`,
+            backgroundPosition: "center bottom",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            height: {
+              md: "105vh",
+              xs: "auto",
+            },
+          }}
+        >
+          <Splide
+            aria-label="My Favorite Images"
+            className="biolife-carousel"
+            options={{
+              type: "loop",
+              autoplay: true,
+              pauseOnHover: false,
+              resetProgress: false,
+              speed: "2000",
+              arrows: false,
+              direction: language === "en" ? "ltr" : "rtl",
+
+              interval: "4000",
+            }}
+          >
+            {data?.sections.map((slide, index) => (
               <SplideSlide
                 key={index}
                 style={{
@@ -47,117 +86,250 @@ const HeroSlider = () => {
                 }}
               >
                 {slide?.image && (
-                  <Box
-                    className="home_slider"
+                  <Grid
+                    container
                     sx={{
-                      // backgroundImage: `url(${IMAGE_URL}${slide?.image})`,
-                      background: `url(${imageBaseUrl + slide?.image})`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: "cover",
-                      backgroundPosition: "left",
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      position: "relative",
+                      px: {
+                        xl: "80px",
+                        lg: "65px",
+                        md: "40px",
+                        xs: "00px",
+                      },
                     }}
                   >
-                    <Box
-                      className="zoomIn"
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
                       sx={{
-                        //   background: "rgba(235, 235, 235,0.3)",
-                        direction: "rtl !important",
-
-                        mb: {
-                          md: "70px",
-                          xs: "60px",
+                        height: {
+                          xl: "80vh",
+                          lg: "85vh",
+                          xs: "90vh",
                         },
-                        py: "20px",
-                        px: {
-                          lg: "100px",
-                          md: "60px",
-                          xs: "30px",
+                        display: {
+                          md: "flex",
+                          xs: "none",
                         },
-                        // bgcolor: "#00000036",
-                        width: 1,
-                        direction: language === "en" ? "ltr" : "rtl",
+                        alignItems: {
+                          md: "center",
+                          xs: "flex-start",
+                        },
+                        justifyContent: "flex-start",
                       }}
                     >
-                      <>
-                        <Typography
-                          sx={{
-                            textAlign: {
-                              md: "initial",
-                              xs: "center",
-                            },
-                            fontSize: {
-                              lg: "60px",
-                              md: "45px",
-                              xs: "32.5px",
-                            },
-                            mt: "-60px",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {slide?.title_en
-                            ? slide[`title_${language}`]
-                            : "Old Title"}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            textAlign: {
-                              md: "initial",
-                              xs: "center",
-                            },
-                            fontFamily: "'Tajawal', sans-serif",
-                            fontSize: {
-                              lg: "35px",
-                              md: "30px",
-                              xs: "20px",
-                            },
-                            fontWeight: "bold",
-                            mt: "10px",
-                          }}
-                        >
-                          {slide[`description_${language}`]
-                            ? slide[`description_${language}`].length > 160
-                              ? `${slide[`description_${language}`].slice(
-                                  0,
-                                  160
-                                )}...`
-                              : slide[`description_${language}`]
-                            : "Old Description"}
-                        </Typography>
-                      </>
                       <Box
                         sx={{
-                          mt: 4,
-                          display: "flex",
-                          justifyContent: {
-                            md: "flex-start",
-                            xs: "center",
+                          direction: "rtl !important",
+
+                          mb: {
+                            md: "70px",
+                            xs: "60px",
                           },
+                          py: "20px",
+
+                          width: 1,
                         }}
                       >
-                        <Button
+                        <>
+                          <Typography
+                            sx={{
+                              fontSize: {
+                                lg: "60px",
+                                md: "45px",
+                                xs: "32.5px",
+                              },
+                              mt: "-60px",
+                              fontWeight: "bold",
+                              fontFamily: publicFontFamily,
+                            }}
+                          >
+                            {slide?.title_en
+                              ? slide[`title_${language}`]
+                              : "Old Title"}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontFamily: publicFontFamily,
+                              fontSize: {
+                                lg: "35px",
+                                md: "30px",
+                                xs: "20px",
+                              },
+                              fontWeight: "bold",
+                              mt: "10px",
+                            }}
+                          >
+                            {slide[`description_${language}`]
+                              ? slide[`description_${language}`].length > 160
+                                ? `${slide[`description_${language}`].slice(
+                                    0,
+                                    160
+                                  )}...`
+                                : slide[`description_${language}`]
+                              : "Old Description"}
+                          </Typography>
+                        </>
+                        <Box
                           sx={{
-                            bgcolor: `${colors.newMainHeavyColor} !important`,
-                            color: "#fff",
-                            fontFamily: publicFontFamily,
-                            fontSize: "19px",
-                            padding: "5px 10px",
+                            mt: 4,
+                            display: "flex",
+                            direction: language === "en" ? "ltr" : "rtl",
+                            justifyContent: {
+                              md: "flex-start",
+                              xs: "center",
+                            },
                           }}
-                          onClick={() => navigate("/departments")}
                         >
-                          {language === "en" ? "Choose a cake" : "أختار كيك"}
-                        </Button>
+                          <Button
+                            sx={{
+                              bgcolor: `${colors.lightYellow} !important`,
+                              color: "#fff",
+                              fontFamily: publicFontFamily,
+                              fontSize: "19px",
+                              padding: "5px 10px",
+                              borderRadius: "20px",
+                            }}
+                            onClick={() => navigate("/departments")}
+                          >
+                            {language === "en" ? "Choose a cake" : "أختار كيك"}
+                          </Button>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Box>
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                      sx={{
+                        display: "flex",
+                        alignItems: {
+                          md: "center",
+                          xs: "flex-end",
+                        },
+                        justifyContent: {
+                          md: "flex-end",
+                          xs: "center",
+                        },
+                        height: {
+                          md: "auto",
+                          xs: "65vh",
+                        },
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        sx={{
+                          width: {
+                            md: 400,
+                            xs: 0.8,
+                          },
+                          height: 300,
+                          objectFit: "contain",
+                          background: `url(${imageBaseUrl + slide?.image})`,
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                      sx={{
+                        height: "60vh",
+                        display: {
+                          md: "none",
+                          xs: "flex",
+                        },
+                        alignItems: "flex-start",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          mb: {
+                            md: "70px",
+                            xs: "60px",
+                          },
+                          py: "20px",
+
+                          width: 1,
+                        }}
+                      >
+                        <>
+                          <Typography
+                            sx={{
+                              textAlign: "center",
+                              fontSize: {
+                                lg: "60px",
+                                md: "45px",
+                                xs: "32.5px",
+                              },
+
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {slide?.title_en
+                              ? slide[`title_${language}`]
+                              : "Old Title"}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              textAlign: "center",
+                              fontFamily: "'Tajawal', sans-serif",
+                              fontSize: {
+                                lg: "35px",
+                                md: "30px",
+                                xs: "20px",
+                              },
+                              fontWeight: "bold",
+                              mt: "10px",
+                            }}
+                          >
+                            {slide[`description_${language}`]
+                              ? slide[`description_${language}`].length > 160
+                                ? `${slide[`description_${language}`].slice(
+                                    0,
+                                    160
+                                  )}...`
+                                : slide[`description_${language}`]
+                              : "Old Description"}
+                          </Typography>
+                        </>
+                        <Box
+                          sx={{
+                            mt: 4,
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Button
+                            sx={{
+                              bgcolor: `${colors.lightYellow} !important`,
+                              color: "#fff",
+                              fontFamily: publicFontFamily,
+                              fontSize: "19px",
+                              padding: "5px 10px",
+                              borderRadius: "20px",
+                              width: 0.6,
+                            }}
+                            onClick={() => navigate("/departments")}
+                          >
+                            {language === "en" ? "Choose a cake" : "أختار كيك"}
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 )}
               </SplideSlide>
             ))}
-        </Splide>
-      </section>
+          </Splide>
+        </Box>
+      ) : (
+        <CustomError errorMessage={error?.data[`error_${language}`]} />
+      )}
     </section>
   );
 };

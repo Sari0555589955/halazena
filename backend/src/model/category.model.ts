@@ -8,6 +8,7 @@ export interface ICategory {
   _id?: string;
   sub?: ObjectId;
   count: Number;
+  image: string;
 }
 
 const categorySchema = new Schema<ICategory>(
@@ -15,6 +16,10 @@ const categorySchema = new Schema<ICategory>(
     name_en: { type: String, required: true },
     name_ar: { type: String, required: true },
     sub: { type: ObjectId, ref: "Category" },
+    image: {
+      type: String,
+      
+    },
     count: Number,
   },
   { timestamps: true }
@@ -32,6 +37,7 @@ export const categoryValidation = (category: ICategory) => {
       post: (schema: any) => schema.required(),
     }),
     sub: Joi.objectId().optional(),
+    image: Joi.string(),
   });
   return schema.validate(category);
 };

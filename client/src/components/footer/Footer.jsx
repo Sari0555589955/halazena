@@ -20,7 +20,6 @@ import { useTranslation } from "react-i18next";
 import { contactWaysIcons } from "../../Pages/contactUs/assets/contact.data";
 import { footerStyle, iconBoxStyle } from "./FooterStyle";
 import { colors, publicFontFamily } from "../publicStyle/publicStyle";
-// import whiteLogo from "../../assets/whiteLogo.png";
 import snapchatImg from "../../assets/snapChat.png";
 import linkedinImg from "../../assets/linkedin.png";
 import twitterImg from "../../assets/twitter.png";
@@ -28,6 +27,7 @@ import instagramImg from "../../assets/instagram.png";
 import facebookImg from "../../assets/facebook.png";
 import youtubeImg from "../../assets/youtube.png";
 import imgPath from "../../assets/zena.png";
+import footeriMG from "../../assets/footer.jpg";
 const Footer = () => {
   const { pathname } = useLocation();
   const [_, { language: lang }] = useTranslation();
@@ -56,7 +56,7 @@ const Footer = () => {
           width: {
             lg: 0.75,
             md: 0.85,
-            xs: 0.95,
+            xs: 1,
           },
           height: 600,
           position: "relative",
@@ -72,23 +72,31 @@ const Footer = () => {
             height: 1,
             zIndex: "-1",
           }}
-          src={
-            "https://tse2.mm.bing.net/th?id=OIP.sVYruSh8hPtV9XukOLgHjAHaFj&pid=Api&P=0&h=180"
-          }
+          src={footeriMG}
         />
         <Stack
-          direction="row"
-          justifyContent={"flex-end"}
-          alignitems={"center"}
-          height={1}
-          width={0.9}
-          mx={"auto"}
+          sx={{
+            width: {
+              md: 0.9,
+              xs: 0.8,
+            },
+            mx: "auto",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: {
+              md: "flex-end",
+              xs: "center",
+            },
+          }}
         >
           <Box
             sx={{
               bgcolor: colors.lightGreen,
               height: "auto",
-              p: "50px 40px",
+              p: {
+                md: "50px 20px",
+                xs: "25px 10px",
+              },
             }}
           >
             {contactWaysIcons.map((contactWay) => (
@@ -100,7 +108,7 @@ const Footer = () => {
                   gap: {
                     lg: 2.5,
                     md: 1.5,
-                    xs: 0.5,
+                    xs: 0,
                   },
                   mt: "10px",
                 }}
@@ -122,8 +130,8 @@ const Footer = () => {
                       width: 200,
                       color: "#fff",
                       fontSize: {
-                        md: "20px",
-                        xs: "17px",
+                        md: "18px",
+                        xs: "14px",
                       },
                     }}
                   >
@@ -137,7 +145,10 @@ const Footer = () => {
                 <Button
                   sx={{
                     fontFamily: publicFontFamily,
-                    fontSize: "17px",
+                    fontSize: {
+                      md: "18px",
+                      xs: "14px",
+                    },
                     color: "#fff",
                     fontWeight: "bold",
                     transition: "color 0.4s",
@@ -155,7 +166,10 @@ const Footer = () => {
                 <Button
                   sx={{
                     fontFamily: publicFontFamily,
-                    fontSize: "17px",
+                    fontSize: {
+                      md: "18px",
+                      xs: "14px",
+                    },
                     color: "#fff",
                     fontWeight: "bold",
                     transition: "color 0.4s",
@@ -173,7 +187,10 @@ const Footer = () => {
                 <Button
                   sx={{
                     fontFamily: publicFontFamily,
-                    fontSize: "17px",
+                    fontSize: {
+                      md: "18px",
+                      xs: "14px",
+                    },
                     color: "#fff",
                     fontWeight: "bold",
                     transition: "color 0.4s",

@@ -73,7 +73,8 @@ export default function MobileProfileMenu() {
                 lg: "27px",
                 xs: "25",
               },
-              color: colors[pathname === "/profile" ? "newMainColor" : "grey"],
+
+              color: open ? colors.newMainColor : undefined,
             }}
           />
         ) : (
@@ -82,6 +83,9 @@ export default function MobileProfileMenu() {
               fontSize: {
                 lg: "27px",
                 xs: "25px",
+              },
+              "&:hover": {
+                color: colors.newMainColor,
               },
               color: colors[pathname === "/profile" ? "newMainColor" : "grey"],
             }}
@@ -114,6 +118,9 @@ export default function MobileProfileMenu() {
               cursor: "pointer",
               gap: "10px",
               p: "10px",
+              "&:hover": {
+                bgcolor: "rgba(0, 0, 0, 0.04)",
+              },
               bgcolor:
                 item.name_en === "Profile" && pathname === "/profile"
                   ? `${colors.newMainColor} !important `

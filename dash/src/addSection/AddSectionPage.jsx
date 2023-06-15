@@ -22,19 +22,27 @@ const AddSectionPage = () => {
       type: "",
     },
     validationSchema: yup.object({
-      title_ar: yup
-        .string()
-        .required(language === "en" ? `*Required` : "*مطلوب"),
-      title_en: yup
-        .string()
-        .required(language === "en" ? `*Required` : "*مطلوب"),
-      description_en: yup
-        .string()
-        .required(language === "en" ? `*Required` : "*مطلوب"),
-      description_ar: yup
-        .string()
-        .required(language === "en" ? `*Required` : "*مطلوب"),
       type: yup.string().required(language === "en" ? `*Required` : "*مطلوب"),
+      title_ar: yup.string().when("type", {
+        is: "banner",
+        then: yup.string().notRequired(),
+        otherwise: yup.string().required(),
+      }),
+      title_en: yup.string().when("type", {
+        is: "banner",
+        then: yup.string().notRequired(),
+        otherwise: yup.string().required(),
+      }),
+      description_en: yup.string().when("type", {
+        is: "banner",
+        then: yup.string().notRequired(),
+        otherwise: yup.string().required(),
+      }),
+      description_ar: yup.string().when("type", {
+        is: "banner",
+        then: yup.string().notRequired(),
+        otherwise: yup.string().required(),
+      }),
       image: yup.string().required(language === "en" ? `*Required` : "*مطلوب"),
     }),
     onSubmit: () => {
@@ -95,52 +103,6 @@ const AddSectionPage = () => {
             >
               <div className="row">
                 <div className="col-lg-6 col-md-12">
-                  <Input
-                    value={values.title_en}
-                    error={errors.title_en}
-                    touched={touched.title_en}
-                    name="title_en"
-                    label={
-                      language === "en" ? "English Title" : "العنوان الانجليزي"
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <Input
-                    value={values.title_ar}
-                    error={errors.title_ar}
-                    touched={touched.title_ar}
-                    name="title_ar"
-                    label={
-                      language === "en" ? "Arabic Title" : "العنوان العربي"
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <Input
-                    value={values.description_en}
-                    error={errors.description_en}
-                    touched={touched.description_en}
-                    name="description_en"
-                    label={
-                      language === "en"
-                        ? "English Description"
-                        : "الوصف الانجليزي"
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <Input
-                    value={values.description_ar}
-                    error={errors.description_ar}
-                    touched={touched.description_ar}
-                    name="description_ar"
-                    label={
-                      language === "en" ? "Arabic Description" : "الوصف العربي"
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
                   <div className=" mt-3">
                     <label style={{ textTransform: "capitalize" }}>
                       {language === "en" ? "section type" : "نوع القسم"}
@@ -184,38 +146,96 @@ const AddSectionPage = () => {
                       </p>
                     ) : undefined}
                   </div>
-                  {values.type === "banner" && (
-                    <div className=" mt-3">
-                      <label style={{ textTransform: "capitalize" }}>
-                        {language === "en"
-                          ? "banner alignment"
-                          : "محاذاة البانر"}
-                      </label>
-                      <select
-                        className={`w-100 mt-2 border `}
-                        value={alignmentField}
-                        onChange={(e) => setAlignmentField(e.target.value)}
-                        style={{
-                          outline: 0,
-                          fontSize: "17px",
-                          padding: "5px",
-                        }}
-                      >
-                        <option selected hidden>
-                          {i18n.language === "en"
-                            ? "Select alignment"
-                            : "اختار تنسيق"}
-                        </option>
-                        {requiredAlignments.map((reqAlignment) => (
-                          <option value={reqAlignment} key={reqAlignment}>
+                  {values.type ? (
+                    values.type === "banner" ? (
+                      <div className=" mt-3">
+                        <label style={{ textTransform: "capitalize" }}>
+                          {language === "en"
+                            ? "banner alignment"
+                            : "محاذاة البانر"}
+                        </label>
+                        <select
+                          className={`w-100 mt-2 border `}
+                          value={alignmentField}
+                          onChange={(e) => setAlignmentField(e.target.value)}
+                          style={{
+                            outline: 0,
+                            fontSize: "17px",
+                            padding: "5px",
+                          }}
+                        >
+                          <option selected hidden>
                             {i18n.language === "en"
-                              ? reqAlignment
-                              : arabicAlignments[reqAlignment]}
+                              ? "Select alignment"
+                              : "اختار تنسيق"}
                           </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                          {requiredAlignments.map((reqAlignment) => (
+                            <option value={reqAlignment} key={reqAlignment}>
+                              {i18n.language === "en"
+                                ? reqAlignment
+                                : arabicAlignments[reqAlignment]}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    ) : (
+                      <>
+                        <Input
+                          value={values.title_en}
+                          error={errors.title_en}
+                          touched={touched.title_en}
+                          name="title_en"
+                          label={
+                            language === "en"
+                              ? "English Title"
+                              : "العنوان الانجليزي"
+                          }
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <Input
+                          value={values.title_ar}
+                          error={errors.title_ar}
+                          touched={touched.title_ar}
+                          name="title_ar"
+                          label={
+                            language === "en"
+                              ? "Arabic Title"
+                              : "العنوان العربي"
+                          }
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <Input
+                          value={values.description_en}
+                          error={errors.description_en}
+                          touched={touched.description_en}
+                          name="description_en"
+                          label={
+                            language === "en"
+                              ? "English Description"
+                              : "الوصف الانجليزي"
+                          }
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <Input
+                          value={values.description_ar}
+                          error={errors.description_ar}
+                          touched={touched.description_ar}
+                          name="description_ar"
+                          label={
+                            language === "en"
+                              ? "Arabic Description"
+                              : "الوصف العربي"
+                          }
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                      </>
+                    )
+                  ) : undefined}
+
                   <div>
                     <button
                       type="submit"

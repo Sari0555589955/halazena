@@ -198,6 +198,9 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
               cursor: "pointer",
               transform: language === "en" ? "rotateY(180deg)" : 0,
               svg: {
+                "&:hover": {
+                  color: colors.newMainColor,
+                },
                 color: colors[pathname === path ? "newMainColor" : "grey"],
               },
               display: {
@@ -205,7 +208,6 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
                 xs: name === "profile" ? "none" : undefined,
               },
             }}
-            // onClick={toggleDrawer(anchor, true)}
           >
             <Badge
               sx={{
@@ -230,15 +232,6 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
               {icon}
             </Badge>
           </Box>
-          {/* {name === "profile" && (
-            <Drawer
-              anchor={anchor}
-              open={state[anchor]}
-              onClose={toggleDrawer(anchor, false)}
-            >
-              {list(anchor)}
-            </Drawer>
-          )} */}
         </React.Fragment>
       ))}
     </div>

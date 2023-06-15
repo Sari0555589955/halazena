@@ -29,7 +29,6 @@ export default function NavLinks() {
             onClick={() => navigate(item.link)}
             sx={{
               color: pathname === item.link ? colors.newMainColor : "#000",
-
               fontSize: {
                 lg: "16px",
                 md: "13px",
@@ -38,13 +37,15 @@ export default function NavLinks() {
               backgroundColor: "transparent !important",
               fontFamily: publicFontFamily,
               fontWeight: "bolder !important",
+              "&:hover": {
+                color: colors.newMainColor,
+              },
             }}
           >
             {item[`title_${lang}`]}
           </Button>
         );
       })}
-
     </Box>
   );
 }

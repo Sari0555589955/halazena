@@ -43,17 +43,25 @@ export const addSubCategory = async (
   req: AuthenticatedRequest,
   res: Response
 ) => {
-  const subcategory = await Category.findOne({
-    name: req.body.name,
-    sub: req.params.id,
+  const sub: any = await Category.findById(req.params.id);
+  const subcategory_en = await Category.findOne({
+    name_en: req.body.name_en,
+    sub: sub._id,
   });
-  if (subcategory) {
+  const subcategory_ar = await Category.findOne({
+    name_ar: req.body.name_ar,
+    sub: sub._id,
+  });
+  if (subcategory_en || subcategory_ar) {
     return res.status(400).send({
       error_en: "Sub category Already Exist",
       error_ar: "الفئة الفرعيه موجودة بالفعل",
     });
   }
-  const newSubCategory = new Category({ ...req.body, sub: req.params.id });
+  const newSubCategory = new Category({
+    ...req.body,
+    sub: req.params.id,
+  });
   await newSubCategory.save();
 
   res.status(200).send({

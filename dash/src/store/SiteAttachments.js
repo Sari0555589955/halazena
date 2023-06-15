@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
     sliders: [],
+    banners:[]
 }
 
 export const SiteAttachments = createSlice({
@@ -17,10 +18,16 @@ export const SiteAttachments = createSlice({
         },
         addSlider: (state, action) => {
             state.sliders.push(action.payload)
-        } 
+        },
+        getBanners: (state, action) => {
+            state.banners = action.payload;
+        },
+        deleteBanner: (state, action) => {
+            state.banners = state.banners.filter((banner) => banner._id !== action.payload)            
+        },
        
     }
 })
 
-export const {getSliders, deleteSlider, addSlider} = SiteAttachments.actions
+export const {getSliders, deleteSlider, addSlider, getBanners,deleteBanner} = SiteAttachments.actions
 export default SiteAttachments.reducer

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetMostSellingProductsQuery } from "../../../../APIs/ProductApis";
+import { useTranslation } from "react-i18next";
 
 const handleUniqueMostSelling = (mostSelling) => {
   let newProductsObj = {};
@@ -18,25 +19,23 @@ function useFetchMostSellingProducts() {
     data,
     isSuccess,
     isError,
+    isLoading,
     refetch: refetchMostSelling,
   } = useGetMostSellingProductsQuery();
+  console.log("fetchingErro");
   const [mostSellingProducts, setMostSellingProducts] = useState([]);
-  const [error, setError] = useState("");
   useEffect(() => {
-    if (isSuccess && !isError) {
+    if (isSuccess) {
+    } else if (isSuccess && !isError) {
       let products = handleUniqueMostSelling(data.products);
-      // let temp =
-        
-      //   products?.map((item) => {
-      //     return { ...item?.product };
-      //   });
       setMostSellingProducts((_) => products);
-      setError("");
-    } else {
-      setError("Error Happenend While Fetching Most Newiest Products");
     }
   }, [isSuccess]);
-  return { mostSellingProducts, mostSellingError: error, refetchMostSelling };
+  return {
+    mostSellingProducts,
+      refetchMostSelling,
+    isLoading,
+  };
 }
 
 export default useFetchMostSellingProducts;

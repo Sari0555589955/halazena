@@ -3,11 +3,11 @@ import styled from "@emotion/styled";
 import { Avatar, Box, Typography } from "@mui/material";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import React, { useEffect } from "react";
-// import colors from "../../";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useGetAllCategoriesQuery } from "../../APIs/categoriesApi";
 import { imageBaseUrl } from "../service";
+import { publicFontFamily } from "../publicStyle/publicStyle";
 const DepartmentsSlider = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState();
@@ -21,7 +21,6 @@ const DepartmentsSlider = () => {
   const StyledBox = styled(Box)({
     display: "flex",
     alignItems: "center",
-
     justifyContent: "center",
     color: "#000",
     borderRadius: "10px",
@@ -44,86 +43,71 @@ const DepartmentsSlider = () => {
       <Box
         sx={{
           width: {
-            xl: "1200px",
-            lg: "992px",
+            xl: "1300px",
+            lg: "1000px",
+            md: "992px",
             xs: 0.9,
           },
           mx: "auto",
-          mt: "-225px",
-          py: "70px",
+          mt: "-175px",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "15px",
+          justifyContent: {
+            lg: "space-evenly",
+            xs: "center",
+          },
         }}
-        className="doctors-carousel"
       >
-        {categories && (
-          <Splide
-            hasTrack={false}
-            options={{
-              type: "loop",
-              perPage: 3,
-              arrows: false,
-              width: "100%",
-              interval: "5000",
-              speed: "2000",
-              autoplay: true,
-              breakpoints: {
-                1900: {
-                  perPage: 3,
+        {categories &&
+          categories.map((category) => (
+            <StyledBox
+              onClick={() => navigate(`/departments/${category._id}`)}
+              sx={{
+                height: {
+                  lg: 240,
+                  xs: 200,
                 },
-                1200: {
-                  perPage: 3,
+                width: {
+                  lg: 0.2,
+                  xs: 0.3,
                 },
-                992: {
-                  perPage: 1,
-                },
-                768: {
-                  perPage: 1,
-                },
-                600: {
-                  perPage: 1,
-                },
-              },
-              pagination: true,
-              gap: "40px",
-            }}
-          >
-            <SplideTrack
-              style={
-                {
-                  // overflowY: "visible",
-                }
-              }
+                mt: "10px",
+              }}
             >
-              {categories?.map((category) => (
-                <SplideSlide>
-                  <StyledBox
-                    onClick={() => navigate(`/departments/${category._id}`)}
-                    sx={{
-                      height: {
-                        lg: 240,
-                        md: 200,
-                        xs: 190,
-                      },
-                    }}
-                  >
-                    <Box>
-                      <Avatar
-                        sx={{
-                          mx: "auto",
-                          height: "60px",
-                          width: "60px",
-                        }}
-                        src={`${imageBaseUrl}/${category?.image}`}
-                      />
-                      <Typography variant="h6" mt="6px" align = "center" >
-                        {category[`name_${language}`]}
-                      </Typography>
-                    </Box>
-                  </StyledBox>
-                </SplideSlide>
-              ))}
-            </SplideTrack>
-          </Splide>
-        )}
+              <Box>
+                <Avatar
+                  sx={{
+                    mx: "auto",
+                    height: {
+                      md: 60,
+                      xs: 45,
+                    },
+                    width: {
+                      md: 60,
+                      xs: 45,
+                    },
+                  }}
+                  src={`${imageBaseUrl}/${category?.image}`}
+                />
+                <Typography
+                  variant="h6"
+                  mt="6px"
+                  align="center"
+                  sx={{
+                    fontFamily: publicFontFamily,
+                    fontWeight: "bold",
+                    fontSize: {
+                      md: "20px",
+                      xs: "15px",
+                    },
+                  }}
+                >
+                  {category[`name_${language}`]}
+                </Typography>
+              </Box>
+            </StyledBox>
+          ))}
       </Box>
     </Box>
   );

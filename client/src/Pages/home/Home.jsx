@@ -14,16 +14,16 @@ import { useTranslation } from "react-i18next";
 import HeroSlider from "./heroSlider/HeroSlider";
 import DepartmentsSlider from "../../components/departmentsSlider/DepartmentsSlider";
 import { useGetAboutUsDataQuery } from "../../APIs/aboutUsApi";
+import Loader from "../../components/loader/loader";
+import CustomError from "../../components/Error/Error";
+import HomeContact from "./HomeContact";
+import Iframe from "./Iframe";
 function Home() {
   const dispatch = useDispatch();
   const [_, { language }] = useTranslation();
-  const {
-    items1Loading,
-    mostSellingProducts,
-    mostSellingError,
-    refetchMostSelling,
-  } = useFetchMostSellingProducts();
-  const { mostNewiestError, mostNewiestProducts, mostNewiestRefetch } =
+  const { mostSellingProducts, isLoading: isLoadingMostSelling } =
+    useFetchMostSellingProducts();
+  const { mostNewiestProducts, isLoading: isLoadingMostNews } =
     useFetchMostNewiestProducts();
   const { data: aboutSectionData, isLoading: aboutIsLoading } =
     useGetAboutUsDataQuery();
@@ -37,48 +37,45 @@ function Home() {
         <HeroSlider />
         <DepartmentsSlider />
       </Box>
-      {mostSellingProducts[0] && mostNewiestProducts[0] ? (
-        <Box sx={sectionStyle}>
-          <Box sx={{ pt: 3 }}>
-            <CardsTest
-              items={mostNewiestProducts}
-              title={language === "en" ? "most newiest" : "الأحدث"}
-            />
-          </Box>
-          <Box pt="100px" pb="50px">
-            {aboutSectionData?.sections && (
-              <Typography variant="h4" align="center" mb="100px">
-                {aboutSectionData.sections[0].type}
-              </Typography>
-            )}
-            <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
-          </Box>
-          <Box sx={{ mt: 7 }}>
-            <CardsTest
-              items={mostSellingProducts}
-              title={language === "en" ? "most selling" : "الأكثر مبيعاً"}
-            />
-          </Box>
+      {isLoadingMostNews ? (
+        <Loader />
+      ) : mostNewiestProducts[0] ? (
+        <Box sx={{ pt: 3 }}>
+          <CardsTest
+            items={mostNewiestProducts}
+            title={language === "en" ? "most newiest" : "الأحدث"}
+          />
         </Box>
       ) : (
-        <>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              height: "30vh",
-            }}
-          >
-            <CircularProgress
-              sx={{
-                color: colors.newMainColor,
-              }}
-            />
-          </Stack>
-          <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
-        </>
+        <CustomError
+          errorMessage={
+            language === "en"
+              ? "Most newiest products Are Not Found"
+              : "لم يتم العثور على المنتجات الأحدث"
+          }
+        />
       )}
+      <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
+      {isLoadingMostSelling ? (
+        <Loader />
+      ) : mostSellingProducts[0] ? (
+        <Box sx={{ pt: 3 }}>
+          <CardsTest
+            items={mostSellingProducts}
+            title={language === "en" ? "most newiest" : "الأحدث"}
+          />
+        </Box>
+      ) : (
+        <CustomError
+          errorMessage={
+            language === "en"
+              ? "Most selling products Are Not Found"
+              : "لم يتم العثور على المنتجات الأكثر مبيعاً"
+          }
+        />
+      )}
+      <Iframe />
+      <HomeContact />
     </Box>
   );
 }

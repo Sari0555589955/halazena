@@ -9,24 +9,21 @@ function useFetchMostNewiestProducts() {
     data,
     isSuccess,
     isError,
+    isLoading,
     refetch: mostNewiestRefetch,
   } = useGetMostNewiestProductsQuery();
   const [mostNewiestProducts, setMostNewiestProducts] = useState([]);
-  const [error, setError] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     if (isSuccess && !isError) {
       setMostNewiestProducts((_) => data?.products);
-      setError("");
-    } else {
-      setError("Error Happenend While Fetching Most Newiest Products");
     }
     if (refetching) {
       mostNewiestRefetch();
       dispatch(unsetRefetch());
     }
   }, [isSuccess, refetching]);
-  return { mostNewiestProducts, mostNewiestError: error, mostNewiestRefetch };
+  return { mostNewiestProducts, isLoading };
 }
 
 export default useFetchMostNewiestProducts;

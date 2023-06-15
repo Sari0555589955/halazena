@@ -18,20 +18,17 @@ const productSlice = createSlice({
       );
     },
     mostSelling: (state, action) => {
-      let newProductsObj={};
-      let copyProducts=[...action.payload]
-      let newProducts=[];
-      copyProducts.forEach((product)=>{
-          if (!newProductsObj[product?._id]) {
-              newProductsObj[product._id] = product
-              newProducts.push(product)
-              
-          }})
-          state.products=newProducts
-      },
-
-    
- 
+      let newProductsObj = {};
+      let copyProducts = [...action.payload];
+      let newProducts = [];
+      copyProducts.forEach((product) => {
+        if (!newProductsObj[product?._id]) {
+          newProductsObj[product._id] = product;
+          newProducts.push(product);
+        }
+      });
+      state.products = newProducts;
+    },
   },
 });
 

@@ -42,13 +42,17 @@ const LinkDropDown = ({
         disableRipple
         sx={{
           ...moreStyle,
-          color: pathname.includes('/department') ? `${colors.newMainHeavyColor} !important` : "#000",
+          color: open || pathname.includes("/department")
+            ? `${colors.newMainHeavyColor} !important`
+            : "#000",
           fontWeight: "bolder",
           textTransform: "capitalize",
           fontSize: "16px",
           backgroundColor: "transparent !important",
           fontFamily: publicFontFamily,
-
+          "&:hover": {
+            color: colors.newMainColor,
+          },
         }}
       >
         {item[`title_${lang}`]}

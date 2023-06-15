@@ -5,3 +5,10 @@ body {
 .products_slider .splide__pagination {
   display: none !important;
 }
+.products_slider .splide__arrow svg , .products_slider .splide__arrow svg:hover {
+  fill: #edcb94;
+}
+
+body {
+  background-image: url("./assets/wall.png");
+}

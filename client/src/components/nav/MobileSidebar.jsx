@@ -15,14 +15,12 @@ import { publicFontFamily } from "../publicStyle/publicStyle";
 const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
   const { pathname } = useLocation();
   const [_, { language: lang }] = useTranslation();
-
   const navigate = useNavigate();
   useEffect(() => {
     if (mobileOpen) {
       handleDrawerToggle();
     }
   }, [pathname]);
-
   return (
     <Box component="nav">
       <Drawer
@@ -31,7 +29,7 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
         sx={{
           "& .MuiDrawer-paper": {
@@ -77,14 +75,16 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
                 disableRipple
                 onClick={() => navigate(item.link)}
                 sx={{
-                  color:
-                    pathname === item.link ? colors.newLightColor : "#000",
+                  color: pathname === item.link ? colors.newLightColor : "#000",
                   fontSize: "16px",
                   textTransform: "capitalize",
                   fontWeight: "bold",
                   backgroundColor: "transparent !important",
                   display: "block",
                   fontFamily: publicFontFamily,
+                  "&:hover": {
+                    color: colors.newLightColor,
+                  },
                 }}
               >
                 {item[`title_${lang}`]}
@@ -103,11 +103,13 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
               color:
                 pathname === "/privacyPolicy" ? colors.newMainColor : "#000",
               fontFamily: publicFontFamily,
+              "&:hover": {
+                color: colors.newLightColor,
+              },
             }}
           >
             {lang === "en" ? "Privacy Policy" : "سياسة الخصوصية"}
           </Button>
-          {/* <MobileProfileMenu /> */}
         </Box>
       </Drawer>
     </Box>

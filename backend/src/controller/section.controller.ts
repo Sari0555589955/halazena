@@ -16,12 +16,7 @@ export const addSection = asyncHandler(
     if (alignment) {
       filterationObject = { ...filterationObject, alignment };
     }
-    if (
-      type == "banner" ||
-      type == "aboutus" ||
-      type == "privacy" ||
-      type == "slider"
-    ) {
+    if (type == "banner" || type == "aboutus" || type == "privacy") {
       // CHECK IF THERE IS SECTION WITH THE SAME TYPE OR NOT
       const sectionExist = await Section.findOne(filterationObject);
 
@@ -75,7 +70,7 @@ export const getAllSections = asyncHandler(
     const sections = await Section.find(filterationOptions);
     if (!sections[0]) {
       return res.status(400).send({
-        error_en: "Sections Are Not Found",
+        error_en: "Sections are not found",
         error_ar: "لم يتم العثور على الأقسام",
       });
     }
@@ -141,7 +136,7 @@ export const getSectionById = asyncHandler(
     if (!section) {
       return res.status(400).send({
         error_en: "section not Found",
-        error_ar: "لا يمكن حذف القسم لأنه غير موجود",
+        error_ar: "",
       });
     }
     res.status(200).send({

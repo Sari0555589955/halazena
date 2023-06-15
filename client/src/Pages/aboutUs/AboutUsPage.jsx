@@ -21,6 +21,9 @@ import {
   publicButton,
 } from "../../components/publicStyle/publicStyle";
 import Loader from "../../components/loader/loader";
+import CustomError from "../../components/Error/Error";
+import aboutImg1 from "../../assets/about1.jpg";
+import aboutImg2 from "../../assets/about2.png";
 
 export const AboutUsShared = ({ data, isLoading }) => {
   const { pathname } = useLocation();
@@ -65,6 +68,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
               md={6}
               xs={12}
               sx={{
+                mb: "10px",
                 display: {
                   md: "none",
                   xs: "block",
@@ -73,16 +77,11 @@ export const AboutUsShared = ({ data, isLoading }) => {
             >
               <Box>
                 <Avatar
-                  // src={`${imageBaseUrl}/${aboutUsSection.image}`}
-                  src={
-                    "https://images.pexels.com/photos/3060330/pexels-photo-3060330.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  }
+                  src={isHomePage ? aboutImg1 : aboutImg2}
                   sx={{
-                    height: {
-                      lg: 500,
-                      xs: 300,
-                    },
-                    width: "100%",
+                    height: 300,
+                    width: 0.96,
+                    mx: "auto",
                     borderRadius: 0,
                   }}
                 />
@@ -93,10 +92,6 @@ export const AboutUsShared = ({ data, isLoading }) => {
               md={6}
               xs={12}
               sx={{
-                width: {
-                  md: 0.9,
-                  xs: 1,
-                },
                 wordBreak: "break-word",
                 textAlign: {
                   md: "initial",
@@ -106,17 +101,18 @@ export const AboutUsShared = ({ data, isLoading }) => {
             >
               <Box
                 sx={{
-                  height: {
-                    md: "42vh",
-                    xs: "auto",
-                  },
+                  height: 1,
                   px: 3,
                   py: 1.5,
-                  width: 0.97,
+                  width: 0.96,
+                  mx: {
+                    md: 0,
+                    xs: "auto",
+                  },
                   bgcolor:
                     pathname === "/"
                       ? `${colors.lightGreen} !important`
-                      : "#fff",
+                      : "transparent",
                 }}
               >
                 <Typography
@@ -138,18 +134,22 @@ export const AboutUsShared = ({ data, isLoading }) => {
                     fontFamily: publicFontFamily,
                     my: 4,
                     fontWeight: "bold",
+                    color: "#717272",
+                    fontSize: "20px",
                   }}
                   dangerouslySetInnerHTML={{
                     __html: aboutUsSection[`description_${language}`],
                   }}
                 />
                 {isHomePage && (
-                  <Button
-                    sx={publicButton}
-                    onClick={() => navigate("/aboutUs")}
-                  >
-                    {language === "en" ? "Read more" : "اقرأ المزيد"}
-                  </Button>
+                  <Stack direction="row" justifyContent={"flex-end"}>
+                    <Button
+                      sx={publicButton}
+                      onClick={() => navigate("/aboutUs")}
+                    >
+                      {language === "en" ? "Read more" : "اقرأ المزيد"}
+                    </Button>
+                  </Stack>
                 )}
               </Box>
             </Grid>
@@ -166,7 +166,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
             >
               <Box>
                 <Avatar
-                  src={`${imageBaseUrl}/${aboutUsSection.image}`}
+                  src={isHomePage ? aboutImg1 : aboutImg2}
                   sx={{
                     height: {
                       lg: 500,
@@ -181,27 +181,13 @@ export const AboutUsShared = ({ data, isLoading }) => {
           </Grid>
         </Box>
       ) : (
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          sx={{
-            height: "50vh",
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: "30px",
-              color: "red",
-              fontWeight: "bold",
-              fontFamily: publicFontFamily,
-            }}
-          >
-            {language == "en"
+        <CustomError
+          errorMessage={
+            language == "en"
               ? "About us Not Been Added Yet"
-              : "لم يتم إضافة قسم من نحن حتى الآن"}
-          </Typography>
-        </Stack>
+              : "لم يتم إضافة قسم من نحن حتى الآن"
+          }
+        />
       )}
     </Box>
   );
@@ -210,16 +196,31 @@ export const AboutUsShared = ({ data, isLoading }) => {
 const AboutUsPage = () => {
   const { data: aboutSectionData, isLoading: aboutIsLoading } =
     useGetAboutUsDataQuery();
+  const [_, { language }] = useTranslation();
   return (
-    <>
-      <Box
-        sx={{
-          py: "200px",
-        }}
-      >
-        <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
-      </Box>
-    </>
+    <Box
+      sx={{
+        py: "200px",
+      }}
+    >
+      {aboutSectionData?.sections[0] && (
+        <Typography
+          variant="h2"
+          sx={{
+            fontFamily: publicFontFamily,
+            fontWeight: "bold",
+            textAlign: "center",
+            mb: {
+              md: "50px",
+              xs: "35px",
+            },
+          }}
+        >
+          {aboutSectionData?.sections[0][`title_${language}`]}
+        </Typography>
+      )}
+      <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
+    </Box>
   );
 };
 

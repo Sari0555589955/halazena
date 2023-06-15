@@ -23,6 +23,7 @@ export const colors = {
   newMainColor: "#C0924D",
   newMainHeavyColor: "#C0924D",
   newLightColor: "#EDCB94",
+  lightYellow : "#EDCB94",
   lightGreen: "#99ECEA",
   grey: "#5E5E5E",
 };

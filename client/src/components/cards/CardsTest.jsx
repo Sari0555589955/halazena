@@ -39,8 +39,8 @@ export default function CardsTest({
   const { pathname } = useLocation();
   const [_, { language }] = useTranslation();
   return (
-    <motion.div
-      style={{
+    <Box
+      sx={{
         direction: "ltr",
       }}
       key={title ? title : undefined}
@@ -56,7 +56,7 @@ export default function CardsTest({
         }}
       >
         <Typography
-          variant="h5"
+          variant="h3"
           sx={{
             fontWeight: "bolder",
             textTransform: "capitalize",
@@ -65,7 +65,9 @@ export default function CardsTest({
             fontWeight: "bold",
             fontFamily: publicFontFamily,
             fontSize: {
-              lg: "20px",
+              xl: "30px",
+              lg: "26px",
+              md: "21px",
               xs: "18px",
             },
             py: {
@@ -97,26 +99,18 @@ export default function CardsTest({
           mx: "auto",
         }}
       >
-        {/* {items &&
-          items[0] &&
-          items.map((item, index) => {
-            return (
-              <Box key={index} sx={cardStyle.wrapper}>
-                <CustomCard item={item} />
-              </Box>
-            );
-          })} */}
         {items && items[0] && (
           <Splide
             className="products_slider"
             hasTrack={false}
             options={{
+              width: "100%",
               type: "loop",
               perPage: 3,
               arrows: true,
-              width: "100%",
-              interval: "5000",
+              interval: "3000",
               speed: "2000",
+              focus: false,
               autoplay: true,
               breakpoints: {
                 1900: {
@@ -155,6 +149,6 @@ export default function CardsTest({
           </Splide>
         )}
       </Stack>
-    </motion.div>
+    </Box>
   );
 }

@@ -73,7 +73,6 @@ const Slider = () => {
   return (
     <div>
       {singleSlider && <EditSlider singleSlider={singleSlider} />}
-    
 
       {/* start of slider pics section */}
       <div className="bg-white rounded p-3 ">
@@ -108,32 +107,34 @@ const Slider = () => {
             </div>
             <div className={`${styles.PicsContainer} my-2 row`}>
               {sliders &&
-                sliders.map((img) => (
-                  <div key={img._id} className=" col-2">
-                    <AiFillDelete
-                      className="rounded-circle fs-5 text-danger"
-                      onClick={() => deleteImg(img)}
-                      style={{
-                        position: "absolute",
-                        top: "15",
-                        left: "15",
-                        cursor: "pointer",
-                        backgroundColor: "#e1e9fc",
-                        padding: "1px",
-                      }}
-                    />
-                    <img
-                      src={`${imageURL}/${img.image}`}
-                      className="rounded p-1 m-3"
-                      alt="Slider"
-                      data-bs-toggle="modal"
-                      data-bs-target={`#${+img?._id}`}
-                      onClick={() => clickOnPic(img)}
-                      style={{ cursor: "pointer", width: "100%" }}
-                    />
-                  </div>
-                ))}
-              
+                sliders.map(
+                  (img) =>
+                    img && (
+                      <div key={img._id} className=" col-2">
+                        <AiFillDelete
+                          className="rounded-circle fs-5 text-danger"
+                          onClick={() => deleteImg(img)}
+                          style={{
+                            position: "absolute",
+                            top: "15",
+                            left: "15",
+                            cursor: "pointer",
+                            backgroundColor: "#e1e9fc",
+                            padding: "1px",
+                          }}
+                        />
+                        <img
+                          src={`${imageURL}/${img?.image}`}
+                          className="rounded p-1 m-3"
+                          alt="Slider"
+                          data-bs-toggle="modal"
+                          data-bs-target={`#${+img?._id}`}
+                          onClick={() => clickOnPic(img)}
+                          style={{ cursor: "pointer", width: "100%" }}
+                        />
+                      </div>
+                    )
+                )}
             </div>
 
             {/* end of modal */}
@@ -144,7 +145,9 @@ const Slider = () => {
           <div className=" p-3 my-3">
             <div className="row m-3 ">
               <label className="form-label">
-                {i18n.language === "en" ? `Slider title arabic` : `عنوان السلايدر عربي`}
+                {i18n.language === "en"
+                  ? `Slider title arabic`
+                  : `عنوان السلايدر عربي`}
               </label>
 
               <input
@@ -157,7 +160,9 @@ const Slider = () => {
             </div>
             <div className="row m-3 ">
               <label className="form-label">
-                {i18n.language === "en" ? `Slider title english` : `عنوان السلايدر إنجليزي`}
+                {i18n.language === "en"
+                  ? `Slider title english`
+                  : `عنوان السلايدر إنجليزي`}
               </label>
 
               <input
@@ -175,7 +180,9 @@ const Slider = () => {
           <div className=" p-3 my-3">
             <div className="row m-3 ">
               <label className="form-label">
-                {i18n.language === "en" ? `Slider description arabic` : `وصف السلايدر عربي`}
+                {i18n.language === "en"
+                  ? `Slider description arabic`
+                  : `وصف السلايدر عربي`}
               </label>
               <textarea
                 name="description_ar"
@@ -188,7 +195,9 @@ const Slider = () => {
             </div>
             <div className="row m-3 ">
               <label className="form-label">
-                {i18n.language === "en" ? `Slider description english` : `وصف السلايدر إنجليزي`}
+                {i18n.language === "en"
+                  ? `Slider description english`
+                  : `وصف السلايدر إنجليزي`}
               </label>
               <textarea
                 name="description_en"
@@ -201,8 +210,7 @@ const Slider = () => {
             </div>
           </div>
           <button type="submit" className="btn btn-warning text-white mx-4">
-          {i18n.language === 'en' ? 'Save' : 'حفظ'}
-
+            {i18n.language === "en" ? "Save" : "حفظ"}
           </button>
         </form>
       </div>

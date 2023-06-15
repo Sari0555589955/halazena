@@ -15,6 +15,7 @@ const EditSlider = ({ singleSlider }) => {
       description_ar: "",
       description_en: "",
       image: "",
+      type:'slider'
     },
     onSubmit: (values) => {
       SiteAttachmentsServices.updateSection(
@@ -27,9 +28,12 @@ const EditSlider = ({ singleSlider }) => {
   });
   useEffect(() => {
     formik.setValues({
-      title: singleSlider?.title,
-      description: singleSlider?.description,
+      title_ar: singleSlider?.title_ar,
+      title_en: singleSlider?.title_en,
+      description_ar: singleSlider?.description_ar,
+      description_en: singleSlider?.description_en,
       image: singleSlider?.image,
+      type:'slider'
     });
     setSlider(singleSlider?.image);
   }, [singleSlider]);

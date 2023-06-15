@@ -167,79 +167,21 @@ const EditSectionPage = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <div className=" mt-3">
-                    <label style={{ textTransform: "capitalize" }}>
-                      {language === "en" ? "section type" : "نوع القسم"}
-                    </label>
-                    <select
-                      className={`w-100 mt-2 border `}
-                      value={values.type}
-                      name="type"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                  <div>
+                    <button
+                      type="submit"
                       style={{
+                        backgroundColor: "#F8B407",
+                        color: "#fff",
                         outline: 0,
+                        border: 0,
                         fontSize: "18px",
-                        padding: "5px",
+                        padding: "7px",
+                        marginTop: "30px",
                       }}
                     >
-                      <option selected hidden>
-                        Open this select menu
-                      </option>
-                      {sectionTypes.map((secType) => (
-                        <option value={secType} key={secType}>
-                          {i18n.language === "en"
-                            ? secType
-                            : arabibTypes[secType]}
-                        </option>
-                      ))}
-                    </select>
-                    {values.type === "banner" && (
-                      <div className=" mt-3">
-                        <label style={{ textTransform: "capitalize" }}>
-                          {language === "en" ? "alignment" : "التنسيق"}
-                        </label>
-                        <select
-                          className={`w-100 mt-2 border `}
-                          value={alignmentField}
-                          onChange={(e) => setAlignmentField(e.target.value)}
-                          style={{
-                            outline: 0,
-                            fontSize: "17px",
-                            padding: "5px",
-                          }}
-                        >
-                          <option selected hidden>
-                            {i18n.language === "en"
-                              ? "Select alignment"
-                              : "اختار تنسيق"}
-                          </option>
-                          {requiredAlignments.map((reqAlignment) => (
-                            <option value={reqAlignment} key={reqAlignment}>
-                              {i18n.language === "en"
-                                ? reqAlignment
-                                : arabicAlignments[reqAlignment]}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                    <div>
-                      <button
-                        type="submit"
-                        style={{
-                          backgroundColor: "#F8B407",
-                          color: "#fff",
-                          outline: 0,
-                          border: 0,
-                          fontSize: "18px",
-                          padding: "7px",
-                          marginTop: "30px",
-                        }}
-                      >
-                        {language === "en" ? "Edit Section" : "تعديل القسم"}
-                      </button>
-                    </div>
+                      {language === "en" ? "Edit Section" : "تعديل القسم"}
+                    </button>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-12">
