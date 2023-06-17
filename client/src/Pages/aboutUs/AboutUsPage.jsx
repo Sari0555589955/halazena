@@ -166,7 +166,11 @@ export const AboutUsShared = ({ data, isLoading }) => {
             >
               <Box>
                 <Avatar
-                  src={isHomePage ? aboutImg1 : aboutImg2}
+                  src={
+                    isHomePage
+                      ? aboutImg1
+                      : `${imageBaseUrl}/${aboutUsSection.image}`
+                  }
                   sx={{
                     height: {
                       lg: 500,

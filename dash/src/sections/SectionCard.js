@@ -40,7 +40,7 @@ const SectionCard = ({ section, styles, mutateDelete }) => {
       <div
         className="card"
         style={{
-          height: "270px",
+          // height: "270px",
         }}
       >
         <Link
@@ -60,9 +60,11 @@ const SectionCard = ({ section, styles, mutateDelete }) => {
               height: "200px",
             }}
           />
-          <div className="card-body">
-            <h6 className="card-text">{section[`title_${i18n.language}`]}</h6>
-          </div>
+          {section.type !== "banner" && (
+            <div className="card-body">
+              <h6 className="card-text">{section[`title_${i18n.language}`]}</h6>
+            </div>
+          )}
         </Link>
       </div>
     </div>

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllPrivcayQuery } from "../../APIs/privacyApi";
 import { Box, CardMedia, CircularProgress, Grid, Stack } from "@mui/material";
-import { colors } from "../../components/publicStyle/publicStyle";
+import {
+  colors,
+  publicFontFamily,
+} from "../../components/publicStyle/publicStyle";
 import { useTranslation } from "react-i18next";
 import bckwall from "../../assets/Group.png";
 import { imageBaseUrl } from "../../components/service";
@@ -52,12 +55,22 @@ const PrivacyPolicyPage = () => {
           >
             <Grid container>
               <Grid item xs={12} lg={6}>
-                <h2>{lang === "en" ? "privacy" : "الخصوصيه"}</h2>
-                <p className="lead fw-bold" style={{ fontSize: "1.8rem" }}>
+                <h2
+                  style={{
+                    fontFamily: publicFontFamily,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {lang === "en" ? "privacy" : "الخصوصيه"}
+                </h2>
+                <p
+                  className="lead fw-bold"
+                  style={{ fontSize: "1.8rem", fontFamily: publicFontFamily }}
+                >
                   {privacy[`title_${lang}`]}
                 </p>
                 <div
-                  style={{ fontWeight: "bold" }}
+                  style={{ fontWeight: "bold", fontFamily: publicFontFamily }}
                   dangerouslySetInnerHTML={{
                     __html: privacy[`description_${lang}`],
                   }}

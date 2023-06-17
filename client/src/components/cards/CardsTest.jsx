@@ -1,30 +1,15 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
-
 import { Box, Stack } from "@mui/material";
-import { motion } from "framer-motion";
-
 import { CardsStackStyle, cardStyle, colors } from "./cardStyle";
-import ProductDetailsModal from "./ProductDetailsModal";
-import { useNavigate } from "react-router";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import useAddToSavedProduct from "../../Pages/ProductsListForCart_Saved/useAddSavedProduct";
-import useAddToCart from "../../Pages/cart/useAddToCart";
-import useFetchSavedProducts from "../../Pages/ProductsListForCart_Saved/useFetchSavedProducts";
 import { useTranslation } from "react-i18next";
-import { useUpdateProductMutation } from "../../APIs/ProductApis";
-import ReactStars from "react-rating-stars-component";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
-import { useGetAllSavedProductsQuery } from "../../APIs/SavedProductApi";
-import { publicFontFamily, publicSizes } from "../publicStyle/publicStyle";
+import { publicFontFamily } from "../publicStyle/publicStyle";
 import ProductCard from "../productCard/ProductCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+
 export default function CardsTest({
   items,
   title,
@@ -90,9 +75,6 @@ export default function CardsTest({
         </Typography>
       </Stack>
       <Stack
-        direction="row"
-        justifyContent={"center"}
-        flexWrap="wrap"
         sx={{
           ...CardsStackStyle,
           width: autoWidth,
@@ -136,6 +118,7 @@ export default function CardsTest({
             <SplideTrack
               style={{
                 overflow: "hidden",
+                marginTop: "40px",
               }}
             >
               {items?.map((item, index) => (

@@ -4,7 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
-const FilterSections = ({ styles, filterSectionTypes }) => {
+const FilterSections = ({ filterSectionTypes }) => {
   const sectionsTypes = ["slider", "banner", "aboutus", "privacy"];
   const arabibTypes = {
     slider: "المنزلق",
@@ -15,7 +15,6 @@ const FilterSections = ({ styles, filterSectionTypes }) => {
 
   return (
     <div className="row p-3 d-flex justify-content-lg-end justify-content-lg-end flex-md-row flex-column w-100">
-   
       <div className=" d-flex flex-lg-row w-auto flex-column">
         <div className="dropdown m-1">
           <button

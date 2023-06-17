@@ -65,12 +65,12 @@ const DepartmentsSlider = () => {
               onClick={() => navigate(`/departments/${category._id}`)}
               sx={{
                 height: {
-                  lg: 240,
-                  xs: 200,
+                  lg: 180,
+                  xs: 150,
                 },
                 width: {
                   lg: 0.2,
-                  xs: 0.3,
+                  xs: 0.42,
                 },
                 mt: "10px",
               }}

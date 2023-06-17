@@ -11,6 +11,7 @@ const aboutUsApi = createApi({
       query: () => `/section/getAll?type=aboutus`,
       providesTags: ["AboutUs"],
     }),
+    
   }),
 });
 

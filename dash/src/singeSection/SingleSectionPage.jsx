@@ -25,7 +25,10 @@ const SingleSectionPage = () => {
     aboutus: "معلومات عننا",
     privacy: "سياسة الخصوصية",
   };
-
+  const arabicAlignments = {
+    horizontal: "افقي",
+    vertical: "عمودي",
+  };
   return (
     <div>
       <Layout>
@@ -50,16 +53,12 @@ const SingleSectionPage = () => {
                   >
                     {section[`title_${i18n.language}`]}
                   </h3>
-
-                  <p
-                    style={{
-                      wordBreak: "break-word",
-                      marginTop: "20px",
-                      fontSize: "20px",
+                  <div
+                    style={{ fontWeight: "bold" }}
+                    dangerouslySetInnerHTML={{
+                      __html: section[`description_${i18n.language}`],
                     }}
-                  >
-                    {section[`description_${i18n.language}`]}
-                  </p>
+                  />
                   <div className="d-flex align-items-center gap-2 justify-content-start ">
                     <p class="m-0">
                       {" "}
@@ -79,6 +78,27 @@ const SingleSectionPage = () => {
                         : arabibTypes[section.type]}
                     </h4>
                   </div>
+
+                  {section.type === "banner" ? (
+                    <div className="d-flex align-items-center gap-2 justify-content-start">
+                      <p class="m-0">
+                        {i18n.language === "en"
+                          ? "Banner alignment: "
+                          : "محاذاة البانر: "}
+                      </p>
+                      <h4
+                        style={{
+                          wordBreak: "break-word",
+                          color: "#C0924D",
+                          margin: 0,
+                        }}
+                      >
+                        {i18n.language === "en"
+                          ? section.alignment
+                          : arabicAlignments[section.alignment]}
+                      </h4>
+                    </div>
+                  ) : undefined}
                 </div>
                 <div className=" col-lg-6 col-sm-12 d-flex justify-content-center order-1 order-lg-2 ">
                   <img

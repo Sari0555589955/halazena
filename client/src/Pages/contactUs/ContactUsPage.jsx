@@ -250,7 +250,11 @@ const ContactUsPage = () => {
                     <Typography
                       variant="h6"
                       sx={{
-                        fontSize: "20px",
+                        fontSize: {
+                          lg: "20px",
+                          md: "18px",
+                          xs: "16px",
+                        },
                         color: "#fff",
                         fontFamily: publicFontFamily,
                         fontWeight: "bold",

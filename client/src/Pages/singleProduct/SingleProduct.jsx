@@ -178,7 +178,6 @@ function SingleProduct() {
                 md: "150px",
                 xs: "50px",
               },
-              // px: "75px",
             }}
           >
             <Stack
@@ -186,7 +185,11 @@ function SingleProduct() {
               justifyContent="flex-start"
               pt="20px"
               sx={{
-                px: "75px",
+                px: {
+                  lg: "75px",
+                  md: "55px",
+                  xs: "35px",
+                },
               }}
             >
               <Button
@@ -214,12 +217,22 @@ function SingleProduct() {
                 sx={{
                   color: colors.newMainColor,
                   fontFamily: publicFontFamily,
-                  fontSize: "30px",
+                  fontSize: {
+                    lg: "30px",
+                    md: "25px",
+                    xs: "16px",
+                  },
                   mt: "20px",
                   display: "inline",
                   bgcolor: colors.lightGreen,
                   color: "#fff",
-                  padding: "6px 75px",
+                  // padding: "6px 75px",
+                  py: "6px",
+                  px: {
+                    lg: "75px",
+                    md: "60px",
+                    xs: "55px",
+                  },
                   borderRadius:
                     lang === "en" ? "0 40px 40px 0" : "40px 0 0 40px",
                 }}
@@ -228,7 +241,11 @@ function SingleProduct() {
               </Typography>
               <Box
                 sx={{
-                  px: "75px",
+                  px: {
+                    lg: "75px",
+                    md: "60px",
+                    xs: "55px",
+                  },
                 }}
               >
                 <h4
@@ -526,82 +543,32 @@ function SingleProduct() {
             xs={12}
             lg={5}
             sx={{
+              position: "relative",
               py: {
                 md: "150px",
                 xs: "110px",
               },
               px: 1,
-              // bgcolor: colors.newLightColor,
             }}
           >
-            {/* <Avatar
-                sx={{ height: "66vh", width: "100%", borderRadius: 0 }}
-                src={product ? imageBaseUrl + product.images[0] : ""}
-              /> */}
-            {/* <div className="carousel-wrapper" style={{ direction: "ltr" }}>
-                <Carousel>
-                  {product.images.map((image) => {
-                    return (
-                      <div
-                        className="w-100"
-                        style={{
-                          height: "250px",
-                          width: "500px",
-                          border: 0,
-                          outline: 0,
-                        }}
-                      >
-                        <img
-                          src={imageBaseUrl + image}
-                          className="w-100"
-                          style={{
-                            objectFit: "contain",
-                            height: "100%",
-                            outline: 0,
-                          }}
-                        />
-                      </div>
-                    );
-                  })}
-                </Carousel>
-              </div> */}
-
-            {/* <Splide
-                options={{
-                  // fixedWidth: "100%",
-                  // autoplay: true,
-                  // interval: 2000,
-                  // type: "loop",
-                  // cover: true,
-                  // direction: lang === "en" ? "ltr" : "rtl",
-                  type: "loop",
-                  drag: "free",
-                  focus: "center",
-                  perPage: 3,
-                  autoScroll: {
-                    speed: 1,
-                  },
-                }}
-              >
-                {product?.images.map((image) => (
-                  <SplideSlide key={image}>
-                    <Box sx={{ position: "relative" }}>
-                      <Avatar
-                        sx={{
-                          width: "100%",
-                          height: {
-                            md: "100vh",
-                            xs: "50vh",
-                          },
-                          borderRadius: 0,
-                        }}
-                        src={imageBaseUrl + image}
-                        alt="Image 1"
-                      />
-                    </Box>
-                  </SplideSlide>
-                ))}
-              </Splide> */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: lang === "ar" ? 0 : undefined,
+                right: lang === "en" ? 0 : undefined,
+                height: {
+                  md: 1,
+                  xs: 0.5,
+                },
+                width: {
+                  md: 0.5,
+                  xs: 1,
+                },
+                bgcolor: colors.lightGreen,
+                zIndex: "-1",
+              }}
+            />
 
             <Box
               sx={{
@@ -616,7 +583,7 @@ function SingleProduct() {
                   height: "100%",
                   width: "100%",
                 }}
-                src={imageBaseUrl + product?.images[imageStart]}
+                src={imageBaseUrl + "/" + product?.images[imageStart]}
                 alt={product[`title_${lang}`]}
               />
             </Box>
@@ -641,7 +608,7 @@ function SingleProduct() {
                   onClick={() => setImageStart(index)}
                 >
                   <img
-                    src={imageBaseUrl + image}
+                    src={imageBaseUrl + "/" + image}
                     alt={
                       lang === "en" ? `Product${index + 1}` : `منتج${index + 1}`
                     }

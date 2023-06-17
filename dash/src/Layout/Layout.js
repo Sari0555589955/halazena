@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../assists/logoSidebar.png";
+import logo from "../assists/zena.png";
 import styles from "./Layout.module.css";
 import { TiThMenu } from "react-icons/ti";
 import LayoutServices from "../httpServices/Layout.services";
@@ -68,10 +68,10 @@ const Layout = ({ children }) => {
       url: "/admins",
       title: t("admins"),
     },
-    {
-      url: "/siteAttachments",
-      title: t("attachments"),
-    },
+    // {
+    //   url: "/siteAttachments",
+    //   title: t("attachments"),
+    // },
   ];
   return (
     <div className="row p-0 m-0">

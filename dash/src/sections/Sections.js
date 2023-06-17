@@ -5,54 +5,27 @@ import styles from "./sections.module.css";
 import SectionsServices from "../httpServices/Sections.services";
 import SectionCard from "./SectionCard";
 import FilterSections from "./FilterSections";
+import SectionsByTypes from "./SectionsByTypes";
+import { Link } from "react-router-dom";
 const Sections = () => {
-  const [sections, setSections] = useState();
-  const [type, setType] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  useEffect(() => {
-    SectionsServices.getAllSections(
-      `section/getAll${type ? `?type=${type}` : ""}`
-    )
-      .then((res) => {
-        if (res?.sections) {
-          setSections(res.sections);
-          setErrorMessage("");
-        }
-      })
-      .catch((err) => {
-        setErrorMessage(err?.response.data[`error_${i18n.language}`]);
-        setSections();
-      });
-  }, [useState, type]);
-
-  const filterSectionTypes = (type) => setType(type);
-
-  const mutateDelete = (sectionId) => {
-    return setSections((sections) =>
-      sections.filter((sec) => sec._id !== sectionId)
-    );
-  };
-  console.log("sections");
+  const sectionTypes = ["slider", "aboutus", "privacy", "banner"];
   return (
     <div>
       <Layout>
         <div className="p-3">
           <div className="bg-white px-3 py-5 row d-flex justify-content-lg-start justify-content- p-2 ">
-            <FilterSections
-              styles={styles}
-              filterSectionTypes={filterSectionTypes}
-            />
-            {sections && !errorMessage ? (
-              sections?.map((section) => (
-                <SectionCard
-                  section={section}
-                  styles={styles}
-                  mutateDelete={mutateDelete}
-                />
-              ))
-            ) : (
-              <h4 class="text-danger text-center">{errorMessage}</h4>
-            )}
+            <div className="d-flex justify-content-end">
+              <Link
+                to="/sections/add"
+                className="btn btn-warning text-white mx-3 "
+              >
+                {i18n.language === "en" ? `Add Section` : `إضافة قسم`}
+              </Link>
+            </div>
+            {sectionTypes &&
+              sectionTypes?.map((secType) => (
+                <SectionsByTypes secType={secType} styles={styles} />
+              ))}
           </div>
         </div>
       </Layout>

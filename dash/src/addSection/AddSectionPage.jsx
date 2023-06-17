@@ -8,19 +8,14 @@ import SectionsServices from "../httpServices/Sections.services";
 import { useNavigate, useParams } from "react-router";
 import { imageURL } from "..";
 import Input from "../editSection/Input";
+import ReactQuill from "react-quill";
+import InputQuill from "./InputQuill";
 const AddSectionPage = () => {
   const { language } = i18n;
-  const sectionTypes = ["slider", "banner", "aboutus", "privacy"];
+  const sectionTypes = ["slider", "aboutus", "privacy", "banner"];
   const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: {
-      title_en: "",
-      title_ar: "",
-      description_en: "",
-      description_ar: "",
-      image: "",
-      type: "",
-    },
+    initialValues: {},
     validationSchema: yup.object({
       type: yup.string().required(language === "en" ? `*Required` : "*مطلوب"),
       title_ar: yup.string().when("type", {
@@ -44,14 +39,13 @@ const AddSectionPage = () => {
         otherwise: yup.string().required(),
       }),
       image: yup.string().required(language === "en" ? `*Required` : "*مطلوب"),
+      alignment: yup.string().when("type", {
+        is: "banner",
+        then: yup.string().required(),
+      }),
     }),
     onSubmit: () => {
-      SectionsServices.addSection(
-        `section/add`,
-        values.type === "banner"
-          ? { ...values, alignment: alignmentField }
-          : values
-      ).then((res) => {
+      SectionsServices.addSection(`section/add`, values).then((res) => {
         if (res?.success_ar) navigate("/sections");
       });
     },
@@ -74,7 +68,6 @@ const AddSectionPage = () => {
       setFieldValue("image", res.filename);
     });
   };
-  const [alignmentField, setAlignmentField] = useState("");
   const arabibTypes = {
     slider: "المنزلق",
     banner: "بانر",
@@ -86,6 +79,25 @@ const AddSectionPage = () => {
     horizontal: "افقي",
     vertical: "عمودي",
   };
+  useEffect(() => {
+    if (values.type) {
+      if (values.type !== "banner") {
+        formik.setValues({
+          ...values,
+          title_en: "",
+          title_ar: "",
+          description_en: "",
+          description_ar: "",
+          image: "",
+        });
+      } else {
+        formik.setValues({
+          type: "banner",
+          alignment: "",
+        });
+      }
+    }
+  }, [values.type]);
 
   return (
     <div>
@@ -155,9 +167,15 @@ const AddSectionPage = () => {
                             : "محاذاة البانر"}
                         </label>
                         <select
-                          className={`w-100 mt-2 border `}
-                          value={alignmentField}
-                          onChange={(e) => setAlignmentField(e.target.value)}
+                          name="alignment"
+                          className={`w-100 mt-2 border ${
+                            errors.alignment && touched.alignment
+                              ? "border-danger"
+                              : ""
+                          } `}
+                          value={values?.alignment}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
                           style={{
                             outline: 0,
                             fontSize: "17px",
@@ -177,6 +195,17 @@ const AddSectionPage = () => {
                             </option>
                           ))}
                         </select>
+                        {errors.alignment && touched.alignment && (
+                          <p
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              color: "red",
+                            }}
+                          >
+                            {errors.alignment}
+                          </p>
+                        )}
                       </div>
                     ) : (
                       <>
@@ -206,32 +235,64 @@ const AddSectionPage = () => {
                           onChange={handleChange}
                           onBlur={handleBlur}
                         />
-                        <Input
-                          value={values.description_en}
-                          error={errors.description_en}
-                          touched={touched.description_en}
-                          name="description_en"
-                          label={
-                            language === "en"
-                              ? "English Description"
-                              : "الوصف الانجليزي"
-                          }
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
-                        <Input
-                          value={values.description_ar}
-                          error={errors.description_ar}
-                          touched={touched.description_ar}
-                          name="description_ar"
-                          label={
-                            language === "en"
-                              ? "Arabic Description"
-                              : "الوصف العربي"
-                          }
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
+                        {values.type === "aboutus" ||
+                        values.type === "privacy" ? (
+                          <>
+                            <InputQuill
+                              field={"description_en"}
+                              value={values.description_en}
+                              touched={touched.description_en}
+                              error={errors.description_en}
+                              setFieldValue={formik.setFieldValue}
+                              label={
+                                i18n.language === "en"
+                                  ? "English description"
+                                  : "الوصف بالانجليزية"
+                              }
+                            />
+                            <InputQuill
+                              field={"description_ar"}
+                              value={values.description_ar}
+                              touched={touched.description_ar}
+                              error={errors.description_ar}
+                              setFieldValue={formik.setFieldValue}
+                              label={
+                                i18n.language === "en"
+                                  ? "Arabic description"
+                                  : "الوصف بالعربية"
+                              }
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <Input
+                              value={values.description_en}
+                              error={errors.description_en}
+                              touched={touched.description_en}
+                              name="description_en"
+                              label={
+                                language === "en"
+                                  ? "English Description"
+                                  : "الوصف الانجليزي"
+                              }
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                            <Input
+                              value={values.description_ar}
+                              error={errors.description_ar}
+                              touched={touched.description_ar}
+                              name="description_ar"
+                              label={
+                                language === "en"
+                                  ? "Arabic Description"
+                                  : "الوصف العربي"
+                              }
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            />
+                          </>
+                        )}
                       </>
                     )
                   ) : undefined}

@@ -199,7 +199,7 @@ function Departments() {
                         </Button>
                       ))}
                   </Stack> */}
-                  <Cards
+                <Cards
                     subCategories={subCategories}
                     setSubCategories={setSubCategories}
                     items={

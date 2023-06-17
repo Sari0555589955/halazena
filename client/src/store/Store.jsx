@@ -13,6 +13,7 @@ import contactsApi from "../APIs/contactsApis";
 import ordersApi from "../APIs/ordersApi";
 import refetchReducer from "../APIs/refetchSlice";
 import privacyApi from "../APIs/privacyApi";
+import bannerApi from "../APIs/bannerApi";
 import userSlice from "../APIs/userSlice";
 const RootReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
@@ -26,6 +27,7 @@ const RootReducer = combineReducers({
   [contactsApi.reducerPath]: contactsApi.reducer,
   [ordersApi.reducerPath]: ordersApi.reducer,
   [privacyApi.reducerPath]: privacyApi.reducer,
+  [bannerApi.reducerPath]: bannerApi.reducer,
   saved: savedReducer,
   cart: cartReducer,
   refetching: refetchReducer,
@@ -48,7 +50,8 @@ export const store = configureStore({
       aboutUsApi.middleware,
       contactsApi.middleware,
       ordersApi.middleware,
-      privacyApi.middleware
+      privacyApi.middleware,
+      bannerApi.middleware
     );
   },
 });

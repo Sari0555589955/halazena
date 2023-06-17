@@ -13,8 +13,9 @@ export default function CustomError({ errorMessage }) {
     >
       <Typography
         sx={{
+          textAlign: "center",
           color: "red",
-          fontSize: { xs: "30px", md: "50px" },
+          fontSize: { xs: "30px", md: "50px", xs: "25px" },
           fontFamily: publicFontFamily,
         }}
       >
