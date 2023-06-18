@@ -82,9 +82,11 @@ const ProductCard = ({ item, externalWidth }) => {
         // }}
         sx={{
           ...cardStyle.card,
-          width: externalWidth ? externalWidth : "300px",
+          width: externalWidth ? externalWidth : 300,
           p: "10px",
           bgcolor: "#E4FDFD",
+          // width: 391,
+          height: 300,
         }}
       >
         <Stack direction="row" justifyContent={"flex-end"}>

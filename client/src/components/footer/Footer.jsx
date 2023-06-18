@@ -47,7 +47,6 @@ const Footer = () => {
       setBanner(data.sections[0]);
     }
   }, [data]);
-  console.log("banner", banner);
   return (
     <Box
       sx={{
@@ -64,7 +63,7 @@ const Footer = () => {
           <Box
             sx={{
               mx: "auto",
-              py: 5,
+              // py: 5,
               width: {
                 lg: 0.75,
                 md: 0.85,
@@ -75,6 +74,12 @@ const Footer = () => {
                 xs: 450,
               },
               position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: {
+                md: "flex-end",
+                xs: "center",
+              },
             }}
           >
             <CardMedia
@@ -92,8 +97,8 @@ const Footer = () => {
             <Stack
               sx={{
                 width: {
-                  md: 0.9,
-                  xs: 0.95,
+                  md: 0.75,
+                  xs: 1,
                 },
                 mx: "auto",
                 flexDirection: "row",

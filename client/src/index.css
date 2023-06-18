@@ -1,14 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?Bhaijaan+2&family=Tajawal:wght@300&display=swap");
-body {
-  /* position: relative; */
+.products_slider {
+  padding: 0 100px;
 }
 .products_slider .splide__pagination {
   display: none !important;
 }
-.products_slider .splide__arrow svg , .products_slider .splide__arrow svg:hover {
+.products_slider .splide__arrow svg,
+.products_slider .splide__arrow svg:hover {
   fill: #edcb94;
 }
-
 body {
   background-image: url("./assets/wall.png");
+}
+@media (max-width: 1200px) {
+  .products_slider {
+    padding: 0 80px;
+  }
+}
+@media (max-width: 992px) {
+  .products_slider {
+    padding: 0 40px;
+  }
+}
+@media (max-width: 768px) {
+  .products_slider {
+    padding: 0 20px;
+  }
 }

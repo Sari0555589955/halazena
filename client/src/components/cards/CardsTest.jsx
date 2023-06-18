@@ -91,7 +91,7 @@ export default function CardsTest({
               perPage: 3,
               arrows: true,
               interval: "3000",
-              speed: "2000",
+              speed: "1000",
               focus: false,
               autoplay: true,
               breakpoints: {
@@ -115,15 +115,10 @@ export default function CardsTest({
               gap: "40px",
             }}
           >
-            <SplideTrack
-              style={{
-                overflow: "hidden",
-                marginTop: "40px",
-              }}
-            >
+            <SplideTrack>
               {items?.map((item, index) => (
                 <SplideSlide>
-                  <Box key={index} sx={cardStyle.wrapper}>
+                  <Box key={index}>
                     <ProductCard item={item} />
                   </Box>
                 </SplideSlide>

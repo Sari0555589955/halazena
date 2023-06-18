@@ -74,7 +74,7 @@ const HeroSlider = () => {
               speed: "2000",
               arrows: false,
               direction: language === "en" ? "ltr" : "rtl",
-
+              pagination: false,
               interval: "4000",
             }}
           >

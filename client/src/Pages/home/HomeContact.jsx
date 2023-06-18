@@ -1,14 +1,13 @@
 import { Box, Button, CardMedia, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import ContactUsForm from "../contactUs/mui/ContactUsForm";
 import { useFormik } from "formik";
 import { contactFormik } from "../contactUs/assets/contact.data";
 import { toast } from "react-toastify";
 import imgPath from "../../assets/cakeContact.png";
 import ContactTextInput from "../contactUs/mui/ContactInput";
 import { publicFontFamily } from "../../components/publicStyle/publicStyle";
-import sliderWall from "../../assets/backSlide.jpg";
+import sliderWall from "../../assets/homeContact.png";
 import {
   ContactColors,
   InputBoxStyle,
@@ -102,6 +101,7 @@ const HomeContact = () => {
                 name="name"
                 handleChange={handleChange}
                 handleBlur={handleBlur}
+                radius={"15px"}
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -114,6 +114,7 @@ const HomeContact = () => {
                 name="email"
                 handleChange={handleChange}
                 handleBlur={handleBlur}
+                radius={"15px"}
               />
             </Grid>
           </Grid>
@@ -126,6 +127,7 @@ const HomeContact = () => {
             name="phone"
             handleChange={handleChange}
             handleBlur={handleBlur}
+            radius={"15px"}
           />
           <Box
             sx={{
@@ -145,15 +147,15 @@ const HomeContact = () => {
                   fontFamily: publicFontFamily,
                   fontSize: "16px",
                   fontWeight: "bold",
-                  // backgroundColor:
-                  //   errors.contactType && touched.contactType
-                  //     ? "transparent"
-                  //     : ContactColors.light,
                   outline: 0,
                   boxShadow: 0,
-                  borderTop: 0,
-                  borderLeft: 0,
-                  borderRight: 0,
+                  border: `1px solid ${
+                    errors.contactType && touched.contactType
+                      ? "#f00"
+                      : "#f5f5f5"
+                  }`,
+                  borderRadius: "20px",
+
                   borderBottom:
                     errors.contactType && touched.contactType
                       ? `1px solid red `
@@ -208,6 +210,8 @@ const HomeContact = () => {
                 placeholder={language === "en" ? "Message" : "الرسالة"}
                 style={{
                   width: "100%",
+                  borderRadius: "20px",
+
                   padding: "12px 16px",
                   height: "150px",
                   backgroundColor: "#fff",
@@ -241,6 +245,7 @@ const HomeContact = () => {
                 bgcolor: "#fff !important",
                 color: "#000",
                 transition: "all 0.3s",
+                borderRadius: "10px",
                 "&:active": {
                   transform: "scale(0.9)",
                 },
@@ -258,11 +263,11 @@ const HomeContact = () => {
         src={imgPath}
         sx={{
           height: {
-            md: 300,
-            xs: 250,
+            md: 400,
+            xs: 350,
           },
           width: {
-            md: 300,
+            md: 350,
             xs: 250,
           },
           objectFit: "contain",

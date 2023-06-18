@@ -12,6 +12,7 @@ const ContactTextInput = ({
   placeholder,
   handleChange,
   handleBlur,
+  radius,
 }) => {
   return (
     <Box
@@ -44,9 +45,11 @@ const ContactTextInput = ({
           name={name}
           placeholder={placeholder}
           sx={{
+            borderRadius: radius ? radius : "0",
             bgcolor: "#fff",
             fontFamily: publicFontFamily,
             fontWeight: "bold",
+            px: "10px",
             borderBottom:
               error && touched
                 ? `1px solid red`

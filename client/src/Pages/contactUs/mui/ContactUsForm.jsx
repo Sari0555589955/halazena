@@ -195,6 +195,7 @@ const ContactUsForm = ({ formik, language }) => {
             sx={{
               ...SubmitBtnStyle,
               transition: "all 0.3s",
+              borderRadius: "15px",
               "&:active": {
                 transform: "scale(0.9)",
               },

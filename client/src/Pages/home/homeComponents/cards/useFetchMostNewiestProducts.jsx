@@ -14,6 +14,7 @@ function useFetchMostNewiestProducts() {
   } = useGetMostNewiestProductsQuery();
   const [mostNewiestProducts, setMostNewiestProducts] = useState([]);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (isSuccess && !isError) {
       setMostNewiestProducts((_) => data?.products);

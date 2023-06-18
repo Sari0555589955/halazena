@@ -38,7 +38,7 @@ function DrawerAppBar(props) {
           pathname === "/thanksOrder"
             ? "none"
             : "block",
-        position: "fixed",
+        position: "absolute",
         top: {
           md: "20px",
           xs: 0,
