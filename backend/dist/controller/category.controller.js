@@ -50,11 +50,16 @@ exports.addCategory = addCategory;
 //access: private(superAdmin,admin)
 //Route: post /UnStore/api/v1/category/addSub/:id
 const addSubCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subcategory = yield category_model_1.default.findOne({
-        name: req.body.name,
-        sub: req.params.id,
+    const sub = yield category_model_1.default.findById(req.params.id);
+    const subcategory_en = yield category_model_1.default.findOne({
+        name_en: req.body.name_en,
+        sub: sub._id,
     });
-    if (subcategory) {
+    const subcategory_ar = yield category_model_1.default.findOne({
+        name_ar: req.body.name_ar,
+        sub: sub._id,
+    });
+    if (subcategory_en || subcategory_ar) {
         return res.status(400).send({
             error_en: "Sub category Already Exist",
             error_ar: "الفئة الفرعيه موجودة بالفعل",

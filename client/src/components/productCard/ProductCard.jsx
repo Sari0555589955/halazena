@@ -140,7 +140,7 @@ const ProductCard = ({ item, externalWidth }) => {
           </Button>
         </Stack>
         <Avatar
-          src={imageBaseUrl + item.images[0]}
+          src={imageBaseUrl + "/" + item.images[0]}
           alt={item.title}
           sx={{
             cursor: "pointer",

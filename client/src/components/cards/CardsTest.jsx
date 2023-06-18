@@ -87,26 +87,15 @@ export default function CardsTest({
             hasTrack={false}
             options={{
               width: "100%",
-              type: "loop",
               perPage: 3,
-              arrows: true,
-              interval: "3000",
-              speed: "1000",
-              focus: false,
-              autoplay: true,
               breakpoints: {
                 1900: {
                   perPage: 3,
                 },
                 1200: {
-                  perPage: 3,
+                  perPage: 2,
                 },
-                992: {
-                  perPage: 1,
-                },
-                768: {
-                  perPage: 1,
-                },
+
                 600: {
                   perPage: 1,
                 },

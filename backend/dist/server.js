@@ -23,16 +23,9 @@ const upload_helper_1 = __importDefault(require("./helper/upload.helper"));
 const cors_1 = __importDefault(require("cors"));
 const setLocation_1 = require("./middleWares/setLocation");
 const createGuestUser_1 = require("./helper/createGuestUser");
-const https_1 = __importDefault(require("https"));
-const fs_1 = __importDefault(require("fs"));
 joi_1.default.objectId = require("joi-objectid")(joi_1.default);
 dotenv_1.default.config({ path: path_1.default.join(__dirname, "./config/dev.env") });
 const app = (0, express_1.default)();
-const options = {
-    key: fs_1.default.readFileSync(path_1.default.join(__dirname, `../../../../etc/letsencrypt/live/saritest.store/privkey.pem`)),
-    cert: fs_1.default.readFileSync(path_1.default.join(__dirname, `../../../../etc/letsencrypt/live/saritest.store/fullchain.pem`)),
-};
-const ser = https_1.default.createServer(options, app);
 dotenv_1.default.config({ path: path_1.default.join(__dirname, "./config/dev.env") });
 // deleteGuest()
 // deleteImages()

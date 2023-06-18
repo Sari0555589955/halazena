@@ -34,6 +34,9 @@ const categorySchema = new mongoose_1.Schema({
     name_en: { type: String, required: true },
     name_ar: { type: String, required: true },
     sub: { type: mongodb_1.ObjectId, ref: "Category" },
+    image: {
+        type: String,
+    },
     count: Number,
 }, { timestamps: true });
 const Category = mongoose_1.default.model("Category", categorySchema);
@@ -47,6 +50,7 @@ const categoryValidation = (category) => {
             post: (schema) => schema.required(),
         }),
         sub: joi_1.default.objectId().optional(),
+        image: joi_1.default.string(),
     });
     return schema.validate(category);
 };
