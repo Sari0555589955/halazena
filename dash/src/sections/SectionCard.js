@@ -39,9 +39,11 @@ const SectionCard = ({ section, styles, mutateDelete }) => {
       </div>
       <div
         className="card"
-        style={{
-          // height: "270px",
-        }}
+        style={
+          {
+            // height: "270px",
+          }
+        }
       >
         <Link
           to={`/sections/${section._id}`}
@@ -53,7 +55,7 @@ const SectionCard = ({ section, styles, mutateDelete }) => {
           }}
         >
           <img
-            src={`${imageURL}/${section.image}`}
+            src={imageURL + section.image}
             className="card-img-top"
             alt={section[`title_${i18n.language}`]}
             style={{

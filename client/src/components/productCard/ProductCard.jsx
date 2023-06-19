@@ -70,23 +70,18 @@ const ProductCard = ({ item, externalWidth }) => {
   return (
     <>
       <Box
-        // component={motion.div}
-        // initial={{ y: 300 }}
-        // whileInView={{
-        //   y: 50,
-        //   transition: {
-        //     type: "spring",
-        //     bounce: 0.5,
-        //     duration: 0.6,
-        //   },
-        // }}
         sx={{
           ...cardStyle.card,
-          width: externalWidth ? externalWidth : 300,
+          width: externalWidth
+            ? externalWidth
+            : {
+                md: 300,
+                sm: 250,
+                xs: 0.9,
+              },
           p: "10px",
           bgcolor: "#E4FDFD",
-          // width: 391,
-          height: 300,
+          height: 350,
         }}
       >
         <Stack direction="row" justifyContent={"flex-end"}>
@@ -144,8 +139,8 @@ const ProductCard = ({ item, externalWidth }) => {
           alt={item.title}
           sx={{
             cursor: "pointer",
-            height: 100,
-            width: 100,
+            height: 150,
+            width: 150,
             my: "10px",
             mx: "auto",
           }}

@@ -5,12 +5,24 @@
 .products_slider .splide__pagination {
   display: none !important;
 }
+.products_slider .splide__arrow--prev {
+  left: 0 !important;
+}
+.products_slider .splide__arrow--next {
+  right: 0 !important;
+}
 .products_slider .splide__arrow svg,
 .products_slider .splide__arrow svg:hover {
   fill: #edcb94;
 }
 body {
   background-image: url("./assets/wall.png");
+}
+
+@media (max-width: 1400px) {
+  .products_slider {
+    padding: 0 30px;
+  }
 }
 @media (max-width: 1200px) {
   .products_slider {

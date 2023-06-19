@@ -184,12 +184,15 @@ const HeroSlider = () => {
                         >
                           <Button
                             sx={{
-                              bgcolor: `${colors.lightYellow} !important`,
+                              bgcolor: colors.lightYellow,
                               color: "#fff",
                               fontFamily: publicFontFamily,
                               fontSize: "19px",
                               padding: "5px 10px",
                               borderRadius: "20px",
+                              "&:hover": {
+                                bgcolor: colors.heavyYellow,
+                              },
                             }}
                             onClick={() => navigate("/departments")}
                           >

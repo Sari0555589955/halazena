@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Layout from "../Layout/Layout";
 import i18n from "../Translation/i18n";
 import styles from "./sections.module.css";
-import SectionsServices from "../httpServices/Sections.services";
-import SectionCard from "./SectionCard";
-import FilterSections from "./FilterSections";
+
 import SectionsByTypes from "./SectionsByTypes";
 import { Link } from "react-router-dom";
 const Sections = () => {

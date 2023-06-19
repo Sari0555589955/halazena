@@ -9,6 +9,7 @@ import {
   Avatar,
   CircularProgress,
   Button,
+  CardMedia,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -29,7 +30,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
   const { pathname } = useLocation();
   const [_, { language }] = useTranslation();
   const isHomePage = pathname === "/" ? true : false;
-  const aboutUsSection = data?.sections[0];
+  const aboutUsSection = data && data?.sections[0];
   const navigate = useNavigate();
   return (
     <Box
@@ -58,10 +59,31 @@ export const AboutUsShared = ({ data, isLoading }) => {
       ) : aboutUsSection ? (
         <Box
           sx={{
-            width: 0.97,
+            width: {
+              xl: 1500,
+              lg: 1100,
+              md: 0.85,
+              xs: 0.9,
+            },
             mx: "auto",
           }}
         >
+          {aboutUsSection && (
+            <Typography
+              variant="h3"
+              sx={{
+                fontFamily: publicFontFamily,
+                fontWeight: "bold",
+                textAlign: "center",
+                mb: {
+                  md: "50px",
+                  xs: "35px",
+                },
+              }}
+            >
+              {aboutUsSection[`title_${language}`]}
+            </Typography>
+          )}
           <Grid container>
             <Grid
               item
@@ -165,18 +187,16 @@ export const AboutUsShared = ({ data, isLoading }) => {
               }}
             >
               <Box>
-                <Avatar
+                <CardMedia
+                  component="img"
                   src={
                     isHomePage
                       ? aboutImg1
-                      : `${imageBaseUrl}/${aboutUsSection.image}`
+                      : imageBaseUrl + "/" + aboutUsSection.image
                   }
                   sx={{
-                    height: {
-                      lg: 500,
-                      xs: 300,
-                    },
-                    width: "100%",
+                    height: 500,
+                    width: 1,
                     borderRadius: 0,
                   }}
                 />
@@ -207,22 +227,6 @@ const AboutUsPage = () => {
         py: "200px",
       }}
     >
-      {aboutSectionData?.sections[0] && (
-        <Typography
-          variant="h2"
-          sx={{
-            fontFamily: publicFontFamily,
-            fontWeight: "bold",
-            textAlign: "center",
-            mb: {
-              md: "50px",
-              xs: "35px",
-            },
-          }}
-        >
-          {aboutSectionData?.sections[0][`title_${language}`]}
-        </Typography>
-      )}
       <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
     </Box>
   );

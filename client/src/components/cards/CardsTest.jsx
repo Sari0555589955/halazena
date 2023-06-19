@@ -17,8 +17,6 @@ export default function CardsTest({
   subCategories,
 }) {
   const autoWidth = {
-    lg:
-      subCategories && subCategories?.length > 0 ? "calc(100vw - 200px)" : 1200,
     xs: 1,
   };
   const { pathname } = useLocation();
@@ -27,6 +25,13 @@ export default function CardsTest({
     <Box
       sx={{
         direction: "ltr",
+        width: {
+          xl: 1500,
+          lg: 1100,
+          md: 0.85,
+          xs: 0.9,
+        },
+        mx: "auto",
       }}
       key={title ? title : undefined}
     >
@@ -36,8 +41,6 @@ export default function CardsTest({
         justifyContent={"center"}
         sx={{
           ...CardsStackStyle.cardsHeader,
-          width: autoWidth,
-          mx: "auto",
         }}
       >
         <Typography
@@ -49,11 +52,9 @@ export default function CardsTest({
             color: pathname === "/" ? "#000" : "#000",
             fontWeight: "bold",
             fontFamily: publicFontFamily,
-            fontSize: {
-              xl: "30px",
-              lg: "26px",
-              md: "21px",
-              xs: "18px",
+            mb: {
+              md: "50px",
+              xs: "35px",
             },
             py: {
               lg: "20px",
@@ -77,16 +78,14 @@ export default function CardsTest({
       <Stack
         sx={{
           ...CardsStackStyle,
-          width: autoWidth,
-          mx: "auto",
         }}
       >
         {items && items[0] && (
           <Splide
             className="products_slider"
             hasTrack={false}
+            width="100%"
             options={{
-              width: "100%",
               perPage: 3,
               breakpoints: {
                 1900: {
@@ -96,12 +95,11 @@ export default function CardsTest({
                   perPage: 2,
                 },
 
-                600: {
+                768: {
                   perPage: 1,
                 },
               },
               pagination: true,
-              gap: "40px",
             }}
           >
             <SplideTrack>

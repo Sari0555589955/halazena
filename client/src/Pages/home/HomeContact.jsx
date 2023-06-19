@@ -263,14 +263,22 @@ const HomeContact = () => {
         src={imgPath}
         sx={{
           height: {
+            lg: 500,
             md: 400,
             xs: 350,
           },
           width: {
-            md: 350,
+            md: 400,
             xs: 250,
           },
-          objectFit: "contain",
+          objectFit: {
+            md: "cover",
+            xs: "contain",
+          },
+          mb: {
+            md: 0,
+            xs: "100px",
+          },
         }}
       />
     </Stack>

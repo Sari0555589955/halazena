@@ -28,9 +28,10 @@ const DepartmentsSlider = () => {
     transition: "0.7s all",
     backgroundColor: "#f4f4f4 ",
     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+    border: "1px solid transparent",
     "&:hover": {
-      backgroundColor: "#b7b7b7",
-      transform: "scale(0.97)",
+      transform: "scale(0.98)",
+      boxShadow: "#66DFDC  0px 2px 8px 0px"
     },
   });
   return (
@@ -43,9 +44,9 @@ const DepartmentsSlider = () => {
       <Box
         sx={{
           width: {
-            xl: "1300px",
-            lg: "1000px",
-            md: "992px",
+            xl: 1500,
+            lg: 1100,
+            md: 0.85,
             xs: 0.9,
           },
           mx: "auto",
@@ -54,7 +55,7 @@ const DepartmentsSlider = () => {
           flexWrap: "wrap",
           gap: "15px",
           justifyContent: {
-            lg: "space-evenly",
+            lg: "space-between",
             xs: "center",
           },
         }}
@@ -69,7 +70,7 @@ const DepartmentsSlider = () => {
                   xs: 150,
                 },
                 width: {
-                  lg: 0.2,
+                  lg: 300,
                   xs: 0.42,
                 },
                 mt: "10px",

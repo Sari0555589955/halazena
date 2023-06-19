@@ -63,163 +63,117 @@ const SavedTest = () => {
         overflow: "hidden",
       }}
     >
-      <Grid
+      <Box
         container
         sx={{
           width: 0.95,
           mx: "auto",
           zIndex: 2,
+          display: "flex",
+          justifyContent: "center",
+          gap: {
+            xl: "50px",
+            lg: "40px",
+            md: "30px",
+      
+            xs: "20px",
+          },
+          flexWrap: "wrap",
         }}
       >
         {savedProducts?.products &&
           !isErrSaved &&
           savedProducts.products.map((item) => (
-            <Grid
-              item
-              lg={4}
-              md={6}
-              xs={12}
+            <Box
               sx={{
-                mt: "40px",
+                width: 300,
+                height: 350,
+                p: 1.5,
+                backgroundColor: "#DFFCFC",
+                zIndex: 2,
+                borderRadius: "25px",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
               }}
             >
-              <Box
+              <Stack direction="row" justifyContent={"flex-end"}>
+                <DeleteIcon
+                  sx={{ color: colors.newLightColor, cursor: "pointer" }}
+                  onClick={() => deleteProduct(item.product._id)}
+                />
+              </Stack>
+              <Avatar
+                src={imageBaseUrl + "/" + item.product.images[0]}
+                alt={item.product[`title_${lang}`]}
                 sx={{
-                  width: {
-                    lg: 0.7,
-                    md: 0.85,
-                    xs: 0.9,
-                  },
+                  cursor: "pointer",
+                  height: 150,
+                  width: 150,
+                  my: "10px",
                   mx: "auto",
-                  p: 1.5,
-                  backgroundColor: "#fff",
-                  zIndex: 2,
-                  borderRadius: "25px",
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+                }}
+                onClick={() => navigate(`/productDetails/${item?.product._id}`)}
+              />
+              <Typography
+                mb="10px"
+                variant="h5"
+                sx={{
+                  textAlign: "center",
+                  fontFamily: publicFontFamily,
+                  fontWeight: "bold",
+                  mt: "20px",
                 }}
               >
-                <Stack direction="row" justifyContent={"flex-end"}>
-                  <DeleteIcon
-                    sx={{ color: colors.newLightColor, cursor: "pointer" }}
-                    onClick={() => deleteProduct(item.product._id)}
-                  />
-                </Stack>
-                <Avatar
-                  src={imageBaseUrl + item.product.images[0]}
-                  alt={item.product[`title_${lang}`]}
+                {item.product[`title_${lang}`]}
+              </Typography>
+              <Stack direction="row" justifyContent="space-between" mt="30px">
+                <Button
                   sx={{
-                    height: 100,
-                    width: 100,
-                    my: "10px",
-                    mx: "auto",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    navigate(`/productDetails/${item?.product._id}`)
-                  }
-                />
-                <Typography
-                  mb="10px"
-                  variant="h5"
-                  sx={{
-                    textAlign: "center",
                     fontFamily: publicFontFamily,
-                    fontWeight: "bold",
+                    border: `1px solid ${colors.newLightColor}`,
+                    fontSize: "17px",
+                    borderRadius: "20px",
+                    padding: "5px 10px",
+                    transition: "0.4s all",
+                    width: 0.9,
+                    mx: "auto",
+                    color:
+                      !isErrCart &&
+                      cartData?.cart?.find(
+                        ({ product }) => product?._id === item?.product?._id
+                      )
+                        ? "#fff !important"
+                        : "#000 !important",
+                    bgcolor:
+                      !isErrCart &&
+                      cartData?.cart?.find(
+                        ({ product }) => product?._id === item?.product?._id
+                      )
+                        ? `${colors.newLightColor} !important`
+                        : "transparent !important",
+                    "&:active": {
+                      transform: "scale(0.95)",
+                    },
                   }}
+                  onClick={() => handleAddToCart(item?.product?._id)}
                 >
-                  {item.product[`title_${lang}`]}
-                </Typography>
-                <Stack direction="row" justifyContent="space-between" mt="5px">
-                  <Button
-                    sx={{
-                      fontFamily: publicFontFamily,
-                      border: `1px solid ${colors.newLightColor}`,
-                      fontSize: "17px",
-                      borderRadius: "20px",
-                      padding: "5px 10px",
-                      transition: "0.4s all",
-                      width: 0.9,
-                      mx: "auto",
-                      color:
-                        !isErrCart &&
-                        cartData?.cart?.find(
-                          ({ product }) => product?._id === item?.product?._id
-                        )
-                          ? "#fff !important"
-                          : "#000 !important",
-                      bgcolor:
-                        !isErrCart &&
-                        cartData?.cart?.find(
-                          ({ product }) => product?._id === item?.product?._id
-                        )
-                          ? `${colors.newLightColor} !important`
-                          : "transparent !important",
-                      "&:active": {
-                        transform: "scale(0.95)",
-                      },
-                    }}
-                    onClick={() => handleAddToCart(item?.product?._id)}
-                  >
-                    {!isErrCart &&
-                    cartData?.cart?.find(
-                      ({ product }) => product?._id === item?.product?._id
-                    )
-                      ? lang === "en"
-                        ? "Remove from cart"
-                        : "حذف من السلة"
-                      : lang === "en"
-                      ? "Add to cart"
-                      : "إضافة إلي السلة"}
-                  </Button>
-                  {/* <Stack
-                    direction="row"
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    gap="10px"
-                  >
-                    <AddCircleIcon
-                      sx={{
-                        cursor: "pointer",
-                        color: colors.newLightColor,
-                        transform: "scale(1.2)",
-                        transition: "all 0.2s",
-                        "&:active": {
-                          transform: "scale(1)",
-                        },
-                      }}
-                    />
-                    <Typography
-                      fontFamily={publicFontFamily}
-                      variant="h6"
-                      fontWeight={"bold"}
-                      align={"center"}
-                    >
-                      1
-                    </Typography>
-
-                    <RemoveCircleIcon
-                      sx={{
-                        display: "block",
-                        cursor: item.Quantity !== 1 && "pointer",
-                        pointerEvents: item.Quantity === 1 && "none",
-                        color:
-                          item.Quantity === 1 ? "#bbb" : colors.newLightColor,
-                        transform: "scale(1.2)",
-                        transition: "all 0.2s",
-                        "&:active": {
-                          transform: "scale(1)",
-                        },
-                      }}
-                      // onClick={() => dec(item)}
-                    />
-                  </Stack> */}
-                </Stack>
-              </Box>
-            </Grid>
+                  {!isErrCart &&
+                  cartData?.cart?.find(
+                    ({ product }) => product?._id === item?.product?._id
+                  )
+                    ? lang === "en"
+                      ? "Remove from cart"
+                      : "حذف من السلة"
+                    : lang === "en"
+                    ? "Add to cart"
+                    : "إضافة إلي السلة"}
+                </Button>
+              </Stack>
+            </Box>
           ))}
+
         {error && (
-          <Grid
+          <Box
             item
             xs={12}
             sx={{
@@ -240,9 +194,9 @@ const SavedTest = () => {
                 ? "Sorry but your productList is empty"
                 : "عذرا ولكن قائمة المنتجات الخاصة بك فارغة"}
             </Typography>
-          </Grid>
+          </Box>
         )}
-      </Grid>
+      </Box>
     </Box>
   );
 };

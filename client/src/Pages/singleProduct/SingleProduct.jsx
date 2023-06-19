@@ -582,6 +582,7 @@ function SingleProduct() {
                 style={{
                   height: "100%",
                   width: "100%",
+                  objectFit: "contain",
                 }}
                 src={imageBaseUrl + "/" + product?.images[imageStart]}
                 alt={product[`title_${lang}`]}
@@ -612,7 +613,11 @@ function SingleProduct() {
                     alt={
                       lang === "en" ? `Product${index + 1}` : `منتج${index + 1}`
                     }
-                    style={{ height: "100%", width: "100%" }}
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      objectFit: "contain",
+                    }}
                   />
                 </Box>
               ))}

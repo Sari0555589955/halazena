@@ -55,7 +55,13 @@ function Home() {
           }
         />
       )}
-      <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
+      <Box
+        sx={{
+          mt: "30px",
+        }}
+      >
+        <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
+      </Box>
       {isLoadingMostSelling ? (
         <Loader />
       ) : mostSellingProducts[0] ? (
