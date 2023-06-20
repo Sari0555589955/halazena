@@ -25,15 +25,14 @@ function useFetchMostSellingProducts() {
   console.log("fetchingErro");
   const [mostSellingProducts, setMostSellingProducts] = useState([]);
   useEffect(() => {
-    if (isSuccess) {
-    } else if (isSuccess && !isError) {
+    if (isSuccess && !isError) {
       let products = handleUniqueMostSelling(data.products);
       setMostSellingProducts((_) => products);
     }
   }, [isSuccess]);
   return {
     mostSellingProducts,
-      refetchMostSelling,
+    refetchMostSelling,
     isLoading,
   };
 }

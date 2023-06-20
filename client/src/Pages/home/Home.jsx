@@ -21,9 +21,9 @@ import Iframe from "./Iframe";
 function Home() {
   const dispatch = useDispatch();
   const [_, { language }] = useTranslation();
-  const { mostSellingProducts, isLoading: isLoadingMostSelling } =
+  const { mostSellingProducts, isLoading: loadingSellings } =
     useFetchMostSellingProducts();
-  const { mostNewiestProducts, isLoading: isLoadingMostNews } =
+  const { mostNewiestProducts, isLoading: loadingNewiest } =
     useFetchMostNewiestProducts();
   const { data: aboutSectionData, isLoading: aboutIsLoading } =
     useGetAboutUsDataQuery();
@@ -37,20 +37,20 @@ function Home() {
         <HeroSlider />
         <DepartmentsSlider />
       </Box>
-      {isLoadingMostNews ? (
+      {loadingNewiest ? (
         <Loader />
       ) : mostNewiestProducts[0] ? (
         <Box sx={{ pt: 3 }}>
           <CardsTest
             items={mostNewiestProducts}
-            title={language === "en" ? "most newiest" : "الأحدث"}
+            title={language === "en" ? "Most newiest" : "الأحدث"}
           />
         </Box>
       ) : (
         <CustomError
           errorMessage={
             language === "en"
-              ? "Most newiest products Are Not Found"
+              ? "Most newiest products are not dound"
               : "لم يتم العثور على المنتجات الأحدث"
           }
         />
@@ -62,13 +62,13 @@ function Home() {
       >
         <AboutUsShared data={aboutSectionData} isLoading={aboutIsLoading} />
       </Box>
-      {isLoadingMostSelling ? (
+      {loadingSellings ? (
         <Loader />
       ) : mostSellingProducts[0] ? (
         <Box sx={{ pt: 3 }}>
           <CardsTest
             items={mostSellingProducts}
-            title={language === "en" ? "most newiest" : "الأحدث"}
+            title={language === "en" ? "Most selling" : "الأكثر مبيعاً"}
           />
         </Box>
       ) : (

@@ -10,12 +10,7 @@ import ProductCard from "../productCard/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
-export default function CardsTest({
-  items,
-  title,
-  singleDepartmentName,
-  subCategories,
-}) {
+export default function CardsTest({ items, title, singleDepartmentName }) {
   const autoWidth = {
     xs: 1,
   };

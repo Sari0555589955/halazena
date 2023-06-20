@@ -160,7 +160,12 @@ export const AboutUsShared = ({ data, isLoading }) => {
                     fontSize: "20px",
                   }}
                   dangerouslySetInnerHTML={{
-                    __html: aboutUsSection[`description_${language}`],
+                    __html: isHomePage
+                      ? aboutUsSection[`description_${language}`].slice(
+                          0,
+                          451
+                        ) + "..."
+                      : aboutUsSection[`description_${language}`],
                   }}
                 />
                 {isHomePage && (

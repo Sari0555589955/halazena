@@ -16,6 +16,10 @@ const Iframe = () => {
     <Box
       sx={{
         bgcolor: state ? "#badbdb8f" : undefined,
+        mt: {
+          md: "75px",
+          xs: "50px",
+        },
       }}
     >
       {!state ? (
@@ -67,7 +71,7 @@ const Iframe = () => {
           ref={videoRef}
           controls={state ? true : false}
           sx={{
-            height: state ? '50vh' : "40vh",
+            height: state ? "50vh" : "40vh",
             width: 1,
             mx: "auto",
           }}
