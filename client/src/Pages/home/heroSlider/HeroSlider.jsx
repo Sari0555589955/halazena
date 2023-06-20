@@ -230,7 +230,9 @@ const HeroSlider = () => {
                           },
                           height: 300,
                           objectFit: "contain",
-                          background: `url(${imageBaseUrl + slide?.image})`,
+                          background: `url(${
+                            imageBaseUrl + "/" + slide?.image
+                          })`,
                           backgroundRepeat: "no-repeat",
                         }}
                       />
