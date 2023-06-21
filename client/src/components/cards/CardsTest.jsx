@@ -99,8 +99,8 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
           >
             <SplideTrack>
               {items?.map((item, index) => (
-                <SplideSlide>
-                  <Box key={index}>
+                <SplideSlide key={index}>
+                  <Box>
                     <ProductCard item={item} />
                   </Box>
                 </SplideSlide>

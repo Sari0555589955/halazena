@@ -58,17 +58,9 @@ export const contactFormik = {
     contactType: "",
   },
   errors: Yup.object({
-    name: Yup.string()
-      .strict()
-      .matches(
-        lang === "en" ? /^[a-zA-Z ]*$/ : /^[\u0621-\u064A]+$/,
-        `${
-          lang === "en"
-            ? "Name musn't have numbers"
-            : "الأسم لا ينبغي أن يحتوي علي أرقام"
-        }`
-      )
-      .required(lang === "en" ? "Name is required" : "الأسم مطلوب"),
+    name: Yup.string().required(
+      lang === "en" ? "Name is required" : "الأسم مطلوب"
+    ),
     email: Yup.string()
       .email(() => (lang === "en" ? "Invalid Email" : "بريد إلكتروني خاطئ"))
       .required(

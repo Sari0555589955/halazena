@@ -11,6 +11,7 @@ const DrawerItem = ({ name, data }) => {
       {data &&
         data.map((item) => (
           <Stack
+            key={item?.product?.title}
             direction="row"
             sx={{ justifyContent: "space-around", padding: 2 }}
           >

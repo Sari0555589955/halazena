@@ -20,7 +20,9 @@ export default function useFetchSavedProducts() {
           setError("");
           dispatch(setSaved(data.products.length));
         } else {
-          setError(error?.data[`error_${lang}`]);
+          setError(
+            lang === "en" ? error?.data?.error_en : error?.data?.error_ar
+          );
           setSavedProducts([]);
         }
       });

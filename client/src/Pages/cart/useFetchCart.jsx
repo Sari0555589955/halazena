@@ -20,20 +20,6 @@ export default function useFetchCart() {
   const [cartData, setCartData] = useState([]);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (sessionStorage.getItem("token")) {
-  //     getAllCart().then(({ data }) => {
-  //       if (data.cart[0]) {
-  //         setCartData(data?.cart);
-  //         setError("");
-  //         dispatch(setCart(data.cart.length));
-  //       } else {
-  //         setError(error?.data[`error_${lang}`]);
-  //         setCartData([]);
-  //       }
-  //     });
-  //   }
-  // }, [isSuccess]);
 
   function getCarts() {
     if (sessionStorage.getItem("token")) {
@@ -43,7 +29,9 @@ export default function useFetchCart() {
           setError("");
           dispatch(setCart(data.cart.length));
         } else {
-          setError(error?.data[`error_${lang}`]);
+          setError(
+            lang === "en" ? error?.data?.error_en : error?.data?.error_ar
+          );
           setCartData([]);
         }
       });

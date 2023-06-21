@@ -4,7 +4,6 @@ import {
   CardMedia,
   CircularProgress,
   Grid,
-  Stack,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -65,16 +64,15 @@ const HeroSlider = () => {
         >
           <Splide
             aria-label="My Favorite Images"
-            className="biolife-carousel"
+            className="heroSection_slider"
             options={{
-              type: "loop",
               autoplay: true,
               pauseOnHover: false,
               resetProgress: false,
               speed: "2000",
               arrows: false,
               direction: language === "en" ? "ltr" : "rtl",
-              pagination: false,
+              pagination: true,
               interval: "4000",
             }}
           >
@@ -90,6 +88,10 @@ const HeroSlider = () => {
                     container
                     sx={{
                       position: "relative",
+                      pt: {
+                        md: "50px",
+                        xs: 0,
+                      },
                       px: {
                         xl: "80px",
                         lg: "65px",
@@ -100,23 +102,20 @@ const HeroSlider = () => {
                   >
                     <Grid
                       item
-                      md={6}
+                      md={7}
                       xs={12}
                       sx={{
-                        height: {
-                          xl: "80vh",
-                          lg: "85vh",
-                          xs: "90vh",
-                        },
+                        pt: "150px",
                         display: {
                           md: "flex",
                           xs: "none",
                         },
                         alignItems: {
-                          md: "center",
+                          md: "flex-end",
                           xs: "flex-start",
                         },
                         justifyContent: "flex-start",
+                        color: "#707070",
                       }}
                     >
                       <Box
@@ -136,39 +135,40 @@ const HeroSlider = () => {
                           <Typography
                             sx={{
                               fontSize: {
-                                lg: "60px",
-                                md: "45px",
-                                xs: "32.5px",
+                                lg: "35px",
+                                md: "30px",
+                                xs: "20px",
                               },
                               mt: "-60px",
                               fontWeight: "bold",
                               fontFamily: publicFontFamily,
                             }}
                           >
-                            {slide?.title_en
-                              ? slide[`title_${language}`]
-                              : "Old Title"}
+                            {language === "en"
+                              ? slide?.title_en
+                              : slide?.title_ar}
                           </Typography>
                           <Typography
                             sx={{
                               fontFamily: publicFontFamily,
                               fontSize: {
-                                lg: "35px",
-                                md: "30px",
-                                xs: "20px",
+                                xl: "50px",
+                                lg: "40px",
+                                md: "35px",
+                                xs: "25.5px",
                               },
-                              fontWeight: "bold",
+                              fontWeight: 900,
                               mt: "10px",
+                              height: 400,
                             }}
                           >
-                            {slide[`description_${language}`]
-                              ? slide[`description_${language}`].length > 160
-                                ? `${slide[`description_${language}`].slice(
-                                    0,
-                                    160
-                                  )}...`
-                                : slide[`description_${language}`]
-                              : "Old Description"}
+                            {language === "en"
+                              ? slide?.description_en?.length > 160
+                                ? slide?.description_en.slice(0, 160) + "..."
+                                : slide?.description_en
+                              : slide?.description_ar?.length > 160
+                              ? slide?.description_ar.slice(0, 160) + "..."
+                              : slide?.description_ar}
                           </Typography>
                         </>
                         <Box
@@ -187,9 +187,13 @@ const HeroSlider = () => {
                               bgcolor: colors.lightYellow,
                               color: "#fff",
                               fontFamily: publicFontFamily,
-                              fontSize: "19px",
+                              fontSize: {
+                                md: "21px",
+                                xs: "18.5px",
+                              },
                               padding: "5px 10px",
                               borderRadius: "20px",
+                              textTransform: "none",
                               "&:hover": {
                                 bgcolor: colors.heavyYellow,
                               },
@@ -203,37 +207,38 @@ const HeroSlider = () => {
                     </Grid>
                     <Grid
                       item
-                      md={6}
+                      md={5}
                       xs={12}
                       sx={{
                         display: "flex",
-                        alignItems: {
-                          md: "center",
-                          xs: "flex-end",
-                        },
-                        justifyContent: {
-                          md: "flex-end",
-                          xs: "center",
-                        },
+                        alignItems: "flex-end",
+                        justifyContent: "center",
                         height: {
                           md: "auto",
-                          xs: "65vh",
+                          xs: "50vh",
                         },
                       }}
                     >
                       <CardMedia
                         component="img"
+                        src={imageBaseUrl + "/" + slide?.image}
                         sx={{
                           width: {
+                            xl: 500,
+                            lg: 450,
                             md: 400,
-                            xs: 0.8,
+                            xs: 250,
                           },
-                          height: 300,
+                          height: {
+                            lg: 600,
+                            md: 450,
+                            xs: 300,
+                          },
                           objectFit: "contain",
-                          background: `url(${
-                            imageBaseUrl + "/" + slide?.image
-                          })`,
-                          backgroundRepeat: "no-repeat",
+                          mb: {
+                            md: "100px",
+                            xs: 0,
+                          },
                         }}
                       />
                     </Grid>
@@ -242,13 +247,18 @@ const HeroSlider = () => {
                       md={6}
                       xs={12}
                       sx={{
-                        height: "60vh",
+                        height: 800,
                         display: {
                           md: "none",
                           xs: "flex",
                         },
+                        px: {
+                          md: 0,
+                          xs: "10px",
+                        },
                         alignItems: "flex-start",
                         justifyContent: "flex-start",
+                        color: "#707070",
                       }}
                     >
                       <Box
@@ -265,41 +275,40 @@ const HeroSlider = () => {
                         <>
                           <Typography
                             sx={{
-                              textAlign: "center",
-                              fontSize: {
-                                lg: "60px",
-                                md: "45px",
-                                xs: "32.5px",
-                              },
-
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {slide?.title_en
-                              ? slide[`title_${language}`]
-                              : "Old Title"}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              textAlign: "center",
-                              fontFamily: "'Tajawal', sans-serif",
                               fontSize: {
                                 lg: "35px",
                                 md: "30px",
                                 xs: "20px",
                               },
+                              mt: "-60px",
                               fontWeight: "bold",
-                              mt: "10px",
+                              fontFamily: publicFontFamily,
                             }}
                           >
-                            {slide[`description_${language}`]
-                              ? slide[`description_${language}`].length > 160
-                                ? `${slide[`description_${language}`].slice(
-                                    0,
-                                    160
-                                  )}...`
-                                : slide[`description_${language}`]
-                              : "Old Description"}
+                            {language === "en"
+                              ? slide?.title_en
+                              : slide?.title_ar}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontFamily: publicFontFamily,
+                              fontSize: {
+                                lg: "60px",
+                                md: "45px",
+                                xs: "32.5px",
+                              },
+                              fontWeight: 900,
+                              mt: "10px",
+                              height: 450,
+                            }}
+                          >
+                            {language === "en"
+                              ? slide?.description_en?.length > 160
+                                ? slide?.description_en.slice(0, 160) + "..."
+                                : slide?.description_en
+                              : slide?.description_ar?.length > 160
+                              ? slide?.description_ar.slice(0, 160) + "..."
+                              : slide?.description_ar}
                           </Typography>
                         </>
                         <Box
@@ -317,6 +326,8 @@ const HeroSlider = () => {
                               fontSize: "19px",
                               padding: "5px 10px",
                               borderRadius: "20px",
+                              textTransform: "capitalize !important",
+
                               width: 0.6,
                             }}
                             onClick={() => navigate("/departments")}
@@ -333,7 +344,9 @@ const HeroSlider = () => {
           </Splide>
         </Box>
       ) : (
-        <CustomError errorMessage={error?.data[`error_${language}`]} />
+        <CustomError
+          errorMessage={error?.data && error?.data[`error_${language}`]}
+        />
       )}
     </section>
   );

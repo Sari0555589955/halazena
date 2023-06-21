@@ -110,6 +110,7 @@ export default function MobileProfileMenu() {
             : name_en !== "Profile" && name_en !== "Logout"
         ).map((item) => (
           <Stack
+            key={item.name_en}
             direction="row"
             alignItems="center"
             justifyContent="space-between"

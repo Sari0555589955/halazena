@@ -58,7 +58,7 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
           {NavLinksData().map((item, index) => {
             return item.nestedLinks ? (
               <LinkDropDown
-                key={item}
+                key={index}
                 item={item}
                 pathname={pathname}
                 moreStyle={{

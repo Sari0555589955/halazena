@@ -78,7 +78,6 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
   // const { data: savedProducts, isError: savedError } =
   //   useGetAllSavedProductsQuery();
   const { pathname } = useLocation();
-  console.log("name", name);
   const { savedProducts: savedData, getSaved } = useFetchSavedProducts();
   const { data: carts, isError: isErrCart } = useGetAllCartsQuery();
   const { carts: cartData, getCarts } = useFetchCart();

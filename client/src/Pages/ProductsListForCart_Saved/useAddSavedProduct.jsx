@@ -15,7 +15,6 @@ function useAddToSavedProduct() {
   const [_, { language: lang }] = useTranslation();
   const { userinfo } = useGetUserInfo();
   function addSavedProduct(saved) {
-    console.log("saved", saved);
     if (saved?.product && currentUser?.email) {
       if (sessionStorage.getItem("token")) {
         addToSavedProduct(saved).then(({ data }) => {

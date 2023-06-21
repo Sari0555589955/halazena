@@ -87,7 +87,6 @@ const CheckTest = () => {
       });
     }
   }, [carts]);
-  console.log("formik values", formik.values);
   return (
     <Box
       sx={{

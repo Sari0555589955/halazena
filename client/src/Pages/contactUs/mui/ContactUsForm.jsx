@@ -98,13 +98,10 @@ const ContactUsForm = ({ formik, language }) => {
                 backgroundColor: "#fff",
                 width: "100%",
                 padding: "18px 0",
+                color: values.contactType ? "#000" : "#87989D",
                 fontFamily: publicFontFamily,
                 fontSize: "16px",
                 fontWeight: "bold",
-                // backgroundColor:
-                //   errors.contactType && touched.contactType
-                //     ? "transparent"
-                //     : ContactColors.light,
                 outline: 0,
                 boxShadow: 0,
                 borderTop: 0,
@@ -123,13 +120,31 @@ const ContactUsForm = ({ formik, language }) => {
                   ? "Select Contact Type"
                   : "أختار نوع التواصل"}
               </option>
-              <option value="complaints">
+              <option
+                value="complaints"
+                style={{
+                  color: "#000",
+                  fontWeight: "bold",
+                }}
+              >
                 {language === "en" ? "Complaints" : "الشكاوي"}
               </option>
-              <option value="suggestions">
+              <option
+                value="suggestions"
+                style={{
+                  color: "#000",
+                  fontWeight: "bold",
+                }}
+              >
                 {language === "en" ? "Suggestions" : "الاقتراحات"}
               </option>
-              <option value="customerService">
+              <option
+                value="customerService"
+                style={{
+                  color: "#000",
+                  fontWeight: "bold",
+                }}
+              >
                 {language === "en" ? "Customer Service" : "خدمة العملاء"}
               </option>
             </select>

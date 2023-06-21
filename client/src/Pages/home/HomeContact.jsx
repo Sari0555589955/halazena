@@ -57,7 +57,6 @@ const HomeContact = () => {
           md: 0,
           xs: "100px",
         },
-        // bgcolor: "#99ECEA",
         backgroundImage: `url(${sliderWall})`,
         backgroundPosition: "center bottom",
         backgroundSize: "cover",
@@ -142,6 +141,7 @@ const HomeContact = () => {
                 name="contactType"
                 style={{
                   backgroundColor: "#fff",
+                  color: values.contactType ? "#000" : "#87989D",
                   width: "100%",
                   padding: "18px 0",
                   fontFamily: publicFontFamily,
@@ -169,13 +169,31 @@ const HomeContact = () => {
                     ? "Select Contact Type"
                     : "أختار نوع التواصل"}
                 </option>
-                <option value="complaints">
+                <option
+                  value="complaints"
+                  style={{
+                    color: "#000",
+                    fontWeight: "bold",
+                  }}
+                >
                   {language === "en" ? "Complaints" : "الشكاوي"}
                 </option>
-                <option value="suggestions">
+                <option
+                  value="suggestions"
+                  style={{
+                    color: "#000",
+                    fontWeight: "bold",
+                  }}
+                >
                   {language === "en" ? "Suggestions" : "الاقتراحات"}
                 </option>
-                <option value="customerService">
+                <option
+                  value="customerService"
+                  style={{
+                    color: "#000",
+                    fontWeight: "bold",
+                  }}
+                >
                   {language === "en" ? "Customer Service" : "خدمة العملاء"}
                 </option>
               </select>
@@ -263,18 +281,17 @@ const HomeContact = () => {
         src={imgPath}
         sx={{
           height: {
+            xl: 600,
             lg: 500,
             md: 400,
-            xs: 350,
+            xs: 300,
           },
           width: {
+            lg: 500,
             md: 400,
-            xs: 250,
+            xs: 300,
           },
-          objectFit: {
-            md: "cover",
-            xs: "contain",
-          },
+          objectFit: "contain",
           mb: {
             md: 0,
             xs: "100px",

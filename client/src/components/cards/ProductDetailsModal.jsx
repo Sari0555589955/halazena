@@ -258,6 +258,7 @@ export default function ProductDetailsModal({ productId }) {
                       (attribute) =>
                         attribute.values.length > 0 && (
                           <Stack
+                            
                             direction="row"
                             alignItems="center"
                             sx={{
@@ -279,6 +280,7 @@ export default function ProductDetailsModal({ productId }) {
                                 );
                                 return (
                                   <Button
+                                    key={value}
                                     disableRipple
                                     sx={{
                                       px: "10px",

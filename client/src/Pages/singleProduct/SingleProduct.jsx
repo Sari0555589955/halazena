@@ -71,15 +71,17 @@ function SingleProduct() {
     boxShadow: 24,
   };
   const [myAttributes, setMyAttributes] = React.useState([]);
+  const checkAttributeValues = product?.attributes.some(
+    (att) => att.values?.length > 0
+  );
   const checkActivity =
-    (product?.attributes?.length > 0 && myAttributes?.length > 0) ||
-    !product?.attributes?.length > 0;
+    (checkAttributeValues && myAttributes[0]) ||
+    (!checkAttributeValues && !myAttributes[0]);
   const productInCart =
     cartIsSuccess &&
     dataCart?.cart?.find(
       (earchProduct) => earchProduct?.product?._id === product?._id
     );
-  console.log("state Attributes", myAttributes);
   const addAttributes = (attribute, value) => {
     let attrIsExisted = myAttributes.find(
       (item) => item?.key_en === attribute?.key_en
@@ -145,7 +147,6 @@ function SingleProduct() {
       }
     });
   }, []);
-  console.log("myAttributes", myAttributes);
 
   const [imageStart, setImageStart] = React.useState(0);
   const [count, setCount] = useState(1);
@@ -344,7 +345,7 @@ function SingleProduct() {
                                       transform: "scale(1) !important",
                                       fontFamily: publicFontFamily,
                                     }}
-                                    disabled={productInCart}
+                                    disabled={productInCart || checkActivity}
                                     onChange={() =>
                                       addAttributes(attribute, value)
                                     }
@@ -453,7 +454,6 @@ function SingleProduct() {
                     />
                   </Stack>
                 )}
-
                 <Stack
                   direction="row"
                   alignItems="flex-start"
@@ -464,9 +464,9 @@ function SingleProduct() {
                     className="text-white py-3 px-2 btn border-0"
                     sx={{
                       borderRadius: "10px",
-                      backgroundColor:
-                        // checkActivity && !productInCart
-                        `${colors.newLightColor} !important`,
+                      backgroundColor: `${
+                        !checkActivity ? "#D0B98B" : colors.newLightColor
+                      } !important`,
                       fontFamily: publicFontFamily,
                     }}
                     disabled={!checkActivity || productInCart}
@@ -484,7 +484,11 @@ function SingleProduct() {
                       }}
                     >
                       {!productInCart
-                        ? "اضافة الي سلة التسوق"
+                        ? lang === "en"
+                          ? "Add to cart"
+                          : "اضافة الي سلة التسوق"
+                        : lang === "en"
+                        ? "Product is added"
                         : "المنتج تمت اضافته"}
                     </span>
 

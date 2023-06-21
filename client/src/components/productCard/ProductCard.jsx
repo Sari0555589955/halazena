@@ -70,6 +70,7 @@ const ProductCard = ({ item, externalWidth }) => {
   return (
     <>
       <Box
+        key={item?._id}
         sx={{
           ...cardStyle.card,
           width: externalWidth

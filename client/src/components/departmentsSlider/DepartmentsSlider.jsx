@@ -31,7 +31,7 @@ const DepartmentsSlider = () => {
     border: "1px solid transparent",
     "&:hover": {
       transform: "scale(0.98)",
-      boxShadow: "#66DFDC  0px 2px 8px 0px"
+      boxShadow: "#66DFDC  0px 2px 8px 0px",
     },
   });
   return (
@@ -63,6 +63,7 @@ const DepartmentsSlider = () => {
         {categories &&
           categories.map((category) => (
             <StyledBox
+              key={category._id}
               onClick={() => navigate(`/departments/${category._id}`)}
               sx={{
                 height: {

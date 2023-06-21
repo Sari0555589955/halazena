@@ -123,8 +123,9 @@ const Footer = () => {
                   },
                 }}
               >
-                {contactWaysIcons.map((contactWay) => (
+                {contactWaysIcons.map((contactWay, idx) => (
                   <Box
+                    key={idx}
                     sx={{
                       display: "flex",
                       alignItems: "center",
