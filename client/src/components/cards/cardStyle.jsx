@@ -3,6 +3,10 @@ export const colors = {
   heavyMainColor: "#B83806",
   newMainColor: "#C29997",
   newMainHeavyColor: "#a97674",
+  lightYellow: "#EDCB94",
+  heavyYellow: "#D8B08E",
+  lightGreen: "#99ECEA",
+  grey: "#707070",
 };
 
 export const CardsStackStyle = {

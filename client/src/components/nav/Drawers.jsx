@@ -53,23 +53,7 @@ export default function Drawers() {
         );
       })}
       <LanguageToggler />
-      {/* <Avatar
-        alt="Remy Sharp"
-        src="https://thumbs.dreamstime.com/z/cartoon-funny-monster-halloween-vector-illustration-monster-face-avatar-97155715.jpg"
-        onClick={() => navigate("/profile")}
-        sx={{
-          cursor: "pointer",
-          ml: {
-            xl: language === "en" ? "70px" : 0,
-            xs: language === "en" ? "10px" : 0,
-          },
-
-          mr: {
-            xl: language === "ar" ? "70px" : 0,
-            xs: language === "ar" ? "10px" : 0,
-          },
-        }}
-      /> */}
+      
     </Box>
   );
 }
@@ -200,7 +184,11 @@ export const CustomDrawer = ({ icon, data, name, path }) => {
                 "&:hover": {
                   color: colors.newMainColor,
                 },
-                color: colors[pathname === path ? "newMainColor" : "grey"],
+                color:  {
+                  md : pathname === "/" ? "#fff" : colors[pathname === path ? "newMainColor" : "grey"],
+                  xs : pathname === "/" ? colors.grey : colors[pathname === path ? "newMainColor" : "grey"],
+
+                },
               },
               display: {
                 md: "initial",

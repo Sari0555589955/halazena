@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 const LinkDropDown = ({
   item,
   pathname,
-  footerTextColor,
+  extraColor,
   moreStyle,
   justifyContenValue,
 }) => {
@@ -42,16 +42,20 @@ const LinkDropDown = ({
         disableRipple
         sx={{
           ...moreStyle,
-          color: open || pathname.includes("/department")
-            ? `${colors.newMainHeavyColor} !important`
-            : "#000",
+          color: extraColor,
+          borderBottom:
+            open || pathname.includes("/department")
+              ? ` 1px solid ${colors.newMainColor} !important`
+              : extraColor,
           fontWeight: "bolder",
           textTransform: "capitalize",
           fontSize: "16px",
           backgroundColor: "transparent !important",
+          borderRadius : 0,
+
           fontFamily: publicFontFamily,
           "&:hover": {
-            color: colors.newMainColor,
+            borderBottom: `1px solid ${colors.newMainColor}`,
           },
         }}
       >

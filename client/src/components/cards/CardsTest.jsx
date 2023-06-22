@@ -7,24 +7,19 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { publicFontFamily } from "../publicStyle/publicStyle";
 import ProductCard from "../productCard/ProductCard";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import DepartmentProduct from "../../Pages/departments/DepartmentProduct";
 
 export default function CardsTest({ items, title, singleDepartmentName }) {
-  const autoWidth = {
-    xs: 1,
-  };
   const { pathname } = useLocation();
   const [_, { language }] = useTranslation();
   return (
     <Box
       sx={{
-        direction: "ltr",
+        direction: "ltr !important",
         width: {
           xl: 1500,
           lg: 1100,
-          md: 0.85,
-          xs: 0.9,
+          xs: 1,
         },
         mx: "auto",
       }}
@@ -44,7 +39,7 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
             fontWeight: "bolder",
             textTransform: "capitalize",
             bgcolor: pathname === "/" ? "transparent" : undefined,
-            color: pathname === "/" ? "#000" : "#000",
+            color: colors.grey,
             fontWeight: "bold",
             fontFamily: publicFontFamily,
             mb: {
@@ -55,9 +50,11 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
               lg: "20px",
               xs: "16px",
             },
-            px: {
-              lg: "100px",
-              xs: "70px",
+            fontSize: {
+              xl: "60px",
+              lg: "55px",
+              md: "45px",
+              xs: "40px",
             },
             borderRadius:
               pathname === "/"
@@ -70,7 +67,7 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
           {title ? title : singleDepartmentName}
         </Typography>
       </Stack>
-      <Stack
+      {/*   <Stack
         sx={{
           ...CardsStackStyle,
         }}
@@ -82,6 +79,8 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
             width="100%"
             options={{
               perPage: 3,
+              perMove: 1,
+              autoplay: true,
               breakpoints: {
                 1900: {
                   perPage: 3,
@@ -108,6 +107,89 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
             </SplideTrack>
           </Splide>
         )}
+      </Stack> */}
+      <Stack
+        sx={{
+          mx: "auto",
+        }}
+      >
+        <Box
+          component={Splide}
+          className="products_slider department_products_slider"
+          hasTrack={false}
+          width="100%"
+          sx={{
+            width: {
+              md: 1,
+              xs: "150vw",
+            },
+            ml: {
+              md: 0,
+              xs: "-35%",
+            },
+          }}
+          options={{
+            perPage: 3,
+            perMove: 1,
+            arrows: true,
+            autoplay: true,
+            breakpoints: {
+              1900: {
+                perPage: 3,
+              },
+              1500: {
+                perPage: 3,
+              },
+              1200: {
+                perPage: 3,
+              },
+              992: {
+                perPage: 3,
+              },
+              768: {
+                perPage: 3,
+              },
+              600: {
+                perPage: 3,
+              },
+            },
+          }}
+        >
+          <SplideTrack>
+            {items &&
+              items[0] &&
+              items?.map((item, index) => (
+                <Box
+                  component={SplideSlide}
+                  key={index}
+                  sx={{
+                    mx: {
+                      md: 0,
+                      xs: "10px",
+                    },
+                  }}
+                >
+                  <ProductCard item={item} />
+                </Box>
+              ))}
+          </SplideTrack>
+        </Box>
+        {/* {products?.map((product) => (
+              <Box
+                sx={{
+                  mt: "10px",
+                }}
+              >
+                <ProductCard
+                  item={product}
+                  externalWidth={{
+                    lg: 400,
+                    md: 0.6,
+                    xs: 1,
+                  }}
+                />
+              </Box>
+            ))} */}
       </Stack>
     </Box>
   );

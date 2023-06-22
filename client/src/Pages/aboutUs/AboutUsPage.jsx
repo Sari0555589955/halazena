@@ -39,23 +39,7 @@ export const AboutUsShared = ({ data, isLoading }) => {
       }}
     >
       {isLoading ? (
-        <Box
-          sx={{
-            width: 0.9,
-            mx: "auto",
-            display: "flex",
-            justifyContent: {
-              md: "start",
-              xs: "center",
-            },
-          }}
-        >
-          <CircularProgress
-            sx={{
-              color: colors.newMainColor,
-            }}
-          />
-        </Box>
+        <Loader />
       ) : aboutUsSection ? (
         <Box
           sx={{
@@ -78,6 +62,13 @@ export const AboutUsShared = ({ data, isLoading }) => {
                 mb: {
                   md: "50px",
                   xs: "35px",
+                },
+                color: colors.grey,
+                fontSize: {
+                  xl: "60px",
+                  lg: "55px",
+                  md: "45px",
+                  xs: "40px",
                 },
               }}
             >

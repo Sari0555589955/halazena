@@ -2,16 +2,12 @@ import { Box, Button, Drawer, Stack, useTheme, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { NavLinksData } from "./nav.data";
-import {
-  MobileItemListContainerStyle,
-  MobileitemListStyle,
-  colors,
-} from "./nav.styes";
+import { MobileItemListContainerStyle, colors } from "./nav.styes";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LinkDropDown from "./LinkDropDown";
-import MobileProfileMenu from "./MobileProfileMenu";
 import { publicFontFamily } from "../publicStyle/publicStyle";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
   const { pathname } = useLocation();
   const [_, { language: lang }] = useTranslation();
@@ -34,13 +30,14 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
         sx={{
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
-            width: 0.65,
+            width: 0.55,
+            bgcolor: "#99ECEA",
             pt: 6,
             px: 3,
           },
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent="flex-end">
+        <Stack direction="row" alignItems="center" justifyContent={lang ==='en' ?"flex-start" : "flex-end" }>
           <Button
             sx={{
               width: "35px",
@@ -51,7 +48,7 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
             }}
             onClick={handleDrawerToggle}
           >
-            <CloseIcon sx={{ color: "#fff" }} />
+            <KeyboardBackspaceIcon sx={{ color: colors.newMainColor }} />
           </Button>
         </Stack>
         <Box sx={MobileItemListContainerStyle}>
@@ -61,6 +58,7 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
                 key={index}
                 item={item}
                 pathname={pathname}
+                extraColor="#000"
                 moreStyle={{
                   fontSize: "16px",
                   textTransform: "capitalize",
@@ -75,7 +73,11 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
                 disableRipple
                 onClick={() => navigate(item.link)}
                 sx={{
-                  color: pathname === item.link ? colors.newLightColor : "#000",
+                  borderBottom:
+                    pathname === item.link
+                      ? `1px solid ${colors.newMainColor}`
+                      : "transparent",
+                  color: "#000",
                   fontSize: "16px",
                   textTransform: "capitalize",
                   fontWeight: "bold",
@@ -83,7 +85,7 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
                   display: "block",
                   fontFamily: publicFontFamily,
                   "&:hover": {
-                    color: colors.newLightColor,
+                    borderBottom: `1px solid ${colors.newMainColor}`,
                   },
                 }}
               >
@@ -100,11 +102,15 @@ const MobileSidebar = ({ container, mobileOpen, handleDrawerToggle }) => {
               fontWeight: "bold",
               backgroundColor: "transparent !important",
               display: "block",
-              color:
-                pathname === "/privacyPolicy" ? colors.newMainColor : "#000",
+              color: "#000",
+              fontWeight: "bold",
+              borderBottom:
+                pathname === "/privacyPolicy"
+                  ? `1px solid ${colors.newMainColor}`
+                  : "1px solid transparent",
               fontFamily: publicFontFamily,
               "&:hover": {
-                color: colors.newLightColor,
+                borderBottom: `1px solid ${colors.newMainColor}`,
               },
             }}
           >

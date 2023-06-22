@@ -21,7 +21,6 @@ import "./sliderStyle.css";
 import { useGetAllSlidersQuery } from "../../../APIs/SectionApis";
 import { imageBaseUrl } from "../../../components/service";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../../components/loader/loader";
 import CustomError from "../../../components/Error/Error";
 const HeroSlider = () => {
   const [_, { language }] = useTranslation();

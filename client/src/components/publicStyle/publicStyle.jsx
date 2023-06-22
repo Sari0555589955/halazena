@@ -26,7 +26,7 @@ export const colors = {
   lightYellow: "#EDCB94",
   heavyYellow: "#D8B08E",
   lightGreen: "#99ECEA",
-  grey: "#5E5E5E",
+  grey: "#707070",
 };
 
 export const publicButton = {

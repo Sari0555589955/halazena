@@ -59,6 +59,7 @@ const PrivacyPolicyPage = () => {
                   style={{
                     fontFamily: publicFontFamily,
                     fontWeight: "bold",
+                    color: colors.grey,
                   }}
                 >
                   {lang === "en" ? "privacy" : "الخصوصيه"}

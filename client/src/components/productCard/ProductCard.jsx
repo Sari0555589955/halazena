@@ -13,9 +13,8 @@ import {
   colors,
   publicFontFamily,
   publicSizes,
-} from "../publicStyle/publicStyle";
+} from "../../components/publicStyle/publicStyle";
 import { cardStyle } from "../cards/cardStyle";
-import { motion } from "framer-motion";
 import { imageBaseUrl } from "../service";
 import { useTranslation } from "react-i18next";
 import { useGetAllSavedProductsQuery } from "../../APIs/SavedProductApi";
@@ -73,16 +72,19 @@ const ProductCard = ({ item, externalWidth }) => {
         key={item?._id}
         sx={{
           ...cardStyle.card,
-          width: externalWidth
-            ? externalWidth
-            : {
-                md: 300,
-                sm: 250,
-                xs: 0.9,
-              },
+          width: {
+            xl: 300,
+            lg: 275,
+            md: 250,
+            sm: 250,
+            xs: 0.9,
+          },
+          height: {
+            md: 330,
+            xs: 250,
+          },
           p: "10px",
           bgcolor: "#E4FDFD",
-          height: 350,
         }}
       >
         <Stack direction="row" justifyContent={"flex-end"}>
@@ -140,8 +142,16 @@ const ProductCard = ({ item, externalWidth }) => {
           alt={item.title}
           sx={{
             cursor: "pointer",
-            height: 150,
-            width: 150,
+            height: {
+              lg: 150,
+              md: 100,
+              xs: 75,
+            },
+            width: {
+              lg: 150,
+              md: 100,
+              xs: 75,
+            },
             my: "10px",
             mx: "auto",
           }}
@@ -156,6 +166,10 @@ const ProductCard = ({ item, externalWidth }) => {
             fontFamily: publicFontFamily,
             fontWeight: "bold",
             wordBreak: "break-all",
+            fontSize: {
+              md: "initial",
+              xs: "16px",
+            },
           }}
         >
           {language === "en"
@@ -171,11 +185,15 @@ const ProductCard = ({ item, externalWidth }) => {
             sx={{
               fontFamily: publicFontFamily,
               border: `1px solid ${colors.newLightColor}`,
-              fontSize: "17px",
+              fontSize: {
+                md: "initial",
+                xs: "16px",
+              },
               borderRadius: "20px",
               padding: "5px 10px",
               transition: "0.4s all",
               width: 1,
+              textTransform: "none",
               color:
                 !isErrCart &&
                 cartData?.cart?.find(

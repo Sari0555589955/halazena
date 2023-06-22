@@ -11,7 +11,7 @@ function Logo({ imagePath, text }) {
         <Avatar
           sx={{
             height: {
-              md: 70,
+              md: 80,
               xs: 60,
             },
             width: "auto",

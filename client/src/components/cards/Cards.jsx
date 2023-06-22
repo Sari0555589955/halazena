@@ -36,6 +36,8 @@ import { useLocation } from "react-router-dom";
 import { useGetAllSavedProductsQuery } from "../../APIs/SavedProductApi";
 import { publicFontFamily, publicSizes } from "../publicStyle/publicStyle";
 import ProductCard from "../productCard/ProductCard";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import DepartmentProduct from "../../Pages/departments/DepartmentProduct";
 // export const CustomCard = ({ item }) => {
 //   const [addSavedProduct] = useAddToSavedProduct();
 //   const [mutateAddToCart] = useAddToCart();
@@ -256,37 +258,37 @@ import ProductCard from "../productCard/ProductCard";
 //     </Card>
 //   );
 // };
-export default function Cards({
-  items,
-  title,
-  singleDepartmentName,
-  subCategories,
-}) {
-  const cardVariants = {
-    offscreen: {
-      y: 300,
-    },
-    onscreen: {
-      y: 50,
-      rotate: -10,
-      transition: {
-        type: "spring",
-        bounce: 0.4,
-        duration: 0.8,
-      },
-    },
-  };
+export default function Cards({ items, title, singleDepartmentName }) {
+  // const cardVariants = {
+  //   offscreen: {
+  //     y: 300,
+  //   },
+  //   onscreen: {
+  //     y: 50,
+  //     rotate: -10,
+  //     transition: {
+  //       type: "spring",
+  //       bounce: 0.4,
+  //       duration: 0.8,
+  //     },
+  //   },
+  // };
 
   const { pathname } = useLocation();
   const [_, { language }] = useTranslation();
   return (
-    <motion.div key={title ? title : undefined}>
-      <Stack
-        direction="row"
-        alignItems={"center"}
-        justifyContent={pathname === "/" ? "flex-start" : "center"}
+    <Box
+      sx={{
+        direction: "ltr !important",
+      }}
+      key={title ? title : undefined}
+    >
+      <Box
         sx={{
           ...CardsStackStyle.cardsHeader,
+          dusplay: "flex",
+          alignItems: "center",
+          justifyContent: pathname === "/" ? "flex-start" : "center",
         }}
       >
         <Typography
@@ -297,6 +299,7 @@ export default function Cards({
             bgcolor: pathname === "/" ? colors.newMainColor : undefined,
             color: pathname === "/" ? "#fff" : "#000",
             fontFamily: publicFontFamily,
+            textAlign: "center",
             fontWeight: "bold",
             fontSize: {
               lg: "30px",
@@ -310,6 +313,7 @@ export default function Cards({
               lg: "100px",
               xs: "70px",
             },
+            color: colors.grey,
             borderRadius:
               pathname === "/"
                 ? language === "en"
@@ -320,8 +324,8 @@ export default function Cards({
         >
           {title ? title : singleDepartmentName}
         </Typography>
-      </Stack>
-      <Stack
+      </Box>
+      {/* <Stack
         flexWrap="wrap"
         sx={{
           ...CardsStackStyle,
@@ -342,7 +346,76 @@ export default function Cards({
               />
             );
           })}
-      </Stack>
-    </motion.div>
+      </Stack> */}
+      <Box
+        component={Splide}
+        className="products_slider department_products_slider"
+        hasTrack={false}
+        width="100%"
+        sx={{
+          width: {
+            xl: 1,
+            md: "150vw",
+            xs: "150vw",
+          },
+          ml: {
+            xl: 0,
+            lg: "-25%",
+            md: "-17%",
+            xs: "-35%",
+          },
+        }}
+        options={{
+          perPage: 4,
+          perMove: 1,
+          arrows: false,
+          autoplay: true,
+          breakpoints: {
+            1900: {
+              perPage: 4,
+            },
+            1500: {
+              perPage: 5,
+            },
+            1200: {
+              perPage: 5,
+            },
+            992: {
+              perPage: 5,
+            },
+            900: {
+              perPage: 3,
+            },
+            768: {
+              perPage: 3,
+            },
+            600: {
+              perPage: 3,
+            },
+          },
+        }}
+      >
+        <SplideTrack>
+          {items &&
+            items[0] &&
+            items.map((item, index) => (
+              <Box
+                component={SplideSlide}
+                key={index}
+                sx={{
+                  mx: {
+                    xl: 0,
+                    lg: 0,
+                    md: "15px",
+                    xs: "10px",
+                  },
+                }}
+              >
+                <DepartmentProduct item={item} />
+              </Box>
+            ))}
+        </SplideTrack>
+      </Box>
+    </Box>
   );
 }

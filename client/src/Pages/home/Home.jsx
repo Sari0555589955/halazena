@@ -32,6 +32,9 @@ function Home() {
       component={motion.div}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      sx={{
+        overflowX: "hidden",
+      }}
     >
       <Box>
         <HeroSlider />

@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useLazyGetAllSubCategoriesQuery } from "../../APIs/categoriesApi";
 import useFetchDepartments from "./useFetchDepartments";
 import { Box, Stack, Typography } from "@mui/material";
-import { publicFontFamily } from "../../components/publicStyle/publicStyle";
+import {
+  colors,
+  publicFontFamily,
+} from "../../components/publicStyle/publicStyle";
 import ProductCard from "../../components/productCard/ProductCard";
 import Loader from "../../components/loader/loader";
 import { useTranslation } from "react-i18next";
-
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import DepartmentProduct from "./DepartmentProduct";
 const SeparateDepartment = ({ category }) => {
-  const { products, error, isLoading } = useFetchDepartments(category?._id);
+  const { products } = useFetchDepartments(category?._id);
   const [_, { language: lang }] = useTranslation();
 
   return (
-    <Box>
+    <Box
+      sx={{
+        direction: "ltr !important",
+      }}
+    >
       {category?.name_en && products[0] && (
         <>
           <Typography
@@ -24,25 +32,85 @@ const SeparateDepartment = ({ category }) => {
               },
               fontFamily: `${publicFontFamily} !important`,
               fontWeight: "bold",
+              color: colors.grey,
+              mb: "40px",
             }}
           >
             {category[`name_${lang}`]}
           </Typography>
           <Stack
             sx={{
-              flexWrap: "wrap",
-              flexDirection: {
-                lg: "row",
-                xs: "column",
-              },
-              justifyContent: "center",
-              gap: {
-                md: "30px",
-                xs: "20px",
-              },
+              mx: "auto",
             }}
           >
-            {products?.map((product) => (
+            <Box
+              component={Splide}
+              className="products_slider department_products_slider"
+              hasTrack={false}
+              width="100%"
+              sx={{
+                width: {
+                  xl: 1,
+                  md: "150vw",
+                  xs: "150vw",
+                },
+                ml: {
+                  xl: 0,
+                  lg: "-25%",
+                  md: "-17%",
+                  xs: "-35%",
+                },
+              }}
+              options={{
+                perPage: 4,
+                perMove: 1,
+                arrows: false,
+                autoplay: true,
+                breakpoints: {
+                  1900: {
+                    perPage: 4,
+                  },
+                  1500: {
+                    perPage: 5,
+                  },
+                  1200: {
+                    perPage: 5,
+                  },
+                  992: {
+                    perPage: 5,
+                  },
+                  900: {
+                    perPage: 3,
+                  },
+                  768: {
+                    perPage: 3,
+                  },
+                  600: {
+                    perPage: 3,
+                  },
+                },
+              }}
+            >
+              <SplideTrack>
+                {products?.map((item, index) => (
+                  <Box
+                    component={SplideSlide}
+                    key={index}
+                    sx={{
+                      mx: {
+                        xl: 0,
+                        lg: 0,
+                        md: "15px",
+                        xs: "10px",
+                      },
+                    }}
+                  >
+                    <DepartmentProduct item={item} />
+                  </Box>
+                ))}
+              </SplideTrack>
+            </Box>
+            {/* {products?.map((product) => (
               <Box
                 sx={{
                   mt: "10px",
@@ -57,7 +125,7 @@ const SeparateDepartment = ({ category }) => {
                   }}
                 />
               </Box>
-            ))}
+            ))} */}
           </Stack>
         </>
       )}

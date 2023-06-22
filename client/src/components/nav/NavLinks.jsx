@@ -21,14 +21,19 @@ export default function NavLinks() {
     >
       {NavLinksData().map((item, index) => {
         return item.nestedLinks ? (
-          <LinkDropDown key={item} item={item} pathname={pathname} />
+          <LinkDropDown
+            key={item}
+            item={item}
+            pathname={pathname}
+            extraColor={pathname === "/" ? "#fff" : colors.grey}
+          />
         ) : (
           <Button
             key={item.link}
             disableRipple
             onClick={() => navigate(item.link)}
             sx={{
-              color: pathname === item.link ? colors.newMainColor : "#000",
+              color: pathname === "/" ? "#fff" : colors.grey,
               fontSize: {
                 lg: "16px",
                 md: "13px",
@@ -37,8 +42,12 @@ export default function NavLinks() {
               backgroundColor: "transparent !important",
               fontFamily: publicFontFamily,
               fontWeight: "bolder !important",
+              borderRadius : 0,
+              borderBottom: `1px solid ${
+                pathname === item.link ? colors.newMainColor : "transparent"
+              }`,
               "&:hover": {
-                color: colors.newMainColor,
+                borderBottom: `1px solid ${colors.newMainColor}`,
               },
             }}
           >

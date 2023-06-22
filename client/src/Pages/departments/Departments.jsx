@@ -72,12 +72,13 @@ function Departments() {
       setAllCategories(dataCategories?.categories?.category);
     }
   }, [dataCategories]);
-
+  console.log("single cat", dataCategories?.categories?.category);
   return (
     <Box
       sx={{
         pt: 15,
         pb: 7,
+        overflowX: "hidden",
       }}
     >
       {isLoading ? (
@@ -163,43 +164,7 @@ function Departments() {
                     pb: "100px",
                   }}
                 >
-                  {/* Categories */}
-                  {/* <Stack
-                    sx={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      mt: "80px",
-                    }}
-                  >
-                    {allCategories &&
-                      allCategories?.map((category) => (
-                        <Button
-                          variant="h1"
-                          border={1}
-                          borderColor={"red"}
-                          sx={{
-                            bgcolor:
-                              categoryId === category._id
-                                ? `${colors.newLightColor} !important`
-                                : "#F5F5F5 !important",
-                            color:
-                              categoryId === category._id
-                                ? "#fff !important"
-                                : "#000 !important",
-                            fontFamily: publicFontFamily,
-                            fontSize: "17px",
-                            fontWeight: "bold",
-                          }}
-                          onClick={() =>
-                            navigate(`/departments/${category._id}`)
-                          }
-                        >
-                          {category?.name}
-                        </Button>
-                      ))}
-                  </Stack> */}
-                <Cards
+                  <Cards
                     subCategories={subCategories}
                     setSubCategories={setSubCategories}
                     items={
@@ -215,6 +180,21 @@ function Departments() {
                         : singleDepartmentName_ar
                     }
                   />
+                  {/* <Box
+                    sx={{
+                      width: 1,
+                      mt: "75px",
+                    }}
+                  >
+                    <SeparateDepartment
+                      category={
+                        dataCategories &&
+                        dataCategories?.categories?.category.find(
+                          ({ _id }) => _id === categoryId
+                        )
+                      }
+                    />
+                  </Box> */}
                 </Box>
               </Box>
               {subProducts?.errorMessage && (
@@ -242,14 +222,8 @@ function Departments() {
           ) : (
             <Box
               sx={{
-                width: {
-                  xl: 1500,
-                  lg: 1200,
-                  md: 0.9,
-                  xs: 0.92,
-                },
-                mx: "auto",
                 mb: "50px",
+                pt: "25px",
               }}
             >
               {allCategories?.map((category) => (
@@ -257,8 +231,7 @@ function Departments() {
                   key={category?._id}
                   sx={{
                     width: 1,
-                    mt: "40px",
-                    pt: "100px",
+                    mt: "75px",
                   }}
                 >
                   <SeparateDepartment category={category} />

@@ -6,11 +6,11 @@
 }
 .slider-homePage .splide__pagination__page:hover,
 .doctors-carousel .splide__pagination__page:hover {
-  background-color: #c0924d;
+  background-color: #ddd;
 }
 .slider-homePage .splide__pagination__page.is-active,
 .doctors-carousel .splide__pagination__page.is-active {
-  background-color: #c0924d;
+  background-color: #fff;
   width: 40px;
   border-radius: 5px;
   margin: 0 10px;
@@ -42,12 +42,14 @@
   background-color: #334ea3;
   fill: #fff;
   border-radius: 50%;
+
   transition: padding 0.5s;
 }
+
 .slider-homePage .splide__arrow--next svg:active,
 .slider-homePage .splide__arrow--prev svg:active {
-  background-color: #c0924d;
-  border: 4px solid #c0924d;
+  background-color: #fff;
+  border: 4px solid #fff;
 }
 .doctors-carousel .splide__arrows {
   width: 35% !important ;

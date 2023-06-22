@@ -4,8 +4,10 @@ import React from "react";
 import { customDrawerIcon } from "./nav.styes";
 import { useTranslation } from "react-i18next";
 import { colors } from "../publicStyle/publicStyle";
+import { useLocation } from "react-router-dom";
 const LanguageToggler = () => {
   const [_, { language, changeLanguage }] = useTranslation();
+  const { pathname } = useLocation();
   const toggleLanguage = () => {
     language === "en" ? changeLanguage("ar") : changeLanguage("en");
   };
@@ -34,7 +36,10 @@ const LanguageToggler = () => {
             lg: "5px",
             xs: "2px",
           },
-          borderColor: colors.grey,
+          borderColor: {
+            md: pathname === "/" ? "#fff" : colors.grey,
+            xs: colors.grey,
+          },
           p: "3px 20px",
           "&:hover": {
             borderColor: colors.newMainColor,
@@ -49,7 +54,10 @@ const LanguageToggler = () => {
           component="span"
           sx={{
             fontSize: "17px",
-            color: colors.grey,
+            color: {
+              md: pathname === "/" ? "#fff" : colors.grey,
+              xs: colors.grey,
+            },
           }}
         >
           {language === "en" ? "AR" : "EN"}

@@ -88,7 +88,7 @@ function DrawerAppBar(props) {
               },
             }}
           >
-            <MenuIcon sx={{ fontSize: "19px", color: colors.grey }} />
+            <MenuIcon sx={{ fontSize: "25px", color: colors.newMainColor }} />
           </IconButton>
           <Box>
             <Logo imagePath={urlPath} />

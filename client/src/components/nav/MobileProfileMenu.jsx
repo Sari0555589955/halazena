@@ -87,7 +87,16 @@ export default function MobileProfileMenu() {
               "&:hover": {
                 color: colors.newMainColor,
               },
-              color: colors[pathname === "/profile" ? "newMainColor" : "grey"],
+              color: {
+                md:
+                  pathname === "/"
+                    ? "#fff"
+                    : colors[pathname === "/profile" ? "newMainColor" : "grey"],
+                xs:
+                  pathname === "/"
+                    ? colors.grey
+                    : colors[pathname === "/profile" ? "newMainColor" : "grey"],
+              },
             }}
           />
         )}
