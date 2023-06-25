@@ -14,7 +14,10 @@ function Logo({ imagePath, text }) {
               md: 80,
               xs: 60,
             },
-            width: "auto",
+            width: {
+              md: 50,
+              xs: 40,
+            },
             borderRadius: 0,
             mx: "auto",
             transform: "rotate(0)",

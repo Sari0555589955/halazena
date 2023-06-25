@@ -174,7 +174,7 @@ const DepartmentProduct = ({ item, externalWidth }) => {
           wordBreak: "break-all",
           fontSize: {
             md: "initial",
-            xs: "16px",
+            xs: "13.5px",
           },
         }}
       >
@@ -191,7 +191,10 @@ const DepartmentProduct = ({ item, externalWidth }) => {
           sx={{
             fontFamily: publicFontFamily,
             border: `1px solid ${colors.newLightColor}`,
-            fontSize: "17px",
+            fontSize: {
+              md: "initial",
+              xs: "13.5px",
+            },
             borderRadius: "20px",
             padding: "5px 10px",
             transition: "0.4s all",

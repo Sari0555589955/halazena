@@ -58,9 +58,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 @media (max-width: 992px) {
   .slider-homePage .splide__pagination__page {
-    top: -140px;
+    top: -100px;
   }
 }
 @media (min-width: 768px) {
@@ -69,11 +70,20 @@
     display: none;
   }
 }
+@media (max-width: 900px) {
+  .slider-homePage .splide__pagination__page {
+    top: -400px;
+  }
+}
+
 @media (max-width: 768px) {
   .slider-homePage .splide__arrows,
   .doctors-carousel .splide__arrows {
     display: flex;
     direction: ltr;
+  }
+  .slider-homePage .splide__pagination__page {
+    top: -150px;
   }
 }
 .slider-homePage .text-wrapper {

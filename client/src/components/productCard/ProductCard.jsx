@@ -168,7 +168,7 @@ const ProductCard = ({ item, externalWidth }) => {
             wordBreak: "break-all",
             fontSize: {
               md: "initial",
-              xs: "16px",
+              xs: "13.5px",
             },
           }}
         >
@@ -187,7 +187,7 @@ const ProductCard = ({ item, externalWidth }) => {
               border: `1px solid ${colors.newLightColor}`,
               fontSize: {
                 md: "initial",
-                xs: "16px",
+                xs: "13.5px",
               },
               borderRadius: "20px",
               padding: "5px 10px",
