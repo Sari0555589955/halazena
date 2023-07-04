@@ -56,7 +56,9 @@ const HeroSlider = () => {
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             height: {
-              md: "105vh",
+              xl: 1070,
+              lg: 950,
+              md: "1000px",
               xs: "auto",
             },
           }}
