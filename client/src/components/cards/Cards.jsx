@@ -373,24 +373,31 @@ export default function Cards({ items, title, singleDepartmentName }) {
           breakpoints: {
             1900: {
               perPage: 4,
+              type: "slide",
             },
             1500: {
               perPage: 5,
+              type: "slide",
             },
             1200: {
               perPage: 5,
+              type: "slide",
             },
             992: {
               perPage: 5,
+              type: "slide",
             },
             900: {
               perPage: 3,
+              type: "loop",
             },
             768: {
               perPage: 3,
+              type: "loop",
             },
             600: {
               perPage: 3,
+              type: "loop",
             },
           },
         }}

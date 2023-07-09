@@ -136,21 +136,26 @@ export default function CardsTest({ items, title, singleDepartmentName }) {
             breakpoints: {
               1900: {
                 perPage: 3,
+                type: "slide",
               },
               1500: {
                 perPage: 3,
+                type: "slide",
               },
               1200: {
                 perPage: 3,
               },
               992: {
                 perPage: 3,
+                type: "loop",
               },
               768: {
                 perPage: 3,
+                type: "loop",
               },
               600: {
                 perPage: 3,
+                type: "loop",
               },
             },
           }}

@@ -18,6 +18,7 @@ import urlPath from "../../assets/zena.png";
 import { useTranslation } from "react-i18next";
 import { publicFontFamily } from "../publicStyle/publicStyle";
 import { useLocation, useNavigate } from "react-router-dom";
+import SideBar from "../../components/sidebar/SideBar";
 function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -70,26 +71,7 @@ function DrawerAppBar(props) {
         }}
       >
         <Stack direction="row" alignItems="center" justifyContent="flex-start">
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{
-              mx: 1,
-              display: {
-                md: "none",
-                xs: "flex",
-              },
-              borderRadius: 1,
-              p: {
-                sm: 0.8,
-                xs: 0.7,
-              },
-            }}
-          >
-            <MenuIcon sx={{ fontSize: "25px", color: colors.newMainColor }} />
-          </IconButton>
+          <SideBar />
           <Box>
             <Logo imagePath={urlPath} />
           </Box>
@@ -99,11 +81,6 @@ function DrawerAppBar(props) {
           <Drawers handleDrawerToggle={handleDrawerToggle} />
         </Stack>
       </Toolbar>
-      <MobileSidebar
-        container={container}
-        mobileOpen={mobileOpen}
-        handleDrawerToggle={handleDrawerToggle}
-      />
     </Box>
   );
 }
